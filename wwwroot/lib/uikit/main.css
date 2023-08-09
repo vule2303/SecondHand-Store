@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap");
+
+body {
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+}
+
+/* Dropmenu */
+
+code {
+    color: #745eb1;
+    background: #fff;
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.2rem;
+}
+
+.text-uppercase {
+    letter-spacing: 0.08em;
+}
+
+/* brands  */
+uk-container .img-cover {
+    width: 100%;
+    height: 100%;
+}
+
+.brand-logo,
+.title-main {
+    font-family: "Manrope", sans-serif;
+    color: black;
+    font-weight: 900;
+}
+
+/* MAIN */
+main {
+    height: 100%;
+}
+
+.nav-begin {
+    display: flex;
+    padding: 20px 0;
+}
+
+.nav-begin a {
+    font-weight: 800;
+    color: black;
+    text-decoration: none !important;
+}
+
+.product-mg {
+    margin: 0;
+}
+
+
+
+
+
+
+.uk-button-color {
+    background-color: #3da9fc;
+    font-weight: 700;
+    color: white;
+}
+
+.cate-link {
+    text-decoration: none;
+    
+}
+
+.cate-link:hover {
+    text-decoration: none;
+}
+
+
+.name-category {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #272343
+}
