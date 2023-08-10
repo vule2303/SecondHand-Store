@@ -505,12 +505,180 @@
                                                 uk-close
                                             ></a>
                                         </div>
+                                    </div>  <section class="uk-section uk-section-small">
+                    <div class="uk-container">
+                        <div class="uk-grid-medium" uk-grid>
+                            <div
+                                class="uk-width-1-1 uk-width-1-4@m tm-aside-column"
+                            >
+                                <div
+                                    class="uk-card uk-card-default uk-card-small tm-ignore-container"
+                                    
+                                >
+                                    <div class="uk-card-header">
+                                        <div
+                                            class="uk-grid-small uk-child-width-1-1"
+                                            uk-grid
+                                        >
+                                            
+                                            <div class="uk-text-center">
+                                                <div
+                                                    class="uk-h4 uk-margin-remove"
+                                                >
+                                                    ADMIN
+                                                </div>
+                                                <div class="uk-text-meta">
+                                                    Đã tham gia 8/6/2023
+                                                </div>
+                                            </div>
+                                            <div class = "uk-margin-top">
+                                                <div
+                                                    class="uk-grid-small uk-flex-center"
+                                                    uk-grid
+                                                >
+                                                    <div>
+                                                        <a
+                                                            class="uk-button uk-button-default uk-button-small"
+                                                            href="settings.html"
+                                                            ><span
+                                                                class="uk-margin-xsmall-right"
+                                                                uk-icon="icon: cog; ratio: .75;"
+                                                            ></span
+                                                            ><span
+                                                                >Cài đặt</span
+                                                            ></a
+                                                        >
+                                                    </div>
+                                                    <div>
+                                                        <button
+                                                            class="uk-button uk-button-default uk-button-small"
+                                                            href="#"
+                                                            title="Đăng xuất"
+                                                        >
+                                                            <span
+                                                                uk-icon="icon: sign-out; ratio: .75;"
+                                                            ></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div>
+                                        <nav>
+                                            <ul
+                                                class="uk-nav uk-nav-default tm-nav"
+                                            >
+                                                <li>
+                                                    <a href="account.html"
+                                                        >Đơn hàng
+                                                        <span>(2)</span></a
+                                                    >
+                                                </li>
+                                                <li>
+                                                    <a href="favorites.html"
+                                                        >Yêu thích
+                                                        <span>(3)</span></a
+                                                    >
+                                                </li>
+                                                <li class="uk-active">
+                                                    <a href="personal.html"
+                                                        >Thông tin cá nhân</a
+                                                    >
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-width-1-1 uk-width-expand@m">
+                                <div
+                                    class="uk-card uk-card-default uk-card-small tm-ignore-container"
+                                >
+                                    <header class="uk-card-header">
+                                        <h1 class="uk-h2">Thông tin cá nhân</h1>
+                                    </header>
+                                    <div class="uk-card-body">
+                                        <form class="uk-form-stacked">
+                                            <div
+                                                class="uk-grid-medium uk-child-width-1-1"
+                                                uk-grid
+                                            >
+                                                <fieldset class="uk-fieldset">
+                                                    <legend class="uk-h4">
+                                                        Liên hệ
+                                                    </legend>
+                                                    <div
+                                                        class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s"
+                                                        uk-grid
+                                                    >
+                                                        <div>
+                                                            <label
+                                                                ><div
+                                                                    class="uk-form-label"
+                                                                >
+                                                                    Họ
+                                                                </div>
+                                                                <input readonly
+                                                                    class="uk-input"
+                                                                    type="text"
+                                                                    value="xxx"
+                                                            /></label>
+                                                        </div>
+                                                        <div>
+                                                            <label
+                                                                ><div
+                                                                    class="uk-form-label"
+                                                                >
+                                                                    Tên đệm
+                                                                </div>
+                                                                <input readonly
+                                                                    class="uk-input"
+                                                                    type="text"
+                                                                    value="xxx"
+                                                            /></label>
+                                                        </div>
+                                                        <div>
+                                                            <label
+                                                                ><div
+                                                                    class="uk-form-label"
+                                                                >
+                                                                   Số điện thoại
+                                                                </div>
+                                                                <input readonly
+                                                                    class="uk-input"
+                                                                    type="tel"
+                                                                    value="8 (800) 555-35-35"
+                                                            /></label>
+                                                        </div>
+                                                        <div>
+                                                            <label
+                                                                ><div
+                                                                    class="uk-form-label"
+                                                                >
+                                                                   Email
+                                                                </div>
+                                                                <input readonly
+                                                                    class="uk-input"
+                                                                    type="tel"
+                                                                    value="adminyersin@gmail.com"
+                                                            /></label>
+                                                        </div>                                                  
+                                                    </div>
+                                                </fieldset>                                        
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                                 </div>
                             </div>
                             <a
                                 class="uk-navbar-item uk-link-muted tm-navbar-button"
-                                href="account.html"
+                                asp-controller="Personal" asp-action="Index"
                                 uk-icon="user"
                             ></a>
                             <div
@@ -530,7 +698,7 @@
                                         >
                                     </li>
                                     <li>
-                                        <a href="#">Cá nhân</a>
+                                        <a asp-controller="Personal" asp-action="Index">Cá nhân</a>
                                     </li>
                                     <li>
                                         <a href="#">Thông báo <span class="uk-badge">2</span></a>
@@ -990,7 +1158,7 @@
                                 <div>
                                     <a
                                         class="uk-button uk-button-primary uk-margin-small uk-width-1-1"
-                                        asp-controller="checkout" asp-action="Index"
+                                        asp-controller="Checkout" asp-action="Index"
                                         >Thanh Toán</a>
                                 </div>
                             </div>
