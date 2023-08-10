@@ -32,7 +32,7 @@
                                 uk-toggle="target: #nav-offcanvas"
                                 uk-navbar-toggle-icon
                             ></button
-                            ><a class="uk-navbar-item uk-logo brand-logo" asp-area="" asp-action="Index"
+                            ><a class="uk-navbar-item uk-logo brand-logo" asp-controller="Home" asp-action="Index"
                                 >S2 HAND</a>
                             <nav class="uk-visible@m">
                                 <ul class="uk-navbar-nav">
@@ -474,7 +474,7 @@
                         <div class="uk-navbar-right">
                             <a
                                 class="uk-navbar-toggle tm-navbar-button"
-                                href="#"
+                                asp-controller="Filter" asp-action="Filter"
                                 uk-search-icon>
                             </a>
                             <div
