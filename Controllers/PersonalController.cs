@@ -2,11 +2,11 @@
 
 namespace MVC_Core.Controllers
 {
-    public class checkoutController : Controller
+    public class PersonalController : Controller
     {
         public IActionResult Index()
         {
-            return View("/Views/Checkout/Checkout.cshtml");
+            return View("/Views/Profile/Personal.cshtml");
         }
     }
 }
