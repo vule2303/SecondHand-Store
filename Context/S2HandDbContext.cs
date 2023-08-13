@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using MVC_Core.Models;
 
-namespace MVC_Core.Models;
+namespace MVC_Core.Context;
 
 public partial class S2HandDbContext : DbContext
 {

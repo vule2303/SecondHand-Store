@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using MVC_Core.Context;
+
 namespace MVC_Core
 {
     public class Program
@@ -8,6 +11,8 @@ namespace MVC_Core
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            //Add DbContext
+            builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
 
             var app = builder.Build();
 
