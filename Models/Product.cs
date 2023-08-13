@@ -39,6 +39,8 @@ public partial class Product
 
     public string? Img5 { get; set; }
 
+    public string Size { get; set; } = null!;
+
     public virtual Brand? Brand { get; set; }
 
     public virtual Category? Category { get; set; }

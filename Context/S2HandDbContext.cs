@@ -26,6 +26,8 @@ public partial class S2HandDbContext : DbContext
 
     public virtual DbSet<CategoryDiscount> CategoryDiscounts { get; set; }
 
+    public virtual DbSet<Contact> Contacts { get; set; }
+
     public virtual DbSet<Favorite> Favorites { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
@@ -44,7 +46,7 @@ public partial class S2HandDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server = sql.bsite.net\\MSSQL2016; Initial Catalog = vule2303_S2Hand; User id = vule2303_S2Hand; Password = Vuchuot123; TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=sql.bsite.net\\MSSQL2016; Initial Catalog = vule2303_S2Hand; User id = vule2303_S2Hand; Password = Vuchuot123; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -117,6 +119,18 @@ public partial class S2HandDbContext : DbContext
                 .HasConstraintName("fk_CategoryDiscount_Category");
         });
 
+        modelBuilder.Entity<Contact>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("pk_Contact");
+
+            entity.ToTable("Contact");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.FullName).HasMaxLength(255);
+            entity.Property(e => e.Phone).HasMaxLength(20);
+        });
+
         modelBuilder.Entity<Favorite>(entity =>
         {
             entity.HasKey(e => new { e.UserId, e.ProductId });
@@ -183,6 +197,7 @@ public partial class S2HandDbContext : DbContext
             entity.Property(e => e.Created).HasColumnType("datetime");
             entity.Property(e => e.Defects).HasMaxLength(50);
             entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.Size).HasMaxLength(20);
 
             entity.HasOne(d => d.Brand).WithMany(p => p.Products)
                 .HasForeignKey(d => d.BrandId)
