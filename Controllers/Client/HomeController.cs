@@ -1,28 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query;
+using MVC_Core.Context;
 using MVC_Core.Models;
 using System.Diagnostics;
+using System.Linq;
 
-namespace MVC_Core.Controllers
+namespace MVC_Core.Controllers.Client
 {
     public class HomeController : Controller
     {
+        private readonly S2HandDbContext _context;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController( S2HandDbContext context, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View("/Views/Client/Home/Index.cshtml");
         }
 
         public IActionResult Privacy()
         {
             return View();
         }
-        
+
+        public List<Product> GetNewProducts()
+        {
+            
+            return _context.Products.Take(10).ToList();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

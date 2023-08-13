@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVC_Core.Controllers
+namespace MVC_Core.Controllers.Client
 {
     public class checkoutController : Controller
     {
         public IActionResult Index()
         {
-            return View("/Views/Checkout/Checkout.cshtml");
+            return View("/Views/Client/Checkout/Checkout.cshtml");
         }
     }
 }

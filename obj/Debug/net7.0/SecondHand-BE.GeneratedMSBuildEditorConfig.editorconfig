@@ -16,32 +16,40 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Vu\SecondHand-Store\SecondHand-Store
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Vu/SecondHand-Store/SecondHand-Store/Views/checkout/checkout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcY2hlY2tvdXRcY2hlY2tvdXQuY3NodG1s
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Client/Checkout/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XENoZWNrb3V0XENoZWNrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Filter/Filter.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsdGVyXEZpbHRlci5jc2h0bWw=
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Client/Filter/Filter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEZpbHRlclxGaWx0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Client/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Client/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEhvbWVcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Login/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Client/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XExvZ2luXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Profile/Personal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxQZXJzb25hbC5jc2h0bWw=
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Client/Profile/Personal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XFByb2ZpbGVcUGVyc29uYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Vu/SecondHand-Store/SecondHand-Store/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Shared/_ListSuggestHome.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MaXN0U3VnZ2VzdEhvbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Vu/SecondHand-Store/SecondHand-Store/Views/Shared/_ProductItem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0SXRlbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Vu/SecondHand-Store/SecondHand-Store/Views/Shared/_ValidationScriptsPartial.cshtml]

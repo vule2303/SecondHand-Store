@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVC_Core.Controllers
+namespace MVC_Core.Controllers.Client
 {
     public class PersonalController : Controller
     {
         public IActionResult Index()
         {
-            return View("/Views/Profile/Personal.cshtml");
+            return View("/Views/Client/Profile/Personal.cshtml");
         }
     }
 }
