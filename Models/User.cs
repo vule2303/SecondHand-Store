@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 
 namespace MVC_Core.Models;
 
-public partial class User
-{
+public partial class User { 
     public int Id { get; set; }
 
     public string? UserName { get; set; }

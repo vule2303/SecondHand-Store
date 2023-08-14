@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_Core.Context;
+using MVC_Core.Models;
+using MVC_Core.Models.Domain;
 
 namespace MVC_Core
 {
@@ -13,6 +17,13 @@ namespace MVC_Core
             builder.Services.AddControllersWithViews();
             //Add DbContext
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
+            //Add Identity
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<S2HandDbContext>()
+                .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
+
 
             var app = builder.Build();
 
@@ -29,6 +40,7 @@ namespace MVC_Core
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
