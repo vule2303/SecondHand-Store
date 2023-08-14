@@ -28,11 +28,7 @@ namespace MVC_Core.Controllers.Client
             return View();
         }
 
-        public List<Product> GetNewProducts()
-        {
-            
-            return _context.Products.Take(10).ToList();
-        }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
