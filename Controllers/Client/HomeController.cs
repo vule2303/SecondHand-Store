@@ -20,7 +20,7 @@ namespace MVC_Core.Controllers.Client
 
         public IActionResult Index()
         {
-            return View("/Views/Client/Home/Index.cshtml");
+            return View();
         }
 
         public IActionResult Privacy()

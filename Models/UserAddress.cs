@@ -9,8 +9,6 @@ public partial class UserAddress
 
     public string? Name { get; set; }
 
-    public int? UserId { get; set; }
-
     public string DeliveryAddress { get; set; } = null!;
 
     public string? PhoneNumber { get; set; }
