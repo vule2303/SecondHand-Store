@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC_Core.Models;
 
 public partial class CartItem
 {
+    [Key]
     public int Id { get; set; }
 
     public int UserId { get; set; }
