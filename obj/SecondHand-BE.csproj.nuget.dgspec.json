@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Vu\\BaoCaoDoAn\\SecondHand-Store\\SecondHand-BE.csproj": {}
+    "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand-BE.csproj": {}
   },
   "projects": {
-    "D:\\Vu\\BaoCaoDoAn\\SecondHand-Store\\SecondHand-BE.csproj": {
+    "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand-BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Vu\\BaoCaoDoAn\\SecondHand-Store\\SecondHand-BE.csproj",
+        "projectUniqueName": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand-BE.csproj",
         "projectName": "SecondHand-BE",
-        "projectPath": "D:\\Vu\\BaoCaoDoAn\\SecondHand-Store\\SecondHand-BE.csproj",
+        "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand-BE.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "D:\\Vu\\BaoCaoDoAn\\SecondHand-Store\\obj\\",
+        "outputPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.10, )"
@@ -65,6 +69,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[7.0.9, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[4.1.0, )"
             }
           },
           "imports": [

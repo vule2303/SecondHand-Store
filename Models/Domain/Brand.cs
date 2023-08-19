@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVC_Core.Models;
+namespace MVC_Core.Models.Domain;
 
 public partial class Brand
 {

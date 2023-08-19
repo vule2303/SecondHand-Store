@@ -1,4 +1,4 @@
-namespace MVC_Core.Models
+namespace MVC_Core.Models.Domain
 {
     public class ErrorViewModel
     {

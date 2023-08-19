@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using MVC_Core.Context;
 using MVC_Core.Models;
+using MVC_Core.Models.Domain;
 using System.Diagnostics;
 using System.Linq;
 

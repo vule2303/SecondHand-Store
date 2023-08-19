@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using MVC_Core.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace MVC_Core.Models;
+namespace MVC_Core.Models.Domain;
 
 public partial class Adress
 {

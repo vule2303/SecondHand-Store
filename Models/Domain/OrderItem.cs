@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MVC_Core.Models;
+namespace MVC_Core.Models.Domain;
 
 public partial class OrderItem
 {

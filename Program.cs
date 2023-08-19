@@ -4,8 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MVC_Core.Context;
 using MVC_Core.Models;
 using MVC_Core.Models.Domain;
-using MVC_Core.Reponsitories.Abstract;
-using MVC_Core.Reponsitories.Implementation;
+
 
 namespace MVC_Core
 {
@@ -23,14 +22,14 @@ namespace MVC_Core
             //Add Identity
             builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<S2HandDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
 
          
 
             builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
 
             //sign for Interface
-            builder.Services.AddScoped<IUserAuthentication, UserAuthenticationServices>();
             // Truy cập IdentityOptions
             builder.Services.Configure<IdentityOptions>(options => {
                 // Thiết lập về Password

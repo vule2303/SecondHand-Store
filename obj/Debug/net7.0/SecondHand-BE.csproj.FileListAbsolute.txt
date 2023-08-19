@@ -581,3 +581,11 @@ D:\Vu\BaoCaoDoAn\SecondHand-Store\bin\Debug\net7.0\runtimes\win\lib\net6.0\Syste
 D:\Vu\BaoCaoDoAn\SecondHand-Store\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\Vu\BaoCaoDoAn\SecondHand-Store\obj\Debug\net7.0\SecondHand-BE.MvcApplicationPartsAssemblyInfo.cs
 D:\Vu\BaoCaoDoAn\SecondHand-Store\obj\Debug\net7.0\SecondHand-BE.csproj.CopyComplete
+D:\Vu\SecondHand-Store\SecondHand-Store\obj\Debug\net7.0\SecondHand-BE.MvcApplicationPartsAssemblyInfo.cs
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\MailKit.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\MimeKit.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
