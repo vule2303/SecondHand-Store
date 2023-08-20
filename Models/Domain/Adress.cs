@@ -17,5 +17,5 @@ public partial class Adress
 
     public virtual UserAddress? UserAddress { get; set; }
 
-    public virtual User? User { get; set; }
+    public virtual ApplicationUser? User { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
-using MVC_Core.Context;
+using MVC_Core.Areas.Identity.Data;
 using MVC_Core.Models;
 using MVC_Core.Models.Domain;
 using System.Diagnostics;

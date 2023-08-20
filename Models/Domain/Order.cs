@@ -38,5 +38,5 @@ public partial class Order
 
     public virtual Promotion? Promotion { get; set; }
 
-    public virtual User? User { get; set; }
+    public virtual ApplicationUser? User { get; set; }
 }
