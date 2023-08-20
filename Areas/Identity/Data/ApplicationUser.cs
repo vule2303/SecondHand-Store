@@ -3,11 +3,14 @@ using Microsoft.Build.ObjectModelRemoting;
 
 namespace MVC_Core.Models.Domain
 {
-    public class User:IdentityUser
+    public class ApplicationUser:IdentityUser
     {
-        public string Name { get;set; }
-        public string Email { get;set; }
-        public string UserName { get; set; }
+
+
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime? Created { get;set; }
         public virtual ICollection<Adress> Adresses { get; set; } = new List<Adress>();
 
         public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();

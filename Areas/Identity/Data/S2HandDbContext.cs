@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using MVC_Core.Models;
 using MVC_Core.Models.Domain;
 
-namespace MVC_Core.Context;
+namespace MVC_Core.Areas.Identity.Data;
 
-public partial class S2HandDbContext : IdentityDbContext<User>
+public partial class S2HandDbContext : IdentityDbContext<ApplicationUser>
 {
     public S2HandDbContext()
     {
@@ -18,7 +18,7 @@ public partial class S2HandDbContext : IdentityDbContext<User>
         : base(options)
     {
     }
-
+   
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
      => optionsBuilder.UseSqlServer("Server=sql.bsite.net\\MSSQL2016; Initial Catalog = vule2303_SecondHandStore; User id = vule2303_SecondHandStore; Password = admin123; TrustServerCertificate=True");

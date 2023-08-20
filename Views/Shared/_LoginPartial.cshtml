@@ -1,16 +1,17 @@
 ﻿@using MVC_Core.Models.Domain;
 @using Microsoft.AspNetCore.Identity;
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
-   // SignInManager.IsSignedIn(User);
-   // UserManager.GetUserName(User);
+    // SignInManager.IsSignedIn(User);
+    // UserManager.GetUserName(User);
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
+    
     <a class="uk-navbar-item uk-link-muted tm-navbar-button"
-       asp-area="Identity" asp-page="/Account/Login"
+   asp-controller="Personal" asp-action="Index"
        uk-icon="user"></a>
     <div class="uk-padding-small uk-margin-remove"
          uk-dropdown="pos: bottom-right; offset: -10; delay-hide: 200;"
@@ -29,13 +30,21 @@
                 <a href="#">Thông báo <span class="uk-badge">2</span></a>
             </li>
             <li class="uk-nav-divider"></li>
-            <li><a href="login.html">Đăng xuất</a></li>
+            <li>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                    <button class="uk-button uk-button-text uk-button-small"
+                            title="Đăng xuất" type="submit" class="nav-link btn btn-link text-dark">
+                        Đăng xuất
+                    </button>
+                </form>
+            </li>
         </ul>
     </div>
-}else
+}
+else
 {
     <a class="uk-navbar-item uk-link-muted tm-navbar-button"
-       asp-area="Identity" asp-page="/Account/Login"
+   asp-area="Identity" asp-page="/Account/Login"
        uk-icon="user"></a>
 }
 

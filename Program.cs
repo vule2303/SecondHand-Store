@@ -1,10 +1,12 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MVC_Core.Context;
+using MVC_Core.Areas.Identity.Data;
+
 using MVC_Core.Models;
 using MVC_Core.Models.Domain;
-
+using MVC_Core.Areas.Identity.Data;
+using System.Runtime;
 
 namespace MVC_Core
 {
@@ -19,19 +21,20 @@ namespace MVC_Core
             builder.Services.AddRazorPages();
             //Add DbContext
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
+
+
+
             //Add Identity
-            builder.Services.AddIdentity<User, IdentityRole>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<S2HandDbContext>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
-         
+            // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedEmail = false);
 
-            builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
-
-            //sign for Interface
-            // Truy cập IdentityOptions
-            builder.Services.Configure<IdentityOptions>(options => {
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
                 // Thiết lập về Password
                 options.Password.RequireDigit = false; // Không bắt phải có số
                 options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
@@ -48,13 +51,18 @@ namespace MVC_Core
                 // Cấu hình về User.
                 options.User.AllowedUserNameCharacters = // các ký tự đặt tên user
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;  // Email là duy nhất
+                options.User.RequireUniqueEmail = true; // Email là duy nhất
 
                 // Cấu hình đăng nhập.
-                options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
-                options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+                options.SignIn.RequireConfirmedEmail = true; // Cấu hình xác thực địa chỉ email (email phải tồn tại)
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+
 
             });
+
+
+            //sign for Interface
+
 
             var app = builder.Build();
 
@@ -65,6 +73,8 @@ namespace MVC_Core
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+         
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

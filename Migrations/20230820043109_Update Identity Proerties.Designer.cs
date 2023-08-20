@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Core.Migrations
 {
     [DbContext(typeof(S2HandDbContext))]
-    [Migration("20230815034428_AddUser")]
-    partial class AddUser
+    [Migration("20230820043109_Update Identity Proerties")]
+    partial class UpdateIdentityProerties
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace MVC_Core.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MVC_Core.Models.Adress", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Adress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,83 @@ namespace MVC_Core.Migrations
                     b.ToTable("Adress");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Brand", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("MVC_Core.Models.Domain.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +150,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Category", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,7 +183,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.CategoryDiscount", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.CategoryDiscount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,78 +227,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("CategoryDiscount");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Domain.User", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("MVC_Core.Models.Favorite", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Favorite", b =>
                 {
                     b.Property<string>("UserId")
                         .HasMaxLength(450)
@@ -241,7 +246,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("Favorite");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Order", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -292,7 +297,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.OrderItem", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -318,7 +323,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Product", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -388,7 +393,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Promotion", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Promotion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -429,7 +434,7 @@ namespace MVC_Core.Migrations
                     b.ToTable("Promotion");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.UserAddress", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.UserAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -594,13 +599,13 @@ namespace MVC_Core.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Adress", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Adress", b =>
                 {
-                    b.HasOne("MVC_Core.Models.UserAddress", "UserAddress")
+                    b.HasOne("MVC_Core.Models.Domain.UserAddress", "UserAddress")
                         .WithMany("Adresses")
                         .HasForeignKey("UserAddressId");
 
-                    b.HasOne("MVC_Core.Models.Domain.User", "User")
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", "User")
                         .WithMany("Adresses")
                         .HasForeignKey("UserId");
 
@@ -609,18 +614,18 @@ namespace MVC_Core.Migrations
                     b.Navigation("UserAddress");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Category", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Category", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Category", "Parent")
+                    b.HasOne("MVC_Core.Models.Domain.Category", "Parent")
                         .WithMany("InverseParent")
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.CategoryDiscount", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.CategoryDiscount", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Category", "Category")
+                    b.HasOne("MVC_Core.Models.Domain.Category", "Category")
                         .WithMany("CategoryDiscounts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -629,15 +634,15 @@ namespace MVC_Core.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Favorite", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Favorite", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Product", "Product")
+                    b.HasOne("MVC_Core.Models.Domain.Product", "Product")
                         .WithMany("Favorites")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVC_Core.Models.Domain.User", "User")
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", "User")
                         .WithMany("Favorites")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -648,13 +653,13 @@ namespace MVC_Core.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Order", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Order", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Promotion", "Promotion")
+                    b.HasOne("MVC_Core.Models.Domain.Promotion", "Promotion")
                         .WithMany("Orders")
                         .HasForeignKey("PromotionId");
 
-                    b.HasOne("MVC_Core.Models.Domain.User", "User")
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
 
@@ -663,13 +668,13 @@ namespace MVC_Core.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.OrderItem", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.OrderItem", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Order", "Order")
+                    b.HasOne("MVC_Core.Models.Domain.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("MVC_Core.Models.Product", "Product")
+                    b.HasOne("MVC_Core.Models.Domain.Product", "Product")
                         .WithMany("OrderItems")
                         .HasForeignKey("ProductId");
 
@@ -678,13 +683,13 @@ namespace MVC_Core.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Product", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Product", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Brand", "Brand")
+                    b.HasOne("MVC_Core.Models.Domain.Brand", "Brand")
                         .WithMany("Products")
                         .HasForeignKey("BrandId");
 
-                    b.HasOne("MVC_Core.Models.Category", "Category")
+                    b.HasOne("MVC_Core.Models.Domain.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId");
 
@@ -704,7 +709,7 @@ namespace MVC_Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Domain.User", null)
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -713,7 +718,7 @@ namespace MVC_Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Domain.User", null)
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -728,7 +733,7 @@ namespace MVC_Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVC_Core.Models.Domain.User", null)
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -737,28 +742,14 @@ namespace MVC_Core.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MVC_Core.Models.Domain.User", null)
+                    b.HasOne("MVC_Core.Models.Domain.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Brand", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("MVC_Core.Models.Category", b =>
-                {
-                    b.Navigation("CategoryDiscounts");
-
-                    b.Navigation("InverseParent");
-
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("MVC_Core.Models.Domain.User", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.ApplicationUser", b =>
                 {
                     b.Navigation("Adresses");
 
@@ -767,24 +758,38 @@ namespace MVC_Core.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Order", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Brand", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MVC_Core.Models.Domain.Category", b =>
+                {
+                    b.Navigation("CategoryDiscounts");
+
+                    b.Navigation("InverseParent");
+
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MVC_Core.Models.Domain.Order", b =>
                 {
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Product", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Product", b =>
                 {
                     b.Navigation("Favorites");
 
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.Promotion", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.Promotion", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("MVC_Core.Models.UserAddress", b =>
+            modelBuilder.Entity("MVC_Core.Models.Domain.UserAddress", b =>
                 {
                     b.Navigation("Adresses");
                 });
