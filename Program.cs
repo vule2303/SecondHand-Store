@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_Core.Areas.Identity.Data;
@@ -7,6 +7,8 @@ using MVC_Core.Models;
 using MVC_Core.Models.Domain;
 using MVC_Core.Areas.Identity.Data;
 using System.Runtime;
+using MVC_Core.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MVC_Core
 {
@@ -23,6 +25,9 @@ namespace MVC_Core
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
 
 
+         
+
+
 
             //Add Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -31,6 +36,8 @@ namespace MVC_Core
                 .AddDefaultUI();
 
             // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedEmail = false);
+
+
 
             builder.Services.Configure<IdentityOptions>(options =>
             {
@@ -54,13 +61,17 @@ namespace MVC_Core
                 options.User.RequireUniqueEmail = true; // Email là duy nhất
 
                 // Cấu hình đăng nhập.
-                options.SignIn.RequireConfirmedEmail = true; // Cấu hình xác thực địa chỉ email (email phải tồn tại)
+                options.SignIn.RequireConfirmedEmail = false; // Cấu hình xác thực địa chỉ email (email phải tồn tại)
                 options.SignIn.RequireConfirmedPhoneNumber = false;
 
 
             });
 
-
+            //add mailSender
+            builder.Services.AddOptions();
+            var mailSettings = builder.Configuration.GetSection("MailSettings");
+            builder.Services.Configure<MailSettings>(mailSettings);
+            builder.Services.AddSingleton<IEmailSender,SendMailService>();
             //sign for Interface
 
 
