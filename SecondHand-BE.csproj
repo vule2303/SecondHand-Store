@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Server\" />
     <Folder Include="mailssave\" />
     <Folder Include="Reponsitories\Abstract\" />
     <Folder Include="Reponsitories\Implementation\" />
