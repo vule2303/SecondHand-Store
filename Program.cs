@@ -7,8 +7,8 @@ using MVC_Core.Models;
 using MVC_Core.Models.Domain;
 using MVC_Core.Areas.Identity.Data;
 using System.Runtime;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using MVC_Core.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MVC_Core
 {
@@ -31,6 +31,9 @@ namespace MVC_Core
             builder.Services.AddRazorPages();
             //Add DbContext
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
+
+
+         
 
 
 
@@ -71,6 +74,7 @@ namespace MVC_Core
 
 
             });
+
 
             //sign for Interface
 
