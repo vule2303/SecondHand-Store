@@ -40,7 +40,7 @@ namespace MVC_Core.Services
         }
 
         // Gửi email, theo nội dung trong mailContent
-        
+
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             var message = new MimeMessage();
@@ -66,7 +66,7 @@ namespace MVC_Core.Services
             catch (Exception ex)
             {
                 // Gửi mail thất bại, nội dung email sẽ lưu vào thư mục mailssave
-                System.IO.Directory.CreateDirectory("mailssave");
+                Directory.CreateDirectory("mailssave");
                 var emailsavefile = string.Format(@"mailssave/{0}.eml", Guid.NewGuid());
                 await message.WriteToAsync(emailsavefile);
 

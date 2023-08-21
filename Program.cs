@@ -7,8 +7,8 @@ using MVC_Core.Models;
 using MVC_Core.Models.Domain;
 using MVC_Core.Areas.Identity.Data;
 using System.Runtime;
-using MVC_Core.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using MVC_Core.Services;
 
 namespace MVC_Core
 {
