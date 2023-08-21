@@ -7,8 +7,8 @@ using MVC_Core.Models;
 using MVC_Core.Models.Domain;
 using MVC_Core.Areas.Identity.Data;
 using System.Runtime;
-using MVC_Core.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using MVC_Core.Services;
 
 namespace MVC_Core
 {
@@ -18,14 +18,19 @@ namespace MVC_Core
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+            //add mailSender
+            builder.Services.AddOptions();
+            var mailSettings = builder.Configuration.GetSection("MailSettings");
+            builder.Services.Configure<MailSettings>(mailSettings);
+            builder.Services.AddSingleton<IEmailSender, SendMailService>();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             //Add DbContext
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
-
-
-         
 
 
 
@@ -67,11 +72,6 @@ namespace MVC_Core
 
             });
 
-            //add mailSender
-            builder.Services.AddOptions();
-            var mailSettings = builder.Configuration.GetSection("MailSettings");
-            builder.Services.Configure<MailSettings>(mailSettings);
-            builder.Services.AddSingleton<IEmailSender,SendMailService>();
             //sign for Interface
 
 

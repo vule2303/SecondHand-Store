@@ -14,8 +14,8 @@
    asp-controller="Personal" asp-action="Index"
        uk-icon="user"></a>
     <div class="uk-padding-small uk-margin-remove"
-         uk-dropdown="pos: bottom-right; offset: -10; delay-hide: 200;"
-         style="min-width: 150px">
+    uk-dropdown="pos: bottom-right; offset: -10; delay-hide: 200;"
+    style="min-width: 150px">
         <ul class="uk-nav uk-dropdown-nav">
             <li>
                 <a href="#">Đơn hàng  <span class="uk-badge">2</span></a>
@@ -31,12 +31,12 @@
             </li>
             <li class="uk-nav-divider"></li>
             <li>
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
-                    <button class="uk-button uk-button-text uk-button-small"
-                            title="Đăng xuất" type="submit" class="nav-link btn btn-link text-dark">
-                        Đăng xuất
-                    </button>
-                </form>
+                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("", new {controller = "Home"})" method="post">
+                        <button class="uk-button uk-button-text uk-button-small"
+                                title="Đăng xuất" type="submit" class="nav-link btn btn-link text-dark">
+                            Đăng xuất
+                        </button>
+                    </form>                      
             </li>
         </ul>
     </div>

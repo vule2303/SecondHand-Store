@@ -2,56 +2,72 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Đăng ký";
+    Layout = "_LoginLayout.cshtml";
 }
+<div class="container">
 
-
-<div class="row justify-content-center uk-padding">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2 class="text-center">Tạo tài khoản</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
             <div class="row">
-                <div class="col-6">
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" placeholder="ho" />
-                        <label asp-for="Input.FirstName">Họ</label>
-                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Đăng ký tài khoản</h1>
+                        </div>
+                        <form class="user" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="Input.FirstName" class="form-control form-control-user" autocomplete="firstname" aria-required="true" placeholder="Họ" />
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input asp-for="Input.LastName" class="form-control form-control-user" autocomplete="lastname" aria-required="true" placeholder="Tên" />
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Email" class="form-control form-control-user" autocomplete="username" aria-required="true" placeholder="Email" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.UserName" class="form-control form-control-user" autocomplete="username" aria-required="true" placeholder="Tên tài khoản" />
+                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Password" class="form-control form-control-user" autocomplete="new-password" aria-required="true" placeholder="Mật khẩu" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.ConfirmPassword" class="form-control form-control-user" autocomplete="new-password" aria-required="true" placeholder="Nhập lại mật khẩu" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary btn-user ">Đăng ký</button>
+                            <hr>
+                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <i class="fab fa-google fa-fw"></i> Register with Google
+                            </a>
+                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                            </a>
+                        </form>
+                        <hr>            
+                        <div class="text-center">
+                            <a class="text-decoration-none" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Đã có tài khoản? Đăng nhập</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="text-decoration-none" asp-controller="Home" asp-action="Index" asp-route-returnUrl="@Model.ReturnUrl">Trở về trang chủ</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-floating mb-3">
-                        <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" placeholder="ten" />
-                        <label asp-for="Input.LastName">Tên</label>
-                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
-                    </div>
-                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="abc" />
-                <label asp-for="Input.UserName">Tên tài khoản</label>
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Mật khẩu</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Nhập lại mật khẩu</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Đăng ký</button>
-        </form>
+        </div>
     </div>
-   
+
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -589,3 +589,4 @@ D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\MailKit.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\MimeKit.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\libman.json
