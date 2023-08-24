@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = "Đăng nhập";
     Layout = "_LoginLayout.cshtml";
+
+    var thongbao = TempData["ErrorMessage"];
 }
 <div class="row justify-content-center uk-padding">
 
@@ -19,9 +21,15 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Đăng nhập để mua sắm</h1>
                             </div>
+                            @if (TempData.ContainsKey("ErrorMessage"))
+                            {
+                                <partial name="/Area/Identity/Pages/Account/_StatusMessage.cshtml" model="thongbao"/>
+                            
+                            }
                             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                             <form class="user" id="account" method="post">
-                                
+                               
+
                                 <div class="form-group">
                                     <input asp-for="Input.UserNameOrEmail" class="form-control form-control-user" autocomplete="email" aria-required="true" placeholder="name@example.com">
                                     <span asp-validation-for="Input.UserNameOrEmail" class="text-danger"></span>
@@ -49,6 +57,23 @@
                                     <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                 </a>
                             </form>
+
+                            @if ((Model.ExternalLogins?.Count ?? 0) != 0)
+                            {
+                                <section>
+                                    <hr />
+                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                        <div>
+                                            <p>
+                                                @foreach (var provider in Model.ExternalLogins)
+                                                {
+                                                    <button type="submit" class="w-100 btn btn-google btn-user btn-block" name="provider" value="@provider.Name" title="Đăng nhập với tài khoản @provider.DisplayName"><i class="fab fa-google fa-fw"></i> Đăng nhập với @provider.DisplayName</button>
+                                                }
+                                            </p>
+                                        </div>
+                                    </form>
+                                </section>
+                            }
                             <hr>
                             <div class="text-center">
                                 <a class="text-decoration-none" id="forgot-password" asp-page="./ForgotPassword">Quên mật khẩu?</a>

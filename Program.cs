@@ -1,14 +1,14 @@
-using Microsoft.AspNetCore.Builder;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MVC_Core.Areas.Identity.Data;
-
-using MVC_Core.Models;
 using MVC_Core.Models.Domain;
-using MVC_Core.Areas.Identity.Data;
-using System.Runtime;
 using MVC_Core.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVC_Core
 {
@@ -33,15 +33,14 @@ namespace MVC_Core
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
 
 
-         
+
 
 
 
             //Add Identity
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<S2HandDbContext>()
-                .AddDefaultTokenProviders()
-                .AddDefaultUI();
+                .AddDefaultTokenProviders();
 
             // builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedEmail = false);
 
@@ -75,8 +74,40 @@ namespace MVC_Core
 
             });
 
+            //Add Authenticate Services
+            builder.Services.AddAuthentication().AddGoogle(options =>
+            {
+                IConfiguration googleAuthSection = builder.Configuration.GetSection("Authentication:Google");
+                //Config Client Id and ClientSecret for access API google
+                options.ClientId = googleAuthSection["ClientId"]; 
+                options.ClientSecret = googleAuthSection["ClientSecret"];
+                // config URL Callback from Goole(Base is /signin-google)
 
+            });
             //sign for Interface
+
+            //sign samesite
+            void CheckSameSite(HttpContext httpContext, CookieOptions options)
+            {
+                if (options.SameSite == SameSiteMode.None)
+                {
+                    var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
+                    // TODO: Use your User Agent library of choice here.
+                  
+                    
+                        // For .NET Core < 3.1 set SameSite = (SameSiteMode)(-1)
+                        options.SameSite = SameSiteMode.Unspecified;
+                    
+                }
+            }
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+                options.OnAppendCookie = cookieContext =>
+                    CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+                options.OnDeleteCookie = cookieContext =>
+                    CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+            });
 
 
             var app = builder.Build();
@@ -89,13 +120,11 @@ namespace MVC_Core
                 app.UseHsts();
             }
 
-         
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
 

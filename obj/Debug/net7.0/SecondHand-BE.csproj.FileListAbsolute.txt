@@ -590,3 +590,7 @@ D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\MimeKit.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\libman.json
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.Owin.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Owin.dll
