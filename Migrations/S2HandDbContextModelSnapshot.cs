@@ -46,7 +46,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Adress");
+                    b.ToTable("Adress", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.ApplicationUser", b =>
@@ -144,7 +144,7 @@ namespace MVC_Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brand");
+                    b.ToTable("Brand", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.Category", b =>
@@ -177,7 +177,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.CategoryDiscount", b =>
@@ -221,7 +221,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryDiscount");
+                    b.ToTable("CategoryDiscount", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.Favorite", b =>
@@ -240,7 +240,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Favorite");
+                    b.ToTable("Favorite", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.Order", b =>
@@ -291,7 +291,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.OrderItem", b =>
@@ -317,7 +317,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.Product", b =>
@@ -387,7 +387,7 @@ namespace MVC_Core.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.Promotion", b =>
@@ -428,7 +428,7 @@ namespace MVC_Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Promotion");
+                    b.ToTable("Promotion", (string)null);
                 });
 
             modelBuilder.Entity("MVC_Core.Models.Domain.UserAddress", b =>
@@ -460,7 +460,7 @@ namespace MVC_Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserAddress");
+                    b.ToTable("UserAddress", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

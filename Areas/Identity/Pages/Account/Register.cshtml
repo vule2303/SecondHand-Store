@@ -43,12 +43,13 @@
                                 <input asp-for="Input.ConfirmPassword" class="form-control form-control-user" autocomplete="new-password" aria-required="true" placeholder="Nhập lại mật khẩu" />
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
-                            
+                            <div class="form-group">
+                                <input asp-for="Input.Phone" class="form-control form-control-user" autocomplete="phonenumber" aria-required="true" placeholder="Số điện thoại" />
+                                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                            </div>
                             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary btn-user ">Đăng ký</button>
                             <hr>
-                            <a href="index.html" class="btn btn-google btn-user btn-block">
-                                <i class="fab fa-google fa-fw"></i> Register with Google
-                            </a>
+                            
                             <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                 <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                             </a>
