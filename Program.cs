@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Identity.Client;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 
 namespace MVC_Core
 {
@@ -83,6 +84,13 @@ namespace MVC_Core
                 options.ClientSecret = googleAuthSection["ClientSecret"];
                 // config URL Callback from Goole(Base is /signin-google)
 
+            }).AddFacebook(facebookOptions => {
+                // Đọc cấu hình
+                IConfigurationSection facebookAuthNSection = builder.Configuration.GetSection("Authentication:Facebook");
+                facebookOptions.AppId = facebookAuthNSection["AppId"];
+                facebookOptions.AppSecret = facebookAuthNSection["AppSecret"];
+                // Thiết lập đường dẫn Facebook chuyển hướng đến
+                facebookOptions.CallbackPath = "/dang-nhap-tu-facebook";
             });
             //sign for Interface
 

@@ -47,28 +47,34 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Đăng nhập</button>
-                                </div>
-                                <hr>
-                                <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Login with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                </a>
+                                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary btn-user">Đăng nhập</button>
+                                </div>                              
                             </form>
 
                             @if ((Model.ExternalLogins?.Count ?? 0) != 0)
                             {
                                 <section>
                                     <hr />
-                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="user">
                                         <div>
                                             <p>
                                                 @foreach (var provider in Model.ExternalLogins)
                                                 {
-                                                    <button type="submit" class="w-100 btn btn-google btn-user btn-block" name="provider" value="@provider.Name" title="Đăng nhập với tài khoản @provider.DisplayName"><i class="fab fa-google fa-fw"></i> Đăng nhập với @provider.DisplayName</button>
+                                                    var cssClass = "btn btn-user btn-block";
+                                                    var icon = "";
+                                                    if (provider.Name == "Google")
+                                                    {
+                                                        cssClass = "btn btn-google btn-user btn-block";
+                                                        icon = "fab fa-google fa-fw";
+                                                    }
+                                                    else if (provider.Name == "Facebook")
+                                                    {
+                                                        cssClass = "btn btn-facebook btn-user btn-block";
+                                                        icon = "fab fa-facebook-f fa-fw";
+                                                    }
+                                                    <button type="submit" class="@cssClass" name="provider" value="@provider.Name" title="Đăng nhập với tài khoản @provider.DisplayName"><i class="@icon"></i> Đăng nhập với @provider.DisplayName</button>
                                                 }
+
                                             </p>
                                         </div>
                                     </form>
