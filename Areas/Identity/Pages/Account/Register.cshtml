@@ -50,10 +50,37 @@
                             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary btn-user ">Đăng ký</button>
                             <hr>
                             
-                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                            </a>
+                            
                         </form>
+                        @if ((Model.ExternalLogins?.Count ?? 0) != 0)
+                        {
+                            <section>
+                                <hr />
+                                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="user">
+                                    <div>
+                                        <p>
+                                            @foreach (var provider in Model.ExternalLogins)
+                                            {
+                                                var cssClass = "btn btn-user btn-block";
+                                                var icon = "";
+                                                if (provider.Name == "Google")
+                                                {
+                                                    cssClass = "btn btn-google btn-user btn-block";
+                                                    icon = "fab fa-google fa-fw";
+                                                }
+                                                else if (provider.Name == "Facebook")
+                                                {
+                                                    cssClass = "btn btn-facebook btn-user btn-block";
+                                                    icon = "fab fa-facebook-f fa-fw";
+                                                }
+                                                <button type="submit" class="@cssClass" name="provider" value="@provider.Name" title="Đăng ký với tài khoản @provider.DisplayName"><i class="@icon"></i> Đăng ký với @provider.DisplayName</button>
+                                            }
+
+                                        </p>
+                                    </div>
+                                </form>
+                            </section>
+                        }
                         <hr>            
                         <div class="text-center">
                             <a class="text-decoration-none" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Đã có tài khoản? Đăng nhập</a>
