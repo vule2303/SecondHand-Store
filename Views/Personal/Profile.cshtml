@@ -1,0 +1,142 @@
+﻿
+@using SecondHand.Models.Domain;
+@using Microsoft.AspNetCore.Identity;
+@using SecondHand.DataAccess.Data;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <section class="uk-section uk-section-small">
+        <div class="uk-container">
+            <div class="uk-grid-medium" uk-grid>
+                <div class="uk-width-1-1 uk-width-1-4@m tm-aside-column">
+                    <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
+                        <div class="uk-card-header">
+                            <div class="uk-grid-small uk-child-width-1-1"
+                                 uk-grid>
+
+                                <div class="uk-text-center">
+                                    <div class="uk-h4 uk-margin-remove">
+                                        @UserManager.GetUserName(User)
+                                    </div>
+                                    <div class="uk-text-meta">
+                                        Đã tham gia @((await UserManager.GetUserAsync(User))?.Created?.ToString("dd-MM-yyyy"))
+                                    </div>
+                                </div>
+                                <div class="uk-margin-top">
+                                    <div class="uk-grid-small uk-flex-center"
+                                         uk-grid>
+                                        <div>
+                                            <a class="uk-button uk-button-default uk-button-small"
+                                               href="settings.html">
+                                                <span class="uk-margin-xsmall-right"
+                                                      uk-icon="icon: cog; ratio: .75;"></span><span>Cài đặt</span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                                                <button class="uk-button uk-button-default uk-button-small"
+                                                        title="Đăng xuất" type="submit" class="nav-link btn btn-link text-dark">
+                                                    <span uk-icon="icon: sign-out; ratio: .75;"></span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <nav>
+                                <ul class="uk-nav uk-nav-default tm-nav">
+                                    <li>
+                                        <a href="account.html">
+                                            Đơn hàng
+                                            <span>(2)</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="favorites.html">
+                                            Yêu thích
+                                            <span>(3)</span>
+                                        </a>
+                                    </li>
+                                    <li class="uk-active">
+                                        <a href="personal.html">Thông tin cá nhân</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-width-expand@m">
+                    <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
+                        <header class="uk-card-header">
+                            <h1 class="uk-h2">Thông tin cá nhân</h1>
+                        </header>
+                        <div class="uk-card-body">
+                            <form class="uk-form-stacked">
+                                <div class="uk-grid-medium uk-child-width-1-1"
+                                     uk-grid>
+                                    <fieldset class="uk-fieldset">
+                                        <legend class="uk-h4">
+                                            Liên hệ
+                                        </legend>
+                                        <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s"
+                                             uk-grid>
+                                            <div>
+                                                <label>
+                                                    <div class="uk-form-label">
+                                                        Họ
+                                                    </div>
+                                                    <input readonly
+                                                           class="uk-input"
+                                                           type="text"
+                                                           value="@((await UserManager.GetUserAsync(User))?.FirstName)" />
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label>
+                                                    <div class="uk-form-label">
+                                                        Tên
+                                                    </div>
+                                                    <input readonly
+                                                           class="uk-input"
+                                                           type="text"
+                                                           value="@((await UserManager.GetUserAsync(User))?.LastName)" />
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label>
+                                                    <div class="uk-form-label">
+                                                        Số điện thoại
+                                                    </div>
+                                                    <input readonly
+                                                           class="uk-input"
+                                                           type="tel"
+                                                           value="@(await UserManager.GetPhoneNumberAsync(await UserManager.GetUserAsync(User)))" />
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label >
+                                                    <div class="uk-form-label">
+                                                        Email
+                                                    </div>
+                                                    <input readonly
+                                                           class="uk-input"
+                                                           type="tel"
+                                                           value="@(await UserManager.GetEmailAsync(await UserManager.GetUserAsync(User)))" />
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
