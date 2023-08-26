@@ -19,9 +19,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.Extensions.Logging;
-using MVC_Core.Models.Domain;
+using SecondHand.Models.Domain;
 
-namespace MVC_Core.Areas.Identity.Pages.Account
+namespace SecondHand.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {

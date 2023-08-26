@@ -13,11 +13,15 @@
           "Microsoft.AspNetCore.Authentication.Google": "7.0.10",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.10",
           "Microsoft.AspNetCore.Identity.UI": "7.0.10",
+          "Microsoft.EntityFrameworkCore": "7.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
           "Microsoft.EntityFrameworkCore.Tools": "7.0.10",
           "Microsoft.Owin": "4.2.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "7.0.9",
-          "MimeKit": "4.1.0"
+          "MimeKit": "4.1.0",
+          "SecondHand.DataAccess": "1.0.0",
+          "SecondHand.Models": "1.0.0",
+          "SecondHand.Utility": "1.0.0"
         },
         "runtime": {
           "SecondHand-BE.dll": {}
@@ -2663,6 +2667,38 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0"
         }
+      },
+      "SecondHand.DataAccess/1.0.0": {
+        "dependencies": {
+          "MailKit": "4.1.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.10",
+          "Microsoft.AspNetCore.Identity.UI": "7.0.10",
+          "Microsoft.EntityFrameworkCore": "7.0.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
+          "MimeKit": "4.1.0",
+          "SecondHand.Models": "1.0.0",
+          "SecondHand.Utility": "1.0.0"
+        },
+        "runtime": {
+          "SecondHand.DataAccess.dll": {}
+        }
+      },
+      "SecondHand.Models/1.0.0": {
+        "dependencies": {
+          "MailKit": "4.1.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.10",
+          "Microsoft.AspNetCore.Identity.UI": "7.0.10",
+          "Microsoft.EntityFrameworkCore": "7.0.10",
+          "MimeKit": "4.1.0"
+        },
+        "runtime": {
+          "SecondHand.Models.dll": {}
+        }
+      },
+      "SecondHand.Utility/1.0.0": {
+        "runtime": {
+          "SecondHand.Utility.dll": {}
+        }
       }
     }
   },
@@ -4337,6 +4373,21 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
+    },
+    "SecondHand.DataAccess/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SecondHand.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SecondHand.Utility/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

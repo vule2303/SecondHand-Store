@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVC_Core.Controllers.Client
+namespace SecondHand.Controllers.Client
 {
     public class ContactController : Controller
     {

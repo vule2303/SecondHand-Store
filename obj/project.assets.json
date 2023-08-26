@@ -4119,6 +4119,53 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
+      },
+      "SecondHand.DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "MailKit": "4.1.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.10",
+          "Microsoft.AspNetCore.Identity.UI": "7.0.10",
+          "Microsoft.EntityFrameworkCore": "7.0.10",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
+          "MimeKit": "4.1.0",
+          "SecondHand.Models": "1.0.0",
+          "SecondHand.Utility": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SecondHand.DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SecondHand.DataAccess.dll": {}
+        }
+      },
+      "SecondHand.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "MailKit": "4.1.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.10",
+          "Microsoft.AspNetCore.Identity.UI": "7.0.10",
+          "Microsoft.EntityFrameworkCore": "7.0.10",
+          "MimeKit": "4.1.0"
+        },
+        "compile": {
+          "bin/placeholder/SecondHand.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SecondHand.Models.dll": {}
+        }
+      },
+      "SecondHand.Utility/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/SecondHand.Utility.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SecondHand.Utility.dll": {}
+        }
       }
     }
   },
@@ -11919,6 +11966,21 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
+    },
+    "SecondHand.DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../SecondHand.DataAccess/SecondHand.DataAccess.csproj",
+      "msbuildProject": "../SecondHand.DataAccess/SecondHand.DataAccess.csproj"
+    },
+    "SecondHand.Models/1.0.0": {
+      "type": "project",
+      "path": "../SecondHand.Models/SecondHand.Models.csproj",
+      "msbuildProject": "../SecondHand.Models/SecondHand.Models.csproj"
+    },
+    "SecondHand.Utility/1.0.0": {
+      "type": "project",
+      "path": "../SecondHand.Utility/SecondHand.Utility.csproj",
+      "msbuildProject": "../SecondHand.Utility/SecondHand.Utility.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -11928,11 +11990,15 @@
       "Microsoft.AspNetCore.Authentication.Google >= 7.0.10",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.10",
       "Microsoft.AspNetCore.Identity.UI >= 7.0.10",
+      "Microsoft.EntityFrameworkCore >= 7.0.10",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.10",
       "Microsoft.Owin >= 4.2.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 7.0.9",
-      "MimeKit >= 4.1.0"
+      "MimeKit >= 4.1.0",
+      "SecondHand.DataAccess >= 1.0.0",
+      "SecondHand.Models >= 1.0.0",
+      "SecondHand.Utility >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -11966,7 +12032,17 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Vu\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj": {
+              "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj"
+            },
+            "D:\\Vu\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj": {
+              "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj"
+            },
+            "D:\\Vu\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj": {
+              "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -11996,6 +12072,10 @@
             "version": "[7.0.10, )"
           },
           "Microsoft.AspNetCore.Identity.UI": {
+            "target": "Package",
+            "version": "[7.0.10, )"
+          },
+          "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[7.0.10, )"
           },

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MVC_Core.Controllers.Server
+namespace SecondHand.Controllers.Server
 {
     public class ProductController : Controller
     {

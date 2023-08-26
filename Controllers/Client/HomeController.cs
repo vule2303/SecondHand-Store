@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
-using MVC_Core.Areas.Identity.Data;
-using MVC_Core.Models;
-using MVC_Core.Models.Domain;
+using SecondHand.DataAccess.Data;
+using SecondHand.Models;
+using SecondHand.Models.Domain;
 using System.Diagnostics;
 using System.Linq;
 
-namespace MVC_Core.Controllers.Client
+namespace SecondHand.Controllers.Client
 {
     public class HomeController : Controller
     {

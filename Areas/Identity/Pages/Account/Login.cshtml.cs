@@ -14,9 +14,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using MVC_Core.Models.Domain;
+using SecondHand.Models.Domain;
 
-namespace MVC_Core.Areas.Identity.Pages.Account
+namespace SecondHand.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {

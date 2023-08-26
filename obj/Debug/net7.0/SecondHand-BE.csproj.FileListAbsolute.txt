@@ -594,3 +594,9 @@ D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.AspNetCore.Au
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Google.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Microsoft.Owin.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\Owin.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\SecondHand.DataAccess.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\SecondHand.Models.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\SecondHand.Utility.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\SecondHand.DataAccess.pdb
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\SecondHand.Models.pdb
+D:\Vu\SecondHand-Store\SecondHand-Store\bin\Debug\net7.0\SecondHand.Utility.pdb
