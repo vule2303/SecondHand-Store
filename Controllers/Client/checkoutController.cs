@@ -6,7 +6,7 @@ namespace MVC_Core.Controllers.Client
     {
         public IActionResult Index()
         {
-            return View("/Views/Client/Checkout/Checkout.cshtml");
+            return View("/Views/Checkout/Checkout.cshtml");
         }
     }
 }
