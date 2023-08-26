@@ -1,0 +1,104 @@
+﻿@page "/dangnhap"
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "_LoginLayout.cshtml";
+
+    var thongbao = TempData["ErrorMessage"];
+}
+<div class="row justify-content-center uk-padding">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Đăng nhập để mua sắm</h1>
+                            </div>
+                            @if (TempData.ContainsKey("ErrorMessage"))
+                            {
+                                <partial name="/Area/Identity/Pages/Account/_StatusMessage.cshtml" model="thongbao"/>
+                            
+                            }
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <form class="user" id="account" method="post">
+                               
+
+                                <div class="form-group">
+                                    <input asp-for="Input.UserNameOrEmail" class="form-control form-control-user" autocomplete="email" aria-required="true" placeholder="name@example.com">
+                                    <span asp-validation-for="Input.UserNameOrEmail" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="Input.Password" class="form-control form-control-user" autocomplete="current-password" aria-required="true" placeholder="password" />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox small">
+                                        <label asp-for="Input.RememberMe" class="form-label">
+                                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary btn-user">Đăng nhập</button>
+                                </div>                              
+                            </form>
+
+                            @if ((Model.ExternalLogins?.Count ?? 0) != 0)
+                            {
+                                <section>
+                                    <hr />
+                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="user">
+                                        <div>
+                                            <p>
+                                                @foreach (var provider in Model.ExternalLogins)
+                                                {
+                                                    var cssClass = "btn btn-user btn-block";
+                                                    var icon = "";
+                                                    if (provider.Name == "Google")
+                                                    {
+                                                        cssClass = "btn btn-google btn-user btn-block";
+                                                        icon = "fab fa-google fa-fw";
+                                                    }
+                                                    else if (provider.Name == "Facebook")
+                                                    {
+                                                        cssClass = "btn btn-facebook btn-user btn-block";
+                                                        icon = "fab fa-facebook-f fa-fw";
+                                                    }
+                                                    <button type="submit" class="@cssClass" name="provider" value="@provider.Name" title="Đăng nhập với tài khoản @provider.DisplayName"><i class="@icon"></i> Đăng nhập với @provider.DisplayName</button>
+                                                }
+
+                                            </p>
+                                        </div>
+                                    </form>
+                                </section>
+                            }
+                            <hr>
+                            <div class="text-center">
+                                <a class="text-decoration-none" id="forgot-password" asp-page="./ForgotPassword">Quên mật khẩu?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="text-decoration-none" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Đăng ký tài khoản</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="text-decoration-none" asp-controller="Home" asp-action="Index" asp-route-returnUrl="@Model.ReturnUrl">Trở về trang chủ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

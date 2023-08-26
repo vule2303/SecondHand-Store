@@ -1,0 +1,70 @@
+﻿@page "/su-dung-dich-vu-ngoai"
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Đăng ký với dịch vụ";
+    Layout = "_LoginLayout.cshtml";
+    //this.TempData["ErrorMessage"];
+    //this.TempData.Contains("ErrorMessage");
+}
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"] @Model.ProviderDisplayName</h1>
+                            
+
+                            <p id="external-login-description" class="text-info">
+                                Bạn đã đăng nhập thành công với <strong>@Model.ProviderDisplayName</strong>.
+                                Hãy nhập email nhận mã để hoàn tất đăng ký
+                            </p>
+                        </div>
+                        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input asp-for="Input.FirstName" class="form-control form-control-user" autocomplete="firstname" aria-required="true" placeholder="Họ" />
+                                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input asp-for="Input.LastName" class="form-control form-control-user" autocomplete="lastname" aria-required="true" placeholder="Tên" />
+                                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-floating mb-3">
+                                <input type="hidden" asp-for="Input.Email" class="form-control" autocomplete="email" placeholder="Nhập email" />                              
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Phone" class="form-control form-control-user" autocomplete="phone" aria-required="true" placeholder="Số điện thoại" />
+                                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="w-100 btn btn-lg btn-primary">Đăng ký</button>
+                        </form>
+                        <hr>            
+                        <div class="text-center">
+                            <a class="text-decoration-none" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Đã có tài khoản? Đăng nhập</a>
+                        </div>
+                        
+                        <div class="text-center">
+                            <a class="text-decoration-none" asp-controller="Home" asp-action="Index" asp-route-returnUrl="@Model.ReturnUrl">Trở về trang chủ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
