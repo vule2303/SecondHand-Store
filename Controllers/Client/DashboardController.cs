@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MVC_Core.Controllers.Client
+namespace SecondHand.Controllers.Client
 {
     [Authorize]
     public class DashboardController : Controller

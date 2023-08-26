@@ -1,17 +1,17 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MVC_Core.Areas.Identity.Data;
-using MVC_Core.Models.Domain;
-using MVC_Core.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Identity.Client;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
-
-namespace MVC_Core
+using Microsoft.AspNetCore.Authentication.Facebook;
+using SecondHand.DataAccess.Data;
+using SecondHand.Models.Services;
+using SecondHand.Models.Domain;
+namespace SecondHand
 {
     public class Program
     {
@@ -83,6 +83,8 @@ namespace MVC_Core
                 options.ClientId = googleAuthSection["ClientId"]; 
                 options.ClientSecret = googleAuthSection["ClientSecret"];
                 // config URL Callback from Goole(Base is /signin-google)
+                options.CallbackPath = "/dang-nhap-tu-google";
+
 
             }).AddFacebook(facebookOptions => {
                 // Đọc cấu hình
