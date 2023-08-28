@@ -1,6 +1,5 @@
 ﻿@using SecondHand.Models.Domain;
 @using Microsoft.AspNetCore.Identity;
-@using SecondHand.Models.Domain;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
@@ -113,18 +112,17 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
+                        
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a asp-controller="Category" asp-action="Index" class="nav-link">
+                                <i class="fa-solid fa-list" style="color: #ffffff;"></i>
                                 <p>
-                                    Dashboard
+                                     Category
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                           
+
                         </li>
-                        <li class="nav-header"><hr /></li>
-                       
                         
                     </ul>
                 </nav>
