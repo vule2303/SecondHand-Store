@@ -12,7 +12,29 @@ namespace SecondHand.DataAccess.Data
         public S2HandDbContext()
         {
         }
+        public virtual DbSet<Adress> Adresses { get; set; }
 
+        public virtual DbSet<Brand> Brands { get; set; }
+
+        public virtual DbSet<CartItem> CartItems { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<CategoryDiscount> CategoryDiscounts { get; set; }
+
+        public virtual DbSet<Contact> Contacts { get; set; }
+
+        public virtual DbSet<Favorite> Favorites { get; set; }
+
+        public virtual DbSet<Order> Orders { get; set; }
+
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+
+        public virtual DbSet<Product> Products { get; set; }
+
+        public virtual DbSet<Promotion> Promotions { get; set; }
+
+        public virtual DbSet<UserAddress> UserAddresses { get; set; }
         public S2HandDbContext(DbContextOptions<S2HandDbContext> options)
             : base(options)
         {
@@ -24,34 +46,8 @@ namespace SecondHand.DataAccess.Data
 
 
 
-        //    
-        //    public virtual DbSet<Adress> Adresses { get; set; }
-
-        //    public virtual DbSet<Brand> Brands { get; set; }
-
-        //    public virtual DbSet<CartItem> CartItems { get; set; }
-
-        //    public virtual DbSet<Category> Categories { get; set; }
-
-        //    public virtual DbSet<CategoryDiscount> CategoryDiscounts { get; set; }
-
-        //    public virtual DbSet<Contact> Contacts { get; set; }
-
-        //    public virtual DbSet<Favorite> Favorites { get; set; }
-
-        //    public virtual DbSet<Order> Orders { get; set; }
-
-        //    public virtual DbSet<OrderItem> OrderItems { get; set; }
-
-        //    public virtual DbSet<Product> Products { get; set; }
-
-        //    public virtual DbSet<Promotion> Promotions { get; set; }
-
-        //    public virtual DbSet<Role> Roles { get; set; }
-
-        //    public virtual DbSet<User> Users { get; set; }
-
-        //    public virtual DbSet<UserAddress> UserAddresses { get; set; }
+         
+         
 
         //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
