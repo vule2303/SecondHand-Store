@@ -6,7 +6,7 @@ namespace SecondHand.Controllers.Client
     {
         public IActionResult Index()
         {
-            return View("/Views/Client/Filter/Filter.cshtml");
+            return View("/Views/Filter/Filter.cshtml");
         }
     }
 }
