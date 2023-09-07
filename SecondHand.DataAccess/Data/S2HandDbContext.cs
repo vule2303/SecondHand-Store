@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -45,9 +46,18 @@ namespace SecondHand.DataAccess.Data
          => optionsBuilder.UseSqlServer("Server=sql.bsite.net\\MSSQL2016; Initial Catalog = vule2303_SecondHandStore; User id = vule2303_SecondHandStore; Password = admin123; TrustServerCertificate=True");
 
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Quần", Description = null, Created = null, Status = false, Modifield = null, ParentId = null },
+                new Category { Id = 2, Name = "Áo", Description = null, Created = null, Status = false, Modifield = null, ParentId = null }
 
-         
-         
+
+                );
+        }
+
+
 
         //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.

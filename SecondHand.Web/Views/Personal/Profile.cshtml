@@ -37,8 +37,8 @@
                                         </div>
                                         <div>
                                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
-                                                <button class="uk-button uk-button-default uk-button-small"
-                                                        title="Đăng xuất" type="submit" class="nav-link btn btn-link text-dark">
+                                                <button class=" nav-link btn btn-link text-dark uk-button uk-button-default uk-button-small"
+                                                        title="Đăng xuất" type="submit">
                                                     <span uk-icon="icon: sign-out; ratio: .75;"></span>
                                                 </button>
                                             </form>
@@ -77,8 +77,8 @@
                         </header>
                         <div class="uk-card-body">
                             <form class="uk-form-stacked">
-                                <div class="uk-grid-medium uk-child-width-1-1"
-                                     uk-grid>
+                                <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
+                                     
                                     <fieldset class="uk-fieldset">
                                         <legend class="uk-h4">
                                             Liên hệ
@@ -131,6 +131,7 @@
                                             </div>
                                         </div>
                                     </fieldset>
+                                </div>
                             </form>
                         </div>
 
