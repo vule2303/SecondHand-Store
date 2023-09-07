@@ -2,7 +2,7 @@
 
 namespace SecondHand.Controllers.Server
 {
-    public class ProductController : Controller
+    public class AdminController : Controller
     {
         public IActionResult Index()
         {

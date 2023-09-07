@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Blank Page</title>
+    <title>S2HandAdmin</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,6 +19,12 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit-icons.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -27,11 +33,7 @@
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
          
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-         
-               
-          
-
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>                             
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
          
@@ -117,8 +119,8 @@
                             <a asp-controller="Category" asp-action="Index" class="nav-link">
                                 <i class="fa-solid fa-list" style="color: #ffffff;"></i>
                                 <p>
-                                     Category
-                                    <i class="right fas fa-angle-left"></i>
+                                     Danh mục
+                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
 
@@ -132,9 +134,11 @@
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
+
+        <div class="content-wrapper ">
         @RenderBody()
         <!-- /.content-wrapper -->
-
+        </div>
         <footer class="main-footer">
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.2.0
@@ -147,6 +151,7 @@
             <!-- Control sidebar content goes here -->
         </aside>
         <!-- /.control-sidebar -->
+        <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
@@ -158,6 +163,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <script src="https://kit.fontawesome.com/d7608d3ae4.js" crossorigin="anonymous"></script>
-    @await RenderSectionAsync("scripts", required: false);
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>
