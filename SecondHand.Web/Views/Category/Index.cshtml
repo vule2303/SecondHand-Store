@@ -31,8 +31,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Tên</th>
-                                <th>Danh mục cha</th>
+
+                                <th>Tên</th>           
+
                                 <th>Ngày tạo</th>
                                 <th></th>
                                 <th></th>
@@ -43,22 +44,11 @@
                         {
                             <tr>
                                 <td>@item.Id</td>
-                                <td>@item.Name</td>
-                                <td>@{
-                                        var parentCategory = Model.FirstOrDefault(x => x.Id == item.ParentId);
-                                        if(parentCategory != null)
-                                        {
-                                            <span>@parentCategory.Name</span>
-                                        }
-                                        else
-                                        {
-                                            <span>None</span>
-                                        }
-                                    }
-                                </td>
+                                <td>@item.Name</td>                              
                                 <td>@item.Created?.ToString("dd-MM-yyyy")</td>
-                                <td><a class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a></td>
-                                <td><a class="btn btn-danger"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a></td>
+                                <td><a class="btn btn-info" asp-controller="Category" asp-action="Update" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a></td>
+                                <td><a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a></td>
+
                             </tr>
                         }                                                 
                         </tbody>
