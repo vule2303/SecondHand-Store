@@ -22,7 +22,9 @@ namespace MVC_Core.Controllers.Server
             return View(cateList);
         }
         public IActionResult Create() 
+
         {          
+
             return View();
         }
         [HttpPost]
@@ -32,6 +34,7 @@ namespace MVC_Core.Controllers.Server
             if(ModelState.IsValid){
                 _context.Categories.Add(obj);
                 _context.SaveChanges();
+
                 TempData["Success"] = "Tạo mới thành công";
                 return RedirectToAction("Index");
             }
