@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication.Facebook;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Services;
 using SecondHand.Models.Domain;
+using Microsoft.AspNetCore.Builder;
+
 namespace SecondHand
 {
     public class Program
