@@ -1,0 +1,95 @@
+﻿@model SecondHand.Models.Domain.Order
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title" style="color:white">Tạo mới đơn hàng</h3>
+    </div>
+
+    <form method="post">
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="UserId"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PromotionId"></label>
+                <select asp-for="PromotionId" class="form-control" asp-items="ViewBag.PromotionId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PaymentStatus"></label>
+                <input asp-for="PaymentStatus" class="form-control" />
+                <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PaymentMethod"></label>
+                <input asp-for="PaymentMethod" class="form-control" />
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="OrderStatus"></label>
+                <input asp-for="OrderStatus" class="form-control" />
+                <span asp-validation-for="OrderStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Subtotal"></label>
+                <input asp-for="Subtotal" class="form-control" />
+                <span asp-validation-for="Subtotal" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Disscount"></label>
+                <input asp-for="Disscount" class="form-control" />
+                <span asp-validation-for="Disscount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Total"></label>
+                <input asp-for="Total" class="form-control" />
+                <span asp-validation-for="Total" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Note"></label>
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Created">Ngày tạo</label>
+                <input asp-for="Created" class="form-control datepicker" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            </div>
+
+        </div>
+
+        <div class="card-footer row">
+            <button type="submit" style="width: 150px" class="btn btn-primary">Tạo mới</button>
+            <a asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary">Trở về</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd', // Định dạng ngày
+                changeYear: true, // Cho phép thay đổi năm
+                yearRange: '2000:2050' // Phạm vi năm từ 2000 đến 2050
+            });
+        });
+    </script>
+}
+
+
