@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap");
 
 body {
     font-family: "Manrope", sans-serif;
@@ -41,11 +41,11 @@ main {
     padding: 20px 0;
 }
 
-.nav-begin a {
-    font-weight: 800;
-    color: black;
-    text-decoration: none !important;
-}
+    .nav-begin a {
+        font-weight: 800;
+        color: black;
+        text-decoration: none !important;
+    }
 
 .product-mg {
     margin: 0;
@@ -64,12 +64,11 @@ main {
 
 .cate-link {
     text-decoration: none;
-    
 }
 
-.cate-link:hover {
-    text-decoration: none;
-}
+    .cate-link:hover {
+        text-decoration: none;
+    }
 
 
 .name-category {

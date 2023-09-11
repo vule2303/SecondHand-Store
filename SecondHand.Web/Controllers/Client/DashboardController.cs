@@ -8,7 +8,7 @@ namespace SecondHand.Controllers.Client
     {
         public IActionResult Index()
         {
-            return View("/Views/Client/Dashboard/Display");
+            return View("/Views/Dashboard/Display");
         }
     }
 }

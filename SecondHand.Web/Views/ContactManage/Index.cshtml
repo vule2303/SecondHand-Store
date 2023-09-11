@@ -1,20 +1,17 @@
 ﻿@using SecondHand.Models.Domain;
-@model List<Brand>
+@model List<Contact>
 @{
-    ViewData["Title"] = "Brands";
-    Layout = "_Adminlayout";
-
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-
 
 <div class=" row">
     <div class="col-12">
         <div class="card ">
             <div class="card-header">
-                <h3 class="card-title" style="margin-top: 6px; font-weight:bold; font-size: 40px">Brands</h3>
-                <a asp-controller="Brand" asp-action="Create" class="card-tools btn bg-gradient-primary">
-                    <i class="fa-regular fa-plus fa-2xs"></i> Tạo mới danh mục
+                <h3 class="card-title" style="margin-top: 6px;font-weight:bold; font-size: 40px">Contacts</h3>
+                <a asp-controller="ContactManage" asp-action="Create" class="card-tools btn bg-gradient-primary">
+                    <i class="fa-regular fa-plus fa-2xs"></i> Tạo mới liên lạc
                 </a>
             </div>
             <div class=" uk-padding-small col-12">
@@ -33,10 +30,11 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Brands</th>
-                            <th scope="col">Logo</th>
-                            <th scope="col">Descriptions</th>
-                            <th scope="col">Chức năng</th>
+                            <th scope="col">FullName</th>
+                            <th scope="col">Mail</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Functions</th>
 
                         </tr>
                     </thead>
@@ -46,16 +44,17 @@
                         {
                             <tr>
                                 <td>@a.Id</td>
-                                <td>@(a.Name ?? "Tên không có sẵn")</td>
-                                <td><img style="width: 80px; height: 80px;" src="@a.Logo" alt="Logo không có sẵn"></td>
-                                <td>@(a.Description ?? "Mô tả không có sẵn")</td>
+                                <td>@(a.FullName ?? "Tên không có sẵn")</td>
+                                <td>@a.Email</td>
+                                <td>@(a.Phone ?? "Mô tả không có sẵn")</td>
+                                <td>@(a.Message ?? "Mô tả không có sẵn")</td>
                                 <td>
                                     <div class="text-left">
-                                        <a asp-controller="Brand" asp-action ="Edit" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
-                                        <a asp-controller="Brand" asp-action ="Delete" asp-route-id="@a.Id" class="btn btn-danger ml-2"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
+                                        <a asp-controller="ContactManage" asp-action="Update" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
+                                        <a asp-controller="ContactManage" asp-action="Delete" asp-route-id="@a.Id" class="btn btn-danger ml-2"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
                                     </div>
                                 </td>
-                                
+
                             </tr>
                         }
 
@@ -64,7 +63,7 @@
                     </tbody>
                 </table>
 
-              
+
             </div>
 
         </div>
