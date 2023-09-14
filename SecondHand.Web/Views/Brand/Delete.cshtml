@@ -5,16 +5,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="card card-primary">
-    <div class="card-header">
-        <h3 class="card-title" style="color:white">Xóa danh mục thương hiệu</h3>
-    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div class=" container" style="margin: 10px">
-    
-    <hr />
-    <dl class="row">
+<div class="card card-primary" style="margin: 10px">
+    <div class="card-header" style="background-color: #dc3545;">
+        <h3 class="card-title" style="color:white">Xoá thương hiệu</h3>
+    </div>
+    <dl class="card-body">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -25,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Logo)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Logo)
+            <img src="@("~/images/"+ Model.Logo)" alt="@(Model.Name)" asp-append-version="true" style="width: 150px; height: 150px;">
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
@@ -34,13 +30,15 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
-    <br />
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input style="margin-right:4px" type="submit" value="Delete" class="btn btn-danger" /> ||
-        <input asp-action="Index" type="submit" value="Cancel" class="btn btn-secondary" />
 
-    </form>
+    <div class="card-footer row">
+        <form asp-action="PostDelete">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" style="width: 150px" class="btn btn-danger">Xoá</button>
+            <a asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Trở về</a>
+        </form>
+    </div>
+    
 </div>
 
 

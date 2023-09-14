@@ -14,7 +14,7 @@
             <div class="card-header">
                 <h3 class="card-title" style="margin-top: 6px; font-weight:bold; font-size: 40px">Brands</h3>
                 <a asp-controller="Brand" asp-action="Create" class="card-tools btn bg-gradient-primary">
-                    <i class="fa-regular fa-plus fa-2xs"></i> Tạo mới danh mục
+                    <i class="fa-regular fa-plus fa-2xs"></i> Tạo mới thương hiệu
                 </a>
             </div>
             <div class=" uk-padding-small col-12">
@@ -36,8 +36,8 @@
                             <th scope="col">Brands</th>
                             <th scope="col">Logo</th>
                             <th scope="col">Descriptions</th>
-                            <th scope="col">Chức năng</th>
-
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,15 +47,11 @@
                             <tr>
                                 <td>@a.Id</td>
                                 <td>@(a.Name ?? "Tên không có sẵn")</td>
-                                <td><img style="width: 80px; height: 80px; border-radius: 20px" src="@a.Logo" alt="Logo không có sẵn"></td>
-                                <td>@(a.Description ?? "Mô tả không có sẵn")</td>
-                                <td>
-                                    <div class="text-left">
-                                        <a asp-controller="Brand" asp-action ="Edit" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
-                                        <a asp-controller="Brand" asp-action ="Delete" asp-route-id="@a.Id" class="btn btn-danger ml-2"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
-                                    </div>
-                                </td>
-                                
+
+                                <td><img style="width: 80px; height: 80px;" src="~/images/@a.Logo" alt="@a.Name"></td>
+                                <td class="long-text">@(a.Description ?? "Mô tả không có sẵn")</td>
+                                <td><a asp-controller="Brand" asp-action="Edit" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a></td>                               
+                                <td> <a asp-controller="Brand" asp-action="Delete" asp-route-id="@a.Id" class="btn btn-danger ml-2"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a> </td>                               
                             </tr>
                         }
 

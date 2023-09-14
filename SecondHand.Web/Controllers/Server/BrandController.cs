@@ -5,16 +5,21 @@ using SecondHand.Models.Domain;
 using SecondHand.DataAccess.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.ObjectModelRemoting;
-
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.IO;
 
 namespace MVC_Core.Controllers.Server
 {
     public class BrandController : Controller
     {
+
         private readonly S2HandDbContext _context; 
-        public BrandController(S2HandDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment; 
+        public BrandController(S2HandDbContext context, IWebHostEnvironment hostingEnviroment)
         {
             _context = context;
+            _webHostEnvironment = hostingEnviroment;
         }
 
         // GET: BrandController
@@ -40,10 +45,23 @@ namespace MVC_Core.Controllers.Server
         // POST: BrandController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Brand model)
+        public async Task<ActionResult> Create(Brand model)
         {
+
+
             if (ModelState.IsValid)
             {
+
+                //save image into wwwroot/images
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extention = Path.GetExtension(model.ImageFile.FileName);
+                model.Logo=fileName =fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
+                string path = Path.Combine(wwwRootPath + "/images", fileName);
+                using (var fileStream = new FileStream(path,FileMode.Create))
+                {
+                    await model.ImageFile.CopyToAsync(fileStream);
+                }
                 _context.Brands.Add(model);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -66,8 +84,7 @@ namespace MVC_Core.Controllers.Server
 
         // POST: BrandController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Brand updatedBrand)
+        public async Task<ActionResult> Edit(int id, Brand updatedBrand)
         {
             if (id != updatedBrand.Id)
             {
@@ -82,8 +99,35 @@ namespace MVC_Core.Controllers.Server
                     return NotFound();
                 }
 
+                if (updatedBrand.ImageFile != null) // Check if a new image is provided
+                {
+                    // Delete the existing image
+                    var getLogo = existingBrand.Logo;
+                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", getLogo);
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+
+                    // Save the new image
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(updatedBrand.ImageFile.FileName);
+                    string extention = Path.GetExtension(updatedBrand.ImageFile.FileName);
+                    updatedBrand.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
+                    string path = Path.Combine(wwwRootPath + "/images", fileName);
+
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await updatedBrand.ImageFile.CopyToAsync(fileStream);
+                    }
+                }
+                else
+                {
+                    // If no new image is provided, retain the existing image
+                    updatedBrand.Logo = existingBrand.Logo;
+                }
+
                 existingBrand.Name = updatedBrand.Name;
-                existingBrand.Logo = updatedBrand.Logo;
                 existingBrand.Description = updatedBrand.Description;
 
                 _context.Update(existingBrand);
@@ -93,7 +137,6 @@ namespace MVC_Core.Controllers.Server
             }
 
             return View(updatedBrand);
-
         }
         // GET: BrandController/Delete/5
         public ActionResult Delete(int id)
@@ -109,15 +152,24 @@ namespace MVC_Core.Controllers.Server
         }
 
         // POST: BrandController/Delete/5
-        [HttpPost]
+        [HttpPost()]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Brand collection)
+        public ActionResult PostDelete(int id)
         {
             var brand = _context.Brands.Find(id);
 
             if (brand == null)
             {
                 return NotFound();
+            }
+
+            //delete image in wwroot
+            var getLogo = brand.Logo;
+            if(getLogo != null)
+            {
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", getLogo);
+                if (System.IO.File.Exists(imagePath))                                      
+                   System.IO.File.Delete(imagePath);                   
             }
 
             _context.Brands.Remove(brand);
