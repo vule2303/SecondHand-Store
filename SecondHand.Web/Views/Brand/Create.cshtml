@@ -7,6 +7,7 @@
 
 <div class="card card-primary">
     <div class="card-header">
+
         <h3 class="card-title" style="color:white">Tạo mới thương hiệu</h3>
     </div>
         <form method="post" enctype="multipart/form-data">
@@ -14,8 +15,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" placeholder="Tên" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+
             </div>                
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>              
@@ -24,6 +26,7 @@
             </div>
 
             <div class="form-group">
+
                 <label asp-for="ImageFile" class="control-label"></label>
 
                 <div class="custom-file">
@@ -44,6 +47,7 @@
         </div>
         </form>
     </div>
+
 
 @section Scripts {
     @{

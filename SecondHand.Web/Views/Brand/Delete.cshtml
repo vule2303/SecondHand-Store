@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+
 <div class="card card-primary" style="margin: 10px">
     <div class="card-header" style="background-color: #dc3545;">
         <h3 class="card-title" style="color:white">Xoá thương hiệu</h3>
@@ -29,6 +30,7 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
+
     <div class="card-footer row">
         <form asp-action="PostDelete">
             <input type="hidden" asp-for="Id" />
@@ -38,3 +40,11 @@
     </div>
     
 </div>
+
+
+@section Scripts {
+    @{
+
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
