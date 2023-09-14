@@ -5,13 +5,15 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Update</h1>
 
-<h4>Brand</h4>
 <hr />
-<div class="row container"  style="margin: 10px">
-    <div class="col-md-4">
-        <form asp-action="Update" enctype="multipart/form-data">
+<div class="card card-primary" style="margin: 10px">
+    <div class="card-header" style="background-color: #17a2b8;">
+        <h3 class="card-title" style="color:white">Cập nhật thương hiệu</h3>
+    </div>
+   
+        <form asp-action="Edit" enctype="multipart/form-data">
+        <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -20,26 +22,41 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Logo" class="control-label"></label>
-                <input type="file" id="logo" name="logo" asp-for="Logo" class="form-control" />
-                <span asp-validation-for="Logo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter ..." style="height: 218px;"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+            </div>           
             <div class="form-group">
-                <input asp-controller="Brand" asp-action="Edit" type="submit" value="Save" class="btn btn-primary" />
+                <label asp-for="ImageFile" class="control-label"></label>
+
+                <div class="custom-file">
+                    <input asp-for="ImageFile" class="custom-file-input" id="ImgBr"
+                           onchange="document.getElementById('ImgBrandPRV').src = window.URL.createObjectURL(this.files[0])">
+                    <label class="custom-file-label" asp-for="Logo" >@Html.DisplayFor(model => model.Logo)</label>
+
+                </div>
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                <img id="ImgBrandPRV" src="@("~/images/"+ Model.Logo)" alt="@(Model.Name)" asp-append-version="true" style="width:150px; height: 150px; border: 1px; margin-top: 20px;" />
             </div>
+            <div class="card-footer row">
+                <button type="submit" style="width: 150px" class="btn btn-info">Cập nhật</button>
+                <a asp-controller="Brand" asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Trở về</a>
+            </div>
+        </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+
+    </script>
 }

@@ -1,0 +1,6 @@
+﻿.long-text {
+    max-width: 10em; /* Đặt chiều rộng tối đa là 10 ký tự */
+    white-space: nowrap; /* Ngăn đoạn văn bản xuống dòng */
+    overflow: hidden; /* Ẩn nội dung vượt quá khung chứa */
+    text-overflow: ellipsis;
+}

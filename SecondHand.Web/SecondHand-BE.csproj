@@ -10,16 +10,12 @@
   <ItemGroup>
     <Compile Remove="Reponsitories\**" />
     <Compile Remove="Views\Server\**" />
-    <Compile Remove="wwwroot\NewFolder\**" />
     <Content Remove="Reponsitories\**" />
     <Content Remove="Views\Server\**" />
-    <Content Remove="wwwroot\NewFolder\**" />
     <EmbeddedResource Remove="Reponsitories\**" />
     <EmbeddedResource Remove="Views\Server\**" />
-    <EmbeddedResource Remove="wwwroot\NewFolder\**" />
     <None Remove="Reponsitories\**" />
     <None Remove="Views\Server\**" />
-    <None Remove="wwwroot\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,13 +5,15 @@
 @{
     // SignInManager.IsSignedIn(User);
     // UserManager.GetUserName(User);
+    ViewData["Brands"] = "thương hiệu";
+
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>S2HandAdmin</title>
+    <title>@ViewData["Title"]</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -25,7 +27,7 @@
 
     <!-- Toastr Css -->
     <link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-
+    <link href="~/dist/css/cssbonus.css" rel="stylesheet" />
     <!-- UIkit JS -->
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit-icons.min.js"></script>
