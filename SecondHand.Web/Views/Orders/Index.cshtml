@@ -56,7 +56,12 @@
                                 <td>@Html.DisplayFor(modelItem => item.Note)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Created)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IsCancelled)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Promotion.Code)</td>
+                                <td>
+                                    @if (item.Promotion != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Promotion.Code)
+                                    }
+                                </td>
                                 <td>@Html.DisplayFor(modelItem => item.User.Id)</td>
                                 <td>
                                     <a class ="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>

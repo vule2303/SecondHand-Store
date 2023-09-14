@@ -22,8 +22,8 @@ namespace MVC_Core.Controllers.Server
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var s2HandDbContext = _context.Orders.Include(o => o.Promotion).Include(o => o.User);
-            return View(await s2HandDbContext.ToListAsync());
+            var s2HandDbContext = await _context.Orders.Include(o => o.Promotion).Include(o => o.User).ToListAsync();
+            return View(s2HandDbContext);
         }
 
         // GET: Orders/Details/5

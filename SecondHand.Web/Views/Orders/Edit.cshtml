@@ -41,17 +41,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Subtotal" class="control-label">Subtotal</label>
-                <input asp-for="Subtotal" value="@Model.Subtotal.ToString().TrimEnd('0').TrimEnd(',')" class="form-control" />
+                <input asp-for="Subtotal" value="@Model.Subtotal.ToString().TrimEnd('0').TrimEnd('.')" class="form-control" />
                 <span asp-validation-for="Subtotal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Disscount" class="control-label">Discount</label>
-                <input asp-for="Disscount" value="@Model.Disscount.ToString().TrimEnd('0').TrimEnd(',')" class="form-control" />
+                <input asp-for="Disscount" value="@Model.Disscount.ToString().TrimEnd('0').TrimEnd('.')" class="form-control" />
                 <span asp-validation-for="Disscount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Total" class="control-label">Total</label>
-                <input asp-for="Total" value="@Model.Total.ToString().TrimEnd('0').TrimEnd(',')" class="form-control" />
+                <input asp-for="Total" value="@Model.Total.ToString().TrimEnd('0').TrimEnd('.')" class="form-control" />
                 <span asp-validation-for="Total" class="text-danger"></span>
             </div>
             <div class="form-group">

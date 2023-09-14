@@ -15,13 +15,13 @@ namespace MVC_Core.Controllers.Client
         }
         public IActionResult Index()
         {
-            List<Contact> contact = _context.Contacts.ToList();
-            return View(contact);
+           
+            return View();
         }
         public ActionResult Create()
         {
-            var model = new Contact();
-            return View(model);
+            
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
