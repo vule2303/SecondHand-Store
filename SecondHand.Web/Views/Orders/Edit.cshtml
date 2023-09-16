@@ -15,59 +15,72 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="UserId" class="control-label">User</label>
+                <label asp-for="UserId" class="control-label">Id người dùng</label>
                 <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PromotionId" class="control-label">Promotion</label>
+                <label asp-for="PromotionId" class="control-label">Id Khuyễn mãi</label>
                 <select asp-for="PromotionId" class="form-control" asp-items="ViewBag.PromotionId"></select>
                 <span asp-validation-for="PromotionId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PaymentStatus" class="control-label">Payment Status</label>
+                <label asp-for="PaymentStatus" class="control-label">Tình trạng thanh toán</label>
                 <input asp-for="PaymentStatus" class="form-control" />
                 <span asp-validation-for="PaymentStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PaymentMethod" class="control-label">Payment Method</label>
+                <label asp-for="PaymentMethod" class="control-label">Phương thức thanh toá</label>
                 <input asp-for="PaymentMethod" class="form-control" />
                 <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OrderStatus" class="control-label">Order Status</label>
+                <label asp-for="OrderStatus" class="control-label">Tình trạng đơn hàng</label>
                 <input asp-for="OrderStatus" class="form-control" />
                 <span asp-validation-for="OrderStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Subtotal" class="control-label">Subtotal</label>
-                <input asp-for="Subtotal" value="@Model.Subtotal.ToString().TrimEnd('0').TrimEnd('.')" class="form-control" />
+                <label asp-for="Subtotal" class="control-label">Tổng tiền trước giảm giá</label>
+                @{
+                    string formattedSubtotal = string.Format("{0:0.##}", Model.Subtotal);
+                }
+                <input asp-for="Subtotal" value="@formattedSubtotal" class="form-control" />
                 <span asp-validation-for="Subtotal" class="text-danger"></span>
+
             </div>
             <div class="form-group">
-                <label asp-for="Disscount" class="control-label">Discount</label>
-                <input asp-for="Disscount" value="@Model.Disscount.ToString().TrimEnd('0').TrimEnd('.')" class="form-control" />
+                <label asp-for="Disscount" class="control-label">Giảm giá</label>
+                @{
+                    string formattedDisscount = string.Format("{0:0.##}", Model.Disscount);
+                }
+                <input asp-for="Disscount" value="@formattedDisscount" class="form-control" />
                 <span asp-validation-for="Disscount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Total" class="control-label">Total</label>
-                <input asp-for="Total" value="@Model.Total.ToString().TrimEnd('0').TrimEnd('.')" class="form-control" />
+                <label asp-for="Total" class="control-label">Tổng tiền</label>
+                @{
+                     string formattedTotal = string.Format("{0:0.##}", Model.Total);
+                 }
+                <input asp-for="Total" value="@formattedTotal" class="form-control" />
                 <span asp-validation-for="Total" class="text-danger"></span>
             </div>
+
+
+
+
+
             <div class="form-group">
-                <label asp-for="Note" class="control-label">Note</label>
+                <label asp-for="Note" class="control-label">Ghi chú</label>
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Created" class="control-label">Created</label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsCancelled" class="control-label">Is Cancelled</label>
+                <label asp-for="IsCancelled" class="control-label">Bị hủy</label>
                 <input asp-for="IsCancelled" class="form-control" />
                 <span asp-validation-for="IsCancelled" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Created" type="hidden" class="form-control" id="exampleInputText" value="@DateTime.Now">
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

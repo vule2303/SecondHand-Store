@@ -7,7 +7,6 @@ using SecondHand.Models.Domain;
 
 namespace MVC_Core.Controllers.Server
 {
-    [Route("admin/s2hand/category/[action]/{id}")]
 
     public class CategoryController : Controller
     {
