@@ -34,3 +34,5 @@ D:\Vu\SecondHand-Store\SecondHand-Store\SecondHand.Models\obj\Debug\net7.0\Secon
 D:\Vu\SecondHand-Store\SecondHand-Store\SecondHand.Models\obj\Debug\net7.0\refint\SecondHand.Models.dll
 D:\Vu\SecondHand-Store\SecondHand-Store\SecondHand.Models\obj\Debug\net7.0\SecondHand.Models.pdb
 D:\Vu\SecondHand-Store\SecondHand-Store\SecondHand.Models\obj\Debug\net7.0\ref\SecondHand.Models.dll
+D:\Vu\SecondHand-Store\SecondHand-Store\SecondHand.Models\bin\Debug\net7.0\SecondHand.Models.runtimeconfig.json
+D:\Vu\SecondHand-Store\SecondHand-Store\SecondHand.Models\obj\Debug\net7.0\SecondHand.Models.genruntimeconfig.cache
