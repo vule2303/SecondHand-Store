@@ -1,0 +1,90 @@
+﻿@model IEnumerable<SecondHand.Models.Domain.Product>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title" style="margin-top: 6px;">Danh sách sản phẩm</h3>
+                <a asp-action="Create" class="card-tools btn bg-gradient-primary">
+                    <i class="fa-regular fa-plus fa-2xs"></i> Tạo sản phẩm mới
+                </a>
+            </div>
+            <div class="uk-padding-small col-12">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control" placeholder="Tìm kiếm">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên</th>
+                            <th>Mô tả</th>
+                            <th>Giá</th>
+                            <th>Trạng thái</th>
+                            <th>Mới</th>
+                            <th>Màu sắc</th>
+                            <th>Điều kiện</th>
+                            <th>Loại lỗi</th>
+                            <th>Ngày tạo</th>
+                            <th>Ảnh 1</th>
+                            <th>Ảnh 2</th>
+                            <th>Ảnh 3</th>
+                            <th>Ảnh 4</th>
+                            <th>Ảnh 5</th>
+                            <th>Kích thước</th>
+                            <th>Thương hiệu ID</th>
+                            <th>Loại sản phẩm</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td class ="long-text">@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>@Html.DisplayFor(modelItem => item.IsNew)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Color)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Conditon)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Defects)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Created)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Img1)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Img2)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Img3)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Img4)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Img5)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Size)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Brand.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                                <td>
+                                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Chi tiết</a> |
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

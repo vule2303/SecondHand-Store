@@ -1,0 +1,141 @@
+﻿@model SecondHand.Models.Domain.Product
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    Layout = "_AdminLayout";
+}
+
+<div class="card card-secondary">
+    <div class="card-header">
+        <h3 class="card-title" style="color:white">Chi tiết sản phẩm</h3>
+    </div>
+
+    <div class="card-body">
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.IsNew)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.IsNew)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Conditon)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Conditon)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Defects)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Defects)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Created)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Created)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Img1)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Img1)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Img2)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Img2)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Img3)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Img3)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Img4)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Img4)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Img5)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Img5)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Size)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Size)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Brand)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Brand.Id)
+            </dd>
+
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="card-footer row">
+        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary" style="width: 150px">Chỉnh sửa</a>
+        <a asp-action="Index" class="btn btn-secondary" style="width: 150px; margin-left: 10px">Trở về</a>
+    </div>
+</div>
