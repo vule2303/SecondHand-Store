@@ -34,11 +34,8 @@
                             <th>Tổng tiền trước giảm giá</th>
                             <th>Giảm giá</th>
                             <th>Tổng tiền</th>
-                            <th>Ghi chú</th>
                             <th>Ngày tạo</th>
-                            <th>Đã hủy</th>
-                            <th>Mã khuyến mãi</th>
-                            <th>ID Người dùng</th>
+                            <th>Tên người dùng</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -56,16 +53,14 @@
                                 <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Disscount)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Total)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Note)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Created)</td>
-                                <td>@Html.DisplayFor(modelItem => item.IsCancelled)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Created)</td
                                 <td>
                                     @if (item.Promotion != null)
                                     {
                                         @Html.DisplayFor(modelItem => item.Promotion.Code)
                                     }
                                 </td>
-                                <td>@Html.DisplayFor(modelItem => item.User.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
                                 <td>
                                     <a class ="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
                                    
