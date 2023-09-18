@@ -21,12 +21,15 @@ public partial class Category
 
     public DateTime? Modifield { get; set; }
 
+    public string? Slug { get; set; }
+    [Display(Name = "Danh mục cha")]
     public int? ParentId { get; set; }
 
     public virtual ICollection<CategoryDiscount> CategoryDiscounts { get; set; } = new List<CategoryDiscount>();
 
     public virtual ICollection<Category> InverseParent { get; set; } = new List<Category>();
 
+    [Display(Name = "Danh mục cha")]
     public virtual Category? Parent { get; set; }
   
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
