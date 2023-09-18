@@ -1,0 +1,5 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SecondHand.DataAccess/obj/Debug/net7.0/SecondHand.DataAccess.csproj.AssemblyReference.cache
