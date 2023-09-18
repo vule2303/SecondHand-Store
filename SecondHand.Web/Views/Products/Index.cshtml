@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Danh sách sản phẩm";
     Layout = "_AdminLayout";
+    var sttcount = 0;
 }
 
 <div class="row">
@@ -30,52 +31,71 @@
                         <tr>
                             <th>ID</th>
                             <th>Tên</th>
-                            <th>Mô tả</th>
-                            <th>Giá</th>
-                            <th>Trạng thái</th>
-                            <th>Mới</th>
-                            <th>Màu sắc</th>
-                            <th>Điều kiện</th>
-                            <th>Loại lỗi</th>
-                            <th>Ngày tạo</th>
-                            <th>Ảnh 1</th>
-                            <th>Ảnh 2</th>
-                            <th>Ảnh 3</th>
-                            <th>Ảnh 4</th>
-                            <th>Ảnh 5</th>
-                            <th>Kích thước</th>
-                            <th>Thương hiệu ID</th>
                             <th>Loại sản phẩm</th>
+                            <th>Giá</th>                   
+                            <th>Hình ảnh</th>
+                            <th>Màu sắc</th>
+                            <th>Trạng thái</th>
+                            <th>Ngày đăng</th>                         
+                            <th>Size</th>
+                            <th>Thương hiệu</th>
+                            <th></th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                            <tr style="align-content: center; justify-content:center;">
+                                <td>@(++sttcount)</td>
+                           
+                                
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td class ="long-text">@Html.DisplayFor(modelItem => item.Description)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                                <td>@Html.DisplayFor(modelItem => item.IsNew)</td>
+                                <td>
+                                    @if (item.Category != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Category.Name)
+                                    }
+                                </td>
+                                <td>@item.Price.ToString().TrimEnd('0').TrimEnd('.') VNĐ</td>
+                                <td>
+                                    @if (item.productGallery != null)
+                                    {
+                                        <img style="width: 100px; height: 100px" src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
+                                    }
+                                    else
+                                    {
+                                        <!-- Hiển thị một hình ảnh mặc định nếu không có hình ảnh -->
+                                        <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
+                                    }
+                              
+                                </td>
                                 <td>@Html.DisplayFor(modelItem => item.Color)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Conditon)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Defects)</td>
+                                <td>
+                                    @{
+                                        if (item.Status == true)
+                                        {
+                                            <span style="color: green">Còn hàng</span>
+                                        }else
+                                        {
+                                            <span style="color:red">Hết hàng</span>
+                                        }
+                                    }
+                                </td>
                                 <td>@Html.DisplayFor(modelItem => item.Created)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Img1)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Img2)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Img3)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Img4)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Img5)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Size)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Brand.Id)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                                <td>
+                                    @if (item.Brand != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Brand.Name)
+                                    }
+                                </td>                                                
                                 <td>
                                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Chi tiết</a> |
+                                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>Chi tiết</a> 
                                 </td>
                                 <td>
                                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>

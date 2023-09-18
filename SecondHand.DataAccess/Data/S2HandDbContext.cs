@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
+
 namespace SecondHand.DataAccess.Data
 {
 
@@ -36,6 +38,8 @@ namespace SecondHand.DataAccess.Data
         public virtual DbSet<Promotion> Promotions { get; set; }
 
         public virtual DbSet<UserAddress> UserAddresses { get; set; }
+        public virtual DbSet<ProductImages> ProductImages { get; set; }
+
         public S2HandDbContext(DbContextOptions<S2HandDbContext> options)
             : base(options)
         {

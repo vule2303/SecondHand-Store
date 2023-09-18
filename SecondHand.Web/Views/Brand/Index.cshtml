@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Brands";
     Layout = "_Adminlayout";
-
+    var stt = 0;
 }
 
 
@@ -45,10 +45,10 @@
                         @foreach (var a in Model)
                         {
                             <tr>
-                                <td>@a.Id</td>
+                                <td>@(++stt)</td>
                                 <td>@(a.Name ?? "Tên không có sẵn")</td>
 
-                                <td><img style="width: 80px; height: 80px;" src="~/images/@a.Logo" alt="@a.Name"></td>
+                                <td><img style="width: 80px; height: 80px;" src="~/images/brands/@a.Logo" alt="@a.Name"></td>
                                 <td class="long-text">@(a.Description ?? "Mô tả không có sẵn")</td>
                                 <td><a asp-controller="Brand" asp-action="Edit" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a></td>                               
                                 <td> <a asp-controller="Brand" asp-action="Delete" asp-route-id="@a.Id" class="btn btn-danger ml-2"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a> </td>                               

@@ -16,145 +16,129 @@
             <input type="hidden" asp-for="Id" />
 
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Tên sản phẩm</label>
+                <label asp-for="Name" class="control-label">m</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Description" class="control-label">Mô tả</label>
+                <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter ..." style="height: 218px;"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Price" class="control-label">Giá</label>
+                <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Status" class="control-label">Trạng thái</label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <input asp-for="Status" type="hidden" value="True" />
             </div>
 
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label">ID Danh mục</label>
+                <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="BrandId" class="control-label">ID Thương hiệu</label>
+                <label asp-for="BrandId" class="control-label"></label>
                 <select asp-for="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
                 <span asp-validation-for="BrandId" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="IsNew" class="control-label">Mới</label>
-                <input asp-for="IsNew" class="form-control" />
-                <span asp-validation-for="IsNew" class="text-danger"></span>
-            </div>
+         
 
             <div class="form-group">
-                <label asp-for="Color" class="control-label">Màu sắc</label>
+                <label asp-for="Color" class="control-label"></label>
                 <input asp-for="Color" class="form-control" />
                 <span asp-validation-for="Color" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Conditon" class="control-label">Tình trạng</label>
+                <label asp-for="Conditon" class="control-label"></label>
                 <input asp-for="Conditon" class="form-control" />
                 <span asp-validation-for="Conditon" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Defects" class="control-label">Hỏng hóc</label>
+                <label asp-for="Defects" class="control-label"></label>
                 <input asp-for="Defects" class="form-control" />
                 <span asp-validation-for="Defects" class="text-danger"></span>
             </div>
 
             <!-- Đây là phần hiển thị ảnh tương tự như order -->
-            <div class="form-group">
-                <label asp-for="Img1" class="control-label">Ảnh 1</label>
-
-                <div class="custom-file">
-                    <input asp-for="Img1" class="custom-file-input" id="Img1"
-                           onchange="document.getElementById('Img1PRV').src = window.URL.createObjectURL(this.files[0])">
-                    <label class="custom-file-label" asp-for="Img1">Chọn File</label>
-                </div>
-                <span asp-validation-for="Img1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <img id="Img1PRV" src="" alt="Hình ảnh sản phẩm 1" style="width: 150px; height: 150px; border: 1px solid #ccc; margin-top: 20px;">
-            </div>
 
             <div class="form-group">
-                <label asp-for="Img2" class="control-label">Ảnh 2</label>
-
-                <div class="custom-file">
-                    <input asp-for="Img2" class="custom-file-input" id="Img2"
-                           onchange="document.getElementById('Img2PRV').src = window.URL.createObjectURL(this.files[0])">
-                    <label class="custom-file-label" asp-for="Img2">Chọn File</label>
-                </div>
-                <span asp-validation-for="Img2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <img id="Img2PRV" src="" alt="Hình ảnh sản phẩm 2" style="width: 150px; height: 150px; border: 1px solid #ccc; margin-top: 20px;">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Img3" class="control-label">Ảnh 3 </label>
-
-                <div class="custom-file">
-                    <input asp-for="Img3" class="custom-file-input" id="Img3"
-                           onchange="document.getElementById('Img3PRV').src = window.URL.createObjectURL(this.files[0])">
-                    <label class="custom-file-label" asp-for="Img3">Chọn File</label>
-                </div>
-                <span asp-validation-for="Img3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <img id="Img3PRV" src="" alt="Hình ảnh sản phẩm 3" style="width: 150px; height: 150px; border: 1px solid #ccc; margin-top: 20px;">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Img4" class="control-label">Ảnh 4</label>
-
-                <div class="custom-file">
-                    <input asp-for="Img4" class="custom-file-input" id="Img4"
-                           onchange="document.getElementById('Img4PRV').src = window.URL.createObjectURL(this.files[0])">
-                    <label class="custom-file-label" asp-for="Img4">Chọn File</label>
-                </div>
-                <span asp-validation-for="Img4" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <img id="Img4PRV" src="" alt="Hình ảnh sản phẩm 4" style="width: 150px; height: 150px; border: 1px solid #ccc; margin-top: 20px;">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Img5" class="control-label">Ảnh 5</label>
-
-                <div class="custom-file">
-                    <input asp-for="Img5" class="custom-file-input" id="Img5"
-                           onchange="document.getElementById('Img5PRV').src = window.URL.createObjectURL(this.files[0])">
-                    <label class="custom-file-label" asp-for="Img5">Chọn File</label>
-                </div>
-                <span asp-validation-for="Img5" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <img id="Img5PRV" src="" alt="Hình ảnh sản phẩm 5" style="width: 150px; height: 150px; border: 1px solid #ccc; margin-top: 20px;">
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Size" class="control-label">Kích thước</label>
+                <label asp-for="Size" class="control-label"></label>
                 <input asp-for="Size" class="form-control" />
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <label asp-for="MultipleImages" class="control-label"></label>
+
+                <div class="custom-file">
+                    <input asp-for="MultipleImages" class="custom-file-input" id="Img1" multiple
+                           onchange="previewImages(this)">
+                    <label class="custom-file-label">Chọn File</label>
+                </div>
+                <span asp-validation-for="MultipleImages" class="text-danger"></span>
+                <div id="image-preview-container">
+                    @foreach (var item in Model.productGallery)
+                    {
+                        <img src="~/images/products/@item.URL" style="width: 150px; height: 150px; border: 1px solid rgb(0, 0, 0); margin-top: 20px;">
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input asp-for="Created" type="hidden" class="form-control" id="exampleInputText" placeholder="Tên" value="@DateTime.Now">
+            </div>
+            <div class="card-footer row">
+                <button type="submit" style="width: 150px" class="btn btn-info">Cập nhật</button>
+                <a asp-controller="Products" asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary ">Trở về</a>
             </div>
         </div>
     </form>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script type="text/javascript">
+        function previewImages(input) {
+            var imagePreviewContainer = document.getElementById("image-preview-container");
+            var currentImages = imagePreviewContainer.getElementsByTagName("img");
+
+            if (input.files && input.files.length > 0) {
+                var newImages = [];
+
+                for (var i = 0; i < input.files.length; i++) {
+                    var file = input.files[i];
+                    var imageURL = window.URL.createObjectURL(file);
+
+                    var img = document.createElement("img");
+                    img.src = imageURL;
+                    img.style.width = "150px";
+                    img.style.height = "150px";
+                    img.style.border = "1px solid #000";
+                    img.style.marginTop = "20px";
+
+                    newImages.push(img);
+                }
+
+                // Xóa hình ảnh cũ
+                while (currentImages.length > 0) {
+                    currentImages[0].remove();
+                }
+
+                // Hiển thị các hình ảnh mới
+                for (var j = 0; j < newImages.length; j++) {
+                    imagePreviewContainer.appendChild(newImages[j]);
+                }
+            }
+        }
+
+    </script>
+}
