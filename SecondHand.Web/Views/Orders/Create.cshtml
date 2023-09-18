@@ -3,7 +3,7 @@
 @{
     Layout = "_AdminLayout";
 }
-
+<section class="content">
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title" style="color:white">Tạo mới đơn hàng</h3>
@@ -76,7 +76,7 @@
         </div>
     </form>
 </div>
-
+</section>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

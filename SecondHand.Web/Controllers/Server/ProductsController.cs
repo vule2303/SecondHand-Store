@@ -4,26 +4,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
 
 namespace MVC_Core.Controllers.Server
 {
     public class ProductsController : Controller
     {
+     
         private readonly S2HandDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductsController(S2HandDbContext context)
-        {
+
+        public ProductsController(S2HandDbContext context, IWebHostEnvironment webHostEnvironment)
+        {           
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var s2HandDbContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-            return View(await s2HandDbContext.ToListAsync());
+            var products = await _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.productGallery).ToListAsync();
+            
+            return View(products);
         }
 
         // GET: Products/Details/5
@@ -37,6 +45,7 @@ namespace MVC_Core.Controllers.Server
             var product = await _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
+                .Include(p => p.productGallery)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -49,7 +58,7 @@ namespace MVC_Core.Controllers.Server
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
@@ -59,31 +68,36 @@ namespace MVC_Core.Controllers.Server
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Status,CategoryId,BrandId,IsNew,Color,Conditon,Defects,Created,Img1,Img2,Img3,Img4,Img5,Size")] Product product)
+        public async Task<IActionResult> Create(Product product)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+                var tempProduct = _context.Products.Add(product).Entity;
+                _context.SaveChanges();
+                if (product.MultipleImages != null)
+                {
+                    string folder = "/images/products/";                  
+                    product.ProductImages = new List<ProductImages>();
+
+                    foreach (var file in product.MultipleImages)
+                    {
+                        var images = new ProductImages()
+                        {
+                            ProductId = tempProduct.Id,
+                            Name = file.Name,
+                            URL = await UploadImage(folder, file)
+                        };
+                        _context.ProductImages.Add(images);
+                    }
+                }
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Tạo mới thành công";
                 return RedirectToAction("Index");
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             TempData["Error"] = "Tạo mới không thành công";
-            return View(product);
-            if (ModelState.IsValid)
-            {
-                // Gán ngày tạo là ngày hiện tại trước khi lưu vào cơ sở dữ liệu
-                product.Created = DateTime.Now;
-
-                // Xử lý tải lên hình ảnh và lưu sản phẩm vào cơ sở dữ liệu
-                // ...
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            // Nếu mô hình không hợp lệ, quay lại trang tạo với lỗi kiểm tra hợp lệ
             return View(product);
         }
 
@@ -95,12 +109,12 @@ namespace MVC_Core.Controllers.Server
                 return NotFound();
             }
 
-            var product = await _context.Products.FindAsync(id);
+            var product = await _context.Products.Include(p => p.productGallery).FirstOrDefaultAsync(x => x.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
@@ -110,7 +124,7 @@ namespace MVC_Core.Controllers.Server
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Status,CategoryId,BrandId,IsNew,Color,Conditon,Defects,Created,Img1,Img2,Img3,Img4,Img5,Size")] Product product)
+        public async Task<IActionResult> Edit(int id,Product product)
         {
             if (id != product.Id)
             {
@@ -121,9 +135,37 @@ namespace MVC_Core.Controllers.Server
             {
                 try
                 {
+                    if(product.MultipleImages != null)
+                    {
+                        var productImages = _context.ProductImages.Where(x => x.ProductId == product.Id).ToList();
+                        foreach (var img in productImages)
+                        {
+                            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
+                            if (System.IO.File.Exists(imagePath))
+                                System.IO.File.Delete(imagePath);
+
+                            _context.ProductImages.Remove(img);
+                        }
+
+                        string folder = "/images/products/";
+                        product.ProductImages = new List<ProductImages>();
+
+                        foreach (var file in product.MultipleImages)
+                        {
+                            var images = new ProductImages()
+                            {
+                                ProductId = product.Id,
+                                Name = file.Name,
+                                URL = await UploadImage(folder, file)
+                            };
+                            _context.ProductImages.Add(images);
+                        }
+                    }
+                    
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "Cập nhật thành công";
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -138,7 +180,7 @@ namespace MVC_Core.Controllers.Server
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             TempData["Error"] = "Cập nhật không thành công";
             return View(product);
@@ -155,6 +197,7 @@ namespace MVC_Core.Controllers.Server
             var product = await _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
+                .Include(p => p.productGallery)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
@@ -169,26 +212,45 @@ namespace MVC_Core.Controllers.Server
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Products == null)
-            {
-                return Problem("Entity set 'S2HandDbContext.Products'  is null.");
-            }
             var product = await _context.Products.FindAsync(id);
-            if (product != null)
-            {
-                _context.Products.Remove(product);
-                await _context.SaveChangesAsync();
-                TempData["Success"] = "Xoá thành công";
-                return RedirectToAction("Index");
-            }
 
-            TempData["Error"] = "Xoá không thành công";
-            return RedirectToAction(nameof(Index));
+            if (product == null)
+            {
+                TempData["Error"] = "Xoá sản phẩm không thành công";
+
+                return NotFound();
+            }
+            var productImages = _context.ProductImages.Where(p => p.ProductId == id).ToList();
+
+                //Xoá toàn bộ hình ảnh của sản phẩm
+
+                foreach(var img in productImages)
+                {
+                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
+                    if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
+
+                    _context.ProductImages.Remove(img);
+                }
+                _context.Products.Remove(product); 
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Xoá sản phẩm thành công";
+                return RedirectToAction(nameof(Index));
+ 
+
         }
 
         private bool ProductExists(int id)
         {
-          return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private async Task<string> UploadImage(string folderPath, IFormFile file)
+        {
+            string fileName = Guid.NewGuid().ToString()+"_"+ file.FileName;
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath + folderPath, fileName);         
+            await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
+            return fileName;
         }
     }
 }

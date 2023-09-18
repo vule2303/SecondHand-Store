@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
+<section class="content">
 <div class="card card-primary" style="margin: 10px">
     <div class="card-header" style="background-color: #17a2b8;">
         <h3 class="card-title" style="color:white">Cập nhật thương hiệu</h3>
@@ -27,15 +27,13 @@
             </div>           
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-
                 <div class="custom-file">
                     <input asp-for="ImageFile" class="custom-file-input" id="ImgBr"
                            onchange="document.getElementById('ImgBrandPRV').src = window.URL.createObjectURL(this.files[0])">
                     <label class="custom-file-label" asp-for="Logo" >@Html.DisplayFor(model => model.Logo)</label>
-
                 </div>
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
-                <img id="ImgBrandPRV" src="@("~/images/"+ Model.Logo)" alt="@(Model.Name)" asp-append-version="true" style="width:150px; height: 150px; border: 1px; margin-top: 20px;" />
+                <img id="ImgBrandPRV" src="@("~/images/brands/"+ Model.Logo)" alt="@(Model.Name)" asp-append-version="true" style="width:150px; height: 150px; border: 1px; margin-top: 20px;" />
             </div>
             <div class="card-footer row">
                 <button type="submit" style="width: 150px" class="btn btn-info">Cập nhật</button>
@@ -44,7 +42,7 @@
         </div>
         </form>
     </div>
-
+</section>
 
 
 @section Scripts {

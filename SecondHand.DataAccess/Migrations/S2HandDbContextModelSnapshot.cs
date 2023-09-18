@@ -537,24 +537,6 @@ namespace SecondHand.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Img1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Img2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Img3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Img4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Img5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsNew")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -670,6 +652,32 @@ namespace SecondHand.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UserAddresses");
+                });
+
+            modelBuilder.Entity("SecondHand.Models.Models.Domain.ProductImages", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -822,6 +830,17 @@ namespace SecondHand.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("SecondHand.Models.Models.Domain.ProductImages", b =>
+                {
+                    b.HasOne("SecondHand.Models.Domain.Product", "Products")
+                        .WithMany("productGallery")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("SecondHand.Models.Domain.ApplicationUser", b =>
                 {
                     b.Navigation("Adresses");
@@ -855,6 +874,8 @@ namespace SecondHand.DataAccess.Migrations
                     b.Navigation("Favorites");
 
                     b.Navigation("OrderItems");
+
+                    b.Navigation("productGallery");
                 });
 
             modelBuilder.Entity("SecondHand.Models.Domain.Promotion", b =>

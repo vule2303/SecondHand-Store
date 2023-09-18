@@ -2,127 +2,116 @@
 
 @{
     Layout = "_AdminLayout";
+    ViewBag.Title = "sản phẩm";
 }
 
 <div class="card card-danger">
     <div class="card-header">
-        <h3 class="card-title" style="color:white">Xoá đơn hàng</h3>
+        <h3 class="card-title" style="color:white">Xoá @ViewBag.Title</h3>
     </div>
 
     <form method="post">
-        <div class="card-body">
-            <div>
-                <hr />
-                <dl class="row">
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Name)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Name)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Description)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Description)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Price)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Price)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Status)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Status)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.IsNew)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.IsNew)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Color)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Color)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Conditon)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Conditon)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Defects)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Defects)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Created)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Created)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Img1)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Img1)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Img2)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Img2)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Img3)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Img3)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Img4)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Img4)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Img5)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Img5)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Size)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Size)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Brand)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Brand.Id)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Category)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Category.Name)
-                    </dd>
-                </dl>
+         <section class="content">
+
+            <div class="card card-solid">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="ratio: false" style="height:728px;">
+
+                                <ul class="uk-slideshow-items" uk-height-viewport="offset-top: true; offset-bottom:10">
+
+                                    @if (Model.productGallery != null)
+                                    {
+                                        @foreach (var img in Model.productGallery)
+                                        {
+                                                        <li>
+                                                            <img src="~/images/products/@img.URL" alt="" uk-cover>
+                                                        </li>
+                                        }
+                                    }
+
+
+                                </ul>
+
+                                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+                                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">                          
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width:50%">@Html.DisplayNameFor(model => model.Name)</th>
+                                            <td>@Html.DisplayFor(model => model.Name)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Danh mục</th>
+                                            <td>@Html.DisplayFor(model => model.Category.Name)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Thương hiệu</th>
+                                            <td>@Html.DisplayFor(model => model.Brand.Name)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Size)</th>
+                                            <td>@Html.DisplayFor(model => model.Size)</td>
+                                        </tr>
+                                        <tr>
+                                            <th> @Html.DisplayNameFor(model => model.Color)</th>
+                                            <td>@Html.DisplayFor(model => model.Color)</td>
+                                        </tr>                            
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Price)</th>
+                                            <td>@Html.DisplayFor(model => model.Price)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Status)</th>
+                                            <td>@if (Model.Status == true)
+                                                {
+                                                        <span style="color: green">Còn hàng</span>
+                                                }
+                                                else
+                                                {
+                                                        <span style="color: red">Hết hàng</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Conditon)</th>
+                                            <td>@Html.DisplayFor(model => model.Conditon)</td>
+                                        </tr>
+                                         <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Defects)</th>
+                                            <td>@Html.DisplayFor(model => model.Defects)</td>
+                                        </tr>
+
+
+                                         <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Description)</th>
+                                            <td>@Html.DisplayFor(model => model.Description)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Created)</th>
+                                            <td>@Html.DisplayFor(model => model.Created)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-        </div>
+
+        </section>
 
         <div class="card-footer row">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" style="width: 150px" class="btn btn-danger">Xoá</button>
+            <button type="submit" style="width: 150px" class="btn btn-danger">Xoá @ViewBag.Title</button>
             <a asp-action="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary">Trở về</a>
         </div>
     </form>

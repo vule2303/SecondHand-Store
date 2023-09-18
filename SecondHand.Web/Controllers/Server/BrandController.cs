@@ -174,7 +174,7 @@ namespace MVC_Core.Controllers.Server
 
             _context.Brands.Remove(brand);
             _context.SaveChanges();
-
+            TempData["Error"] = "Xoá không thành công";
             return RedirectToAction("Index");
         }
     }
