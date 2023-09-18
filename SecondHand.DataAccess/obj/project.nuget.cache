@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XpcXdNREyLlFKmZSfYZhrLnS3J21W2nLL3+Cf6tr/SCVi26ih7ElQ36WpJC/TLcdINuYkb+k8hURdO9yjuAJWw==",
+  "dgSpecHash": "Yh/Dnh8DAcHtucJE1prb7AkVXEIqKpaxDavE0ucY75E1iyBEkMh78QtYmp5TSs1zyDCTflLgvQLyo6XN6jh8LQ==",
   "success": true,
-  "projectFilePath": "E:\\VU\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj",
+  "projectFilePath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

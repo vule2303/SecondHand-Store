@@ -1,38 +1,42 @@
 {
   "format": 1,
   "restore": {
-    "E:\\VU\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj": {}
+    "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj": {}
   },
   "projects": {
-    "E:\\VU\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj": {
+    "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\VU\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj",
+        "projectUniqueName": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj",
         "projectName": "SecondHand.DataAccess",
-        "projectPath": "E:\\VU\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj",
+        "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.DataAccess\\SecondHand.DataAccess.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\VU\\SecondHand-Store\\SecondHand.DataAccess\\obj\\",
+        "outputPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "E:\\VU\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj": {
-                "projectPath": "E:\\VU\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj"
+              "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj": {
+                "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj"
               },
-              "E:\\VU\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj": {
-                "projectPath": "E:\\VU\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj"
+              "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj": {
+                "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj"
               }
             }
           }
@@ -94,28 +98,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\VU\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj": {
+    "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\VU\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj",
+        "projectUniqueName": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj",
         "projectName": "SecondHand.Models",
-        "projectPath": "E:\\VU\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj",
+        "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\VU\\SecondHand-Store\\SecondHand.Models\\obj\\",
+        "outputPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -171,28 +179,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\VU\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj": {
+    "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\VU\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj",
+        "projectUniqueName": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj",
         "projectName": "SecondHand.Utility",
-        "projectPath": "E:\\VU\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj",
+        "projectPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Utility\\SecondHand.Utility.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\VU\\SecondHand-Store\\SecondHand.Utility\\obj\\",
+        "outputPath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Utility\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -226,7 +238,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

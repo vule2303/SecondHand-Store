@@ -124,7 +124,7 @@ namespace MVC_Core.Controllers.Server
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Status,CategoryId,BrandId,IsNew,Color,Conditon,Defects,Created,Size")] Product product)
+        public async Task<IActionResult> Edit(int id,Product product)
         {
             if (id != product.Id)
             {

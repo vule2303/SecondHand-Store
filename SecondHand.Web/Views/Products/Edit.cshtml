@@ -4,19 +4,19 @@
     ViewData["Title"] = "Edit";
     Layout = "_AdminLayout";
 }
-<section class="content">
+<section class="content" style="padding-top: 10px">
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title" style="color:white">Chỉnh sửa sản phẩm</h3>
     </div>
-    
+
         <form method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
 
             <div class="form-group">
-                <label asp-for="Name" class="control-label">m</label>
+                <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>

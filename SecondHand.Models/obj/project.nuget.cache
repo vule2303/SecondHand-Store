@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+0utgfKIFZ09uNYiyv/KFxPNw50Nf8VxsW/ZGVIhWFnDr85dgYSIJLzxif2/6up7Gb9mgP9mKiAUS1KsFaCWYA==",
+  "dgSpecHash": "8TP0sUt5h6ujCL+Or8FgkU+BFbq9QLM6u5KEJw9dn9h3wWWe9ZhhfHnUrmmateJgkc2Vxutu7HHvEoQfx0yVaw==",
   "success": true,
-  "projectFilePath": "E:\\VU\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj",
+  "projectFilePath": "D:\\Vu\\SecondHand-Store\\SecondHand-Store\\SecondHand.Models\\SecondHand.Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\mailkit\\4.1.0\\mailkit.4.1.0.nupkg.sha512",
