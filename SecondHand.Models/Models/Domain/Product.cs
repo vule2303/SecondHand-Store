@@ -48,7 +48,7 @@ public partial class Product
 
     [Display(Name = "Tải ảnh lên")]
     [NotMapped]
-    public IFormFileCollection MultipleImages { get; set; }
+    public IFormFileCollection? MultipleImages { get; set; }
     [NotMapped]
     public List<ProductImages>? ProductImages { get; set; }
     public virtual ICollection<ProductImages>? productGallery { get; set; } = new List<ProductImages>();

@@ -4,13 +4,13 @@
     ViewData["Title"] = "Edit";
     Layout = "_AdminLayout";
 }
-
+<section class="content">
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title" style="color:white">Chỉnh sửa sản phẩm</h3>
     </div>
-
-    <form method="post">
+    
+        <form method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -102,6 +102,7 @@
         </div>
     </form>
 </div>
+</section>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

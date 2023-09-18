@@ -114,7 +114,7 @@ namespace MVC_Core.Controllers.Server
             {
                 return NotFound();
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
@@ -135,9 +135,37 @@ namespace MVC_Core.Controllers.Server
             {
                 try
                 {
+                    if(product.MultipleImages != null)
+                    {
+                        var productImages = _context.ProductImages.Where(x => x.ProductId == product.Id).ToList();
+                        foreach (var img in productImages)
+                        {
+                            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
+                            if (System.IO.File.Exists(imagePath))
+                                System.IO.File.Delete(imagePath);
+
+                            _context.ProductImages.Remove(img);
+                        }
+
+                        string folder = "/images/products/";
+                        product.ProductImages = new List<ProductImages>();
+
+                        foreach (var file in product.MultipleImages)
+                        {
+                            var images = new ProductImages()
+                            {
+                                ProductId = product.Id,
+                                Name = file.Name,
+                                URL = await UploadImage(folder, file)
+                            };
+                            _context.ProductImages.Add(images);
+                        }
+                    }
+                    
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "Cập nhật thành công";
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
