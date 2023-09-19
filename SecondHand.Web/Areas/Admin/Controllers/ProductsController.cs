@@ -11,17 +11,19 @@ using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 using SecondHand.Models.Models.Domain;
 
-namespace MVC_Core.Controllers.Server
+namespace MVC_Core.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Route("admin/s2Handstore/san-pham/[action]/{id?}")]
     public class ProductsController : Controller
     {
-     
+
         private readonly S2HandDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
         public ProductsController(S2HandDbContext context, IWebHostEnvironment webHostEnvironment)
-        {           
+        {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -30,7 +32,7 @@ namespace MVC_Core.Controllers.Server
         public async Task<IActionResult> Index()
         {
             var products = await _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.productGallery).ToListAsync();
-            
+
             return View(products);
         }
 
@@ -77,7 +79,7 @@ namespace MVC_Core.Controllers.Server
                 _context.SaveChanges();
                 if (product.MultipleImages != null)
                 {
-                    string folder = "/images/products/";                  
+                    string folder = "/images/products/";
                     product.ProductImages = new List<ProductImages>();
 
                     foreach (var file in product.MultipleImages)
@@ -124,7 +126,7 @@ namespace MVC_Core.Controllers.Server
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,Product product)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
             if (id != product.Id)
             {
@@ -135,7 +137,7 @@ namespace MVC_Core.Controllers.Server
             {
                 try
                 {
-                    if(product.MultipleImages != null)
+                    if (product.MultipleImages != null)
                     {
                         var productImages = _context.ProductImages.Where(x => x.ProductId == product.Id).ToList();
                         foreach (var img in productImages)
@@ -161,7 +163,7 @@ namespace MVC_Core.Controllers.Server
                             _context.ProductImages.Add(images);
                         }
                     }
-                    
+
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                     TempData["Success"] = "Cập nhật thành công";
@@ -222,21 +224,21 @@ namespace MVC_Core.Controllers.Server
             }
             var productImages = _context.ProductImages.Where(p => p.ProductId == id).ToList();
 
-                //Xoá toàn bộ hình ảnh của sản phẩm
+            //Xoá toàn bộ hình ảnh của sản phẩm
 
-                foreach(var img in productImages)
-                {
-                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
-                    if (System.IO.File.Exists(imagePath))
+            foreach (var img in productImages)
+            {
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
+                if (System.IO.File.Exists(imagePath))
                     System.IO.File.Delete(imagePath);
 
-                    _context.ProductImages.Remove(img);
-                }
-                _context.Products.Remove(product); 
-                await _context.SaveChangesAsync();
-                TempData["Success"] = "Xoá sản phẩm thành công";
-                return RedirectToAction(nameof(Index));
- 
+                _context.ProductImages.Remove(img);
+            }
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            TempData["Success"] = "Xoá sản phẩm thành công";
+            return RedirectToAction(nameof(Index));
+
 
         }
 
@@ -247,8 +249,8 @@ namespace MVC_Core.Controllers.Server
 
         private async Task<string> UploadImage(string folderPath, IFormFile file)
         {
-            string fileName = Guid.NewGuid().ToString()+"_"+ file.FileName;
-            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath + folderPath, fileName);         
+            string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+            string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath + folderPath, fileName);
             await file.CopyToAsync(new FileStream(serverFolder, FileMode.Create));
             return fileName;
         }

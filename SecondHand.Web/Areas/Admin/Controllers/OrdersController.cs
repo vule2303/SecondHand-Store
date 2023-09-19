@@ -8,8 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 
-namespace MVC_Core.Controllers.Server
+namespace MVC_Core.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Route("admin/s2Handstore/don-dat-hang/[action]/{id?}")]
     public class OrdersController : Controller
     {
         private readonly S2HandDbContext _context;

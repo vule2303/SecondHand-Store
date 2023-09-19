@@ -5,9 +5,10 @@ using Microsoft.Build.ObjectModelRemoting;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 
-namespace MVC_Core.Controllers.Server
+namespace MVC_Core.Areas.Admin.Controllers
 {
-    [Route("admin/s2hand/category/[action]/{id}")]
+    [Area("Admin")]
+    [Route("admin/s2Handstore/danh-muc/[action]/{id?}")]
 
     public class CategoryController : Controller
     {
@@ -23,17 +24,18 @@ namespace MVC_Core.Controllers.Server
             List<Category>? cateList = _context.Categories.ToList();
             return View(cateList);
         }
-        public IActionResult Create() 
+        public IActionResult Create()
 
-        {          
+        {
 
             return View();
         }
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            
-            if(ModelState.IsValid){
+
+            if (ModelState.IsValid)
+            {
                 _context.Categories.Add(obj);
                 _context.SaveChanges();
 
@@ -47,7 +49,7 @@ namespace MVC_Core.Controllers.Server
         {
 
 
-            if(id == null || id ==0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -58,7 +60,7 @@ namespace MVC_Core.Controllers.Server
 
             }
 
-            
+
             return View(categoryFromDb);
         }
         [HttpPost]
@@ -92,7 +94,7 @@ namespace MVC_Core.Controllers.Server
 
             }
 
-          
+
 
             return View(categoryFromDb);
         }
@@ -110,7 +112,7 @@ namespace MVC_Core.Controllers.Server
             _context.SaveChanges();
             TempData["Success"] = "Xoá thành công";
             return RedirectToAction("Index");
-         
+
         }
     }
 }

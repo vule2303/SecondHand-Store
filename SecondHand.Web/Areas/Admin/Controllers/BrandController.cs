@@ -9,13 +9,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.IO;
 
-namespace MVC_Core.Controllers.Server
+namespace MVC_Core.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Route("admin/s2Handstore/thuong-hieu/[action]/{id?}")]
     public class BrandController : Controller
     {
 
-        private readonly S2HandDbContext _context; 
-        private readonly IWebHostEnvironment _webHostEnvironment; 
+        private readonly S2HandDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public BrandController(S2HandDbContext context, IWebHostEnvironment hostingEnviroment)
         {
             _context = context;
@@ -25,7 +27,7 @@ namespace MVC_Core.Controllers.Server
         // GET: BrandController
         public IActionResult Index()
         {
-            List<Brand>? brandList = _context.Brands.ToList();  
+            List<Brand>? brandList = _context.Brands.ToList();
             return View(brandList);
         }
 
@@ -56,9 +58,9 @@ namespace MVC_Core.Controllers.Server
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string extention = Path.GetExtension(model.ImageFile.FileName);
-                model.Logo=fileName =fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
+                model.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
                 string path = Path.Combine(wwwRootPath + "/images", fileName);
-                using (var fileStream = new FileStream(path,FileMode.Create))
+                using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await model.ImageFile.CopyToAsync(fileStream);
                 }
@@ -165,11 +167,11 @@ namespace MVC_Core.Controllers.Server
 
             //delete image in wwroot
             var getLogo = brand.Logo;
-            if(getLogo != null)
+            if (getLogo != null)
             {
                 var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", getLogo);
-                if (System.IO.File.Exists(imagePath))                                      
-                   System.IO.File.Delete(imagePath);                   
+                if (System.IO.File.Exists(imagePath))
+                    System.IO.File.Delete(imagePath);
             }
 
             _context.Brands.Remove(brand);
