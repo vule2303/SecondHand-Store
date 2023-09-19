@@ -7,7 +7,7 @@ namespace MVC_Core.Areas.Customer.Controllers
     {
         public IActionResult Index()
         {
-            return View("/Views/Checkout/Checkout.cshtml");
+            return View();
         }
     }
 }
