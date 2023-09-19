@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SecondHand.Controllers.Client
+namespace MVC_Core.Areas.Customer.Controllers
 {
-    [Authorize]
+    [Area("Customer")]
     public class DashboardController : Controller
     {
         public IActionResult Index()
