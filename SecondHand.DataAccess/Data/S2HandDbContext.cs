@@ -53,27 +53,7 @@ namespace SecondHand.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Product>().HasData(new Product{
-               Id = 1,
-               Name = "Áo Nike",
-               Description = "Description",
-               Price = 100000,
-               Status = false,
-                CategoryId = null,
-                BrandId =null,
-                IsNew = true,
-                Color = "Đen",
-                Conditon = "Mới",
-                Defects = "Không có",
-                Created = DateTime.Now,
-                Img1 = "img1.jpg",
-                Img2 = "img2.jpg",
-                Img3 = "img3.jpg",
-                Img4 = "img4.jpg",
-                Img5 = "img5.jpg",
-                Size = "M"
-
-            });
+            
         }
 
 
