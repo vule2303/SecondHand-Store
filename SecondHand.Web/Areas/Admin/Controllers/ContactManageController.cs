@@ -2,13 +2,16 @@
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 
-namespace MVC_Core.Controllers.Server
+namespace MVC_Core.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Route("admin/s2Handstore/ho-tro-khach-hang/[action]/{id?}")]
     public class ContactManageController : Controller
     {
         private readonly S2HandDbContext _context;
 
-        public ContactManageController(S2HandDbContext context) {
+        public ContactManageController(S2HandDbContext context)
+        {
             _context = context;
         }
         public IActionResult Index()
@@ -25,7 +28,7 @@ namespace MVC_Core.Controllers.Server
         [ValidateAntiForgeryToken]
         public ActionResult Create(Contact contact)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(contact);
                 _context.SaveChanges();
