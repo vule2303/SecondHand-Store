@@ -3,8 +3,9 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 
-namespace MVC_Core.Controllers.Client
+namespace MVC_Core.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class ContactController : Controller
     {
         private readonly S2HandDbContext _context;
@@ -15,12 +16,12 @@ namespace MVC_Core.Controllers.Client
         }
         public IActionResult Index()
         {
-           
+
             return View();
         }
         public ActionResult Create()
         {
-            
+
             return View();
         }
         [HttpPost]
