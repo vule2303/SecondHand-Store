@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    Layout = "_Layout";
+}
+
 @using SecondHand.Models.Domain;
 @using Microsoft.AspNetCore.Identity;
 @using SecondHand.DataAccess.Data;
@@ -15,7 +18,7 @@
                     <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
                         <div class="uk-card-header">
                             <div class="uk-grid-small uk-child-width-1-1"
-                                 uk-grid>
+                             uk-grid>
 
                                 <div class="uk-text-center">
                                     <div class="uk-h4 uk-margin-remove">
@@ -27,18 +30,18 @@
                                 </div>
                                 <div class="uk-margin-top">
                                     <div class="uk-grid-small uk-flex-center"
-                                         uk-grid>
+                                     uk-grid>
                                         <div>
                                             <a class="uk-button uk-button-default uk-button-small"
-                                               href="settings.html">
+                                           href="settings.html">
                                                 <span class="uk-margin-xsmall-right"
-                                                      uk-icon="icon: cog; ratio: .75;"></span><span>Cài đặt</span>
+                                                  uk-icon="icon: cog; ratio: .75;"></span><span>Cài đặt</span>
                                             </a>
                                         </div>
                                         <div>
                                             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
                                                 <button class=" nav-link btn btn-link text-dark uk-button uk-button-default uk-button-small"
-                                                        title="Đăng xuất" type="submit">
+                                                    title="Đăng xuất" type="submit">
                                                     <span uk-icon="icon: sign-out; ratio: .75;"></span>
                                                 </button>
                                             </form>
@@ -63,7 +66,7 @@
                                         </a>
                                     </li>
                                     <li class="uk-active">
-                                        <a asp-controller="Personal" >Thông tin cá nhân</a>
+                                        <a asp-controller="Personal">Thông tin cá nhân</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -78,22 +81,22 @@
                         <div class="uk-card-body">
                             <form class="uk-form-stacked">
                                 <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
-                                     
+
                                     <fieldset class="uk-fieldset">
                                         <legend class="uk-h4">
                                             Liên hệ
                                         </legend>
                                         <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@s"
-                                             uk-grid>
+                                         uk-grid>
                                             <div>
                                                 <label>
                                                     <div class="uk-form-label">
                                                         Họ
                                                     </div>
                                                     <input readonly
-                                                           class="uk-input"
-                                                           type="text"
-                                                           value="@((await UserManager.GetUserAsync(User))?.FirstName)" />
+                                                       class="uk-input"
+                                                       type="text"
+                                                       value="@((await UserManager.GetUserAsync(User))?.FirstName)" />
                                                 </label>
                                             </div>
                                             <div>
@@ -102,9 +105,9 @@
                                                         Tên
                                                     </div>
                                                     <input readonly
-                                                           class="uk-input"
-                                                           type="text"
-                                                           value="@((await UserManager.GetUserAsync(User))?.LastName)" />
+                                                       class="uk-input"
+                                                       type="text"
+                                                       value="@((await UserManager.GetUserAsync(User))?.LastName)" />
                                                 </label>
                                             </div>
                                             <div>
@@ -113,20 +116,20 @@
                                                         Số điện thoại
                                                     </div>
                                                     <input readonly
-                                                           class="uk-input"
-                                                           type="tel"
-                                                           value="@(await UserManager.GetPhoneNumberAsync(await UserManager.GetUserAsync(User)))" />
+                                                       class="uk-input"
+                                                       type="tel"
+                                                       value="@(await UserManager.GetPhoneNumberAsync(await UserManager.GetUserAsync(User)))" />
                                                 </label>
                                             </div>
                                             <div>
-                                                <label >
+                                                <label>
                                                     <div class="uk-form-label">
                                                         Email
                                                     </div>
                                                     <input readonly
-                                                           class="uk-input"
-                                                           type="tel"
-                                                           value="@(await UserManager.GetEmailAsync(await UserManager.GetUserAsync(User)))" />
+                                                       class="uk-input"
+                                                       type="tel"
+                                                       value="@(await UserManager.GetEmailAsync(await UserManager.GetUserAsync(User)))" />
                                                 </label>
                                             </div>
                                         </div>

@@ -7,7 +7,7 @@ namespace MVC_Core.Areas.Customer.Controllers
     {
         public IActionResult Index()
         {
-            return View("/Views/Favorites/Favorites.cshtml");
+            return View();
         }
     }
 }

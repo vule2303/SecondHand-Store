@@ -8,7 +8,7 @@ namespace MVC_Core.Areas.Customer.Controllers
     {
         public IActionResult Index()
         {
-            return View("/Views/Dashboard/Display");
+            return View();
         }
     }
 }
