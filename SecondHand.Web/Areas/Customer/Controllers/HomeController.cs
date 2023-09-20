@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using NuGet.Protocol;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
 using System.Diagnostics;
 using System.Linq;
 
@@ -20,17 +23,18 @@ namespace MVC_Core.Areas.Customer.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            var listProduct = _context.Products.Take(10).ToList();
+             
             return View();
         }
-
+        
         public IActionResult Privacy()
         {
             return View();
         }
-
+       
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
