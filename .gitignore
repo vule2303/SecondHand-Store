@@ -405,3 +405,9 @@ FodyWeavers.xsd
 /SecondHand.Models/obj/project.nuget.cache
 /SecondHand.Models/obj/SecondHand.Models.csproj.nuget.dgspec.json
 /SecondHand.Utility/bin/Debug/net7.0/SecondHand.Utility.dll
+/SecondHand.DataAccess/obj/SecondHand.DataAccess.csproj.nuget.g.props
+/SecondHand.Models/obj/SecondHand.Models.csproj.nuget.g.props
+/SecondHand.Utility/obj/Debug/net7.0/SecondHand.Utility.csproj.AssemblyReference.cache
+/SecondHand.Utility/obj/Debug/net7.0/SecondHand.Utility.csproj.CoreCompileInputs.cache
+/SecondHand.Utility/obj/SecondHand.Utility.csproj.nuget.g.props
+/.vs/SecondHand-Store/v17/.wsuo

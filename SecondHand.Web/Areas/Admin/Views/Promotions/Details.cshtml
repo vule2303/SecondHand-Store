@@ -1,0 +1,82 @@
+﻿@model SecondHand.Models.Domain.Promotion
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="card card-secondary">
+    <div class="card-header">
+        <h3 class="card-title" style="color:white">Chi tiết mã khuyến mãi</h3>
+    </div>
+
+    <form method="post">
+        <section class="content">
+
+            <div class="card card-solid">
+                <div class="card-body">
+                    <div class="row">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th style="width:50%">@Html.DisplayNameFor(model => model.Code)</th>
+                                            <td>@Html.DisplayFor(model => model.Code)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.DiscountType)</th>
+                                            <td>@Html.DisplayFor(model => model.DiscountType)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.DiscountValue)</th>
+                                            <td>
+                                                @{
+                                                  string formattedDiscountValue = Model.DiscountValue?.ToString().TrimEnd('0').TrimEnd(',');
+                                                 }
+                                                @formattedDiscountValue
+                                          %</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.MiniumOrderAmount)</th>
+                                            <td>
+                                            @{
+                                                string formattedMiniumOrderAmount = Model.MiniumOrderAmount.ToString().TrimEnd(',');
+                                            }
+                                            @formattedMiniumOrderAmount
+                                        VNĐ</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.Created)</th>
+                                            <td>@Html.DisplayFor(model => model.Created)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                            <td>@Html.DisplayFor(model => model.IsActive)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.StartDate)</th>
+                                            <td>@Html.DisplayFor(model => model.StartDate)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayNameFor(model => model.EndDate)</th>
+                                            <td>@Html.DisplayFor(model => model.EndDate)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <div class="card-footer row">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary" style="width: 150px">Chỉnh sửa</a>
+            <a asp-action="Index" class="btn btn-secondary" style="width: 150px; margin-left: 10px">Trở về</a>
+        </div>
+    </form>
+</div>
+
