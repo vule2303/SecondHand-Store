@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SecondHand.Models.Domain.Category>
+@{
+
+}
+
+@foreach (var a in Model)
+{
+    <li class="uk-margin-bottom">
+        <a class="uk-card  uk-card-body  uk-padding-remove cate-link">
+            <img src="@a.URL" alt="@a.Name">
+            <h5 class="uk-text-center uk-margin-top name-category">@a.Name</h5>
+        </a>
+    </li>
+}
+

@@ -50,8 +50,9 @@
                                 <th>Tên</th>           
 
                                 <th>Ngày tạo</th>
-                                <th></th>
-                                <th></th>
+                                <th>Image</th>
+                                <th style="padding-left: 60px">Chức năng</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -61,8 +62,11 @@
                                 <td>@item.Id</td>
                                 <td>@item.Name</td>                              
                                 <td>@item.Created?.ToString("dd-MM-yyyy")</td>
-                                <td><a class="btn btn-info" asp-controller="Category" asp-action="Update" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a></td>
-                                <td><a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a></td>
+                                <td>@item.URL</td>
+                                <td><a class="btn btn-info" asp-controller="Category" asp-action="Update" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
+                                        <a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
+                                    </td>
+                                
 
                             </tr>
                         }                                                 
