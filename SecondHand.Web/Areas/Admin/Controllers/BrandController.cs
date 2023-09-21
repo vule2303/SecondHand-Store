@@ -53,7 +53,9 @@ namespace MVC_Core.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+
                 if(model.ImageFile != null)
+
                 {
                     //save image into wwwroot/images/brands
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
@@ -109,7 +111,9 @@ namespace MVC_Core.Areas.Admin.Controllers
                 {
                     // Delete the existing image
                     var getLogo = existingBrand.Logo;
+
                     if (getLogo != null)
+
                     {
                         var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "/images/brands", getLogo);
                         if (System.IO.File.Exists(imagePath))
@@ -123,7 +127,9 @@ namespace MVC_Core.Areas.Admin.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(updatedBrand.ImageFile.FileName);
                     string extention = Path.GetExtension(updatedBrand.ImageFile.FileName);
                     existingBrand.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
+
                     string path = Path.Combine(wwwRootPath + "/images/brands", fileName);
+
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
@@ -134,18 +140,20 @@ namespace MVC_Core.Areas.Admin.Controllers
                 }
                 else
                 {
+
                     // If no new image is provided, retain the existing image
                     existingBrand.Logo = existingBrand.Logo;
+
                 }
+				existingBrand.Name = updatedBrand.Name;
+				existingBrand.Description = updatedBrand.Description;
 
-                existingBrand.Name = updatedBrand.Name;
-                existingBrand.Description = updatedBrand.Description;
+				_context.Update(existingBrand);
+				_context.SaveChanges();
 
-                _context.Update(existingBrand);
-                _context.SaveChanges();
+				return RedirectToAction("Index");
 
-                return RedirectToAction("Index");
-            }
+			}
 
             return View(updatedBrand);
         }

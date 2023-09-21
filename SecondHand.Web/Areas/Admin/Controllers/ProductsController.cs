@@ -140,14 +140,17 @@ namespace MVC_Core.Areas.Admin.Controllers
                     if (product.MultipleImages != null)
                     {
                         var productImages = _context.ProductImages.Where(x => x.ProductId == product.Id).ToList();
-                        foreach (var img in productImages)
+                        if (productImages != null)
                         {
-                            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
-                            if (System.IO.File.Exists(imagePath))
-                                System.IO.File.Delete(imagePath);
+							foreach (var img in productImages)
+							{
+								var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/products/", img.URL);
+								if (System.IO.File.Exists(imagePath))
+									System.IO.File.Delete(imagePath);
 
-                            _context.ProductImages.Remove(img);
-                        }
+								_context.ProductImages.Remove(img);
+							}
+						}
 
                         string folder = "/images/products/";
                         product.ProductImages = new List<ProductImages>();
