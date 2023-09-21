@@ -411,3 +411,5 @@ FodyWeavers.xsd
 /SecondHand.Utility/obj/Debug/net7.0/SecondHand.Utility.csproj.CoreCompileInputs.cache
 /SecondHand.Utility/obj/SecondHand.Utility.csproj.nuget.g.props
 /.vs/SecondHand-Store/v17/.wsuo
+/SecondHand.DataAccess/obj/Debug/net7.0/SecondHand.DataAccess.AssemblyInfo.cs
+/SecondHand.DataAccess/obj/Debug/net7.0/SecondHand.DataAccess.AssemblyInfoInputs.cache
