@@ -24,7 +24,7 @@ public partial class Category
     public string? Slug { get; set; }
     [Display(Name = "Danh mục cha")]
     public int? ParentId { get; set; }
-
+    public string? URL { get; set; }
     public virtual ICollection<CategoryDiscount> CategoryDiscounts { get; set; } = new List<CategoryDiscount>();
 
     public virtual ICollection<Category> InverseParent { get; set; } = new List<Category>();
