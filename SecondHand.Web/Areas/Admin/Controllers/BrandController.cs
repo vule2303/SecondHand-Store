@@ -54,18 +54,24 @@ namespace MVC_Core.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
 
-                //save image into wwwroot/images
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                string extention = Path.GetExtension(model.ImageFile.FileName);
-                model.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
-                string path = Path.Combine(wwwRootPath + "/images/brands", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                if(model.ImageFile != null)
+
                 {
-                    await model.ImageFile.CopyToAsync(fileStream);
+                    //save image into wwwroot/images/brands
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                    string extention = Path.GetExtension(model.ImageFile.FileName);
+                    model.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
+                    string path = Path.Combine(wwwRootPath + "/images/brands", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await model.ImageFile.CopyToAsync(fileStream);
+                    }
                 }
+                
                 _context.Brands.Add(model);
                 _context.SaveChanges();
+                TempData["Success"] = "Tạo mới thành công";
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -105,10 +111,15 @@ namespace MVC_Core.Areas.Admin.Controllers
                 {
                     // Delete the existing image
                     var getLogo = existingBrand.Logo;
-                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/brands", getLogo);
-                    if (System.IO.File.Exists(imagePath))
+
+                    if (getLogo != null)
+
                     {
-                        System.IO.File.Delete(imagePath);
+                        var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "/images/brands", getLogo);
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
                     }
 
                     // Save the new image
@@ -116,17 +127,23 @@ namespace MVC_Core.Areas.Admin.Controllers
                     string fileName = Path.GetFileNameWithoutExtension(updatedBrand.ImageFile.FileName);
                     string extention = Path.GetExtension(updatedBrand.ImageFile.FileName);
                     existingBrand.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
-                    string path = Path.Combine(wwwRootPath + "/images", fileName);
+
+                    string path = Path.Combine(wwwRootPath + "/images/brands", fileName);
+
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
                         await updatedBrand.ImageFile.CopyToAsync(fileStream);
                     }
+                    TempData["Success"] = "Chỉnh sửa thành công";
+
                 }
                 else
                 {
-					// If no new image is provided, retain the existing image
-					existingBrand.Logo = existingBrand.Logo;
+
+                    // If no new image is provided, retain the existing image
+                    existingBrand.Logo = existingBrand.Logo;
+
                 }
 				existingBrand.Name = updatedBrand.Name;
 				existingBrand.Description = updatedBrand.Description;
@@ -169,14 +186,14 @@ namespace MVC_Core.Areas.Admin.Controllers
             var getLogo = brand.Logo;
             if (getLogo != null)
             {
-                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", getLogo);
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "/images/brands", getLogo);
                 if (System.IO.File.Exists(imagePath))
                     System.IO.File.Delete(imagePath);
             }
 
             _context.Brands.Remove(brand);
             _context.SaveChanges();
-            TempData["Error"] = "Xoá không thành công";
+            TempData["Success"] = "Xoá thành công";
             return RedirectToAction("Index");
         }
     }

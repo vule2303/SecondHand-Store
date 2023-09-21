@@ -3,26 +3,24 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Bcpg.Sig;
 using SecondHand.DataAccess.Data;
 
+
+
 namespace MVC_Core.Areas.Customer.ViewComponents
 {
     [Area("Customer")]
-
-    public class HomeViewComponent : ViewComponent
+    public class BrandViewComponent : ViewComponent
     {
         private readonly S2HandDbContext _context;
-        public HomeViewComponent(S2HandDbContext context)
+        public BrandViewComponent(S2HandDbContext context)
         {
             _context = context;
         }
 
         public IViewComponentResult Invoke()
         {
-            var listSuggestItem = _context.Products.Where(p => p.Status == true)
-                .Include(p => p.Brand)
-                .Include(p => p.Category)
-                .Include(p => p.productGallery).ToList();
+            var pro = _context.Brands.ToList();
 
-            return View(listSuggestItem);
+            return View(pro);
         }
     }
 }
