@@ -1,6 +1,61 @@
-﻿
+﻿@*
 @{
 
 }
 
 
+<article class="tm-product-card">
+    <div class="tm-product-card-media">
+        <div class="tm-ratio tm-ratio-4-3">
+            <a class="tm-media-box uk-padding-remove"
+               asp-controller="ProductDetails">
+                <figure class="tm-media-box-wrap">
+                    @if (item.productGallery != null)
+                    {
+                        <img style="width: 150px; height:150px" src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
+                    }
+                    else
+                    {
+                        <!-- Hiển thị một hình ảnh mặc định nếu không có hình ảnh -->
+                        <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
+                    }
+
+                </figure>
+            </a>
+        </div>
+    </div>
+    <div class="tm-product-card-body">
+        <div class="tm-product-card-info">
+            <div class="uk-text-meta uk-margin-xsmall-bottom">
+                @item.Category.Name
+            </div>
+            <h3 class="tm-product-card-title">
+                <a class="uk-link-heading"
+                   href="product.html">@item.Name</a>
+            </h3>
+        </div>
+        <div class="tm-product-card-shop product-mg">
+            <div class="tm-product-card-prices ">
+                <div class="uk-text-meta">@item.Size</div>
+                <div class="tm-product-card-price">
+                    @item.Price
+                </div>
+            </div>
+            <div class="tm-product-card-add">
+                <div class="uk-text-meta tm-product-card-actions">
+                    <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
+                       title="Yêu thích">
+                        <span uk-icon="icon: heart; ratio: .75;"></span><span class="tm-product-card-action-text">
+                            Add to
+                            favorites
+                        </span>
+                    </a>
+                </div>
+                <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                    <span class="tm-product-card-add-button-icon"
+                          uk-icon="cart"></span><span class="tm-product-card-add-button-text">add to cart</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</article>*@
