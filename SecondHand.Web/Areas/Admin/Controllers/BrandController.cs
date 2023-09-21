@@ -59,7 +59,7 @@ namespace MVC_Core.Areas.Admin.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
                 string extention = Path.GetExtension(model.ImageFile.FileName);
                 model.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
-                string path = Path.Combine(wwwRootPath + "/images", fileName);
+                string path = Path.Combine(wwwRootPath + "/images/brands", fileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     await model.ImageFile.CopyToAsync(fileStream);
@@ -105,7 +105,7 @@ namespace MVC_Core.Areas.Admin.Controllers
                 {
                     // Delete the existing image
                     var getLogo = existingBrand.Logo;
-                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", getLogo);
+                    var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "images/brands", getLogo);
                     if (System.IO.File.Exists(imagePath))
                     {
                         System.IO.File.Delete(imagePath);
@@ -115,7 +115,7 @@ namespace MVC_Core.Areas.Admin.Controllers
                     string wwwRootPath = _webHostEnvironment.WebRootPath;
                     string fileName = Path.GetFileNameWithoutExtension(updatedBrand.ImageFile.FileName);
                     string extention = Path.GetExtension(updatedBrand.ImageFile.FileName);
-                    updatedBrand.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
+                    existingBrand.Logo = fileName = fileName + DateTime.Now.ToString("ddMMyyyy") + extention;
                     string path = Path.Combine(wwwRootPath + "/images", fileName);
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
@@ -125,18 +125,18 @@ namespace MVC_Core.Areas.Admin.Controllers
                 }
                 else
                 {
-                    // If no new image is provided, retain the existing image
-                    updatedBrand.Logo = existingBrand.Logo;
+					// If no new image is provided, retain the existing image
+					existingBrand.Logo = existingBrand.Logo;
                 }
+				existingBrand.Name = updatedBrand.Name;
+				existingBrand.Description = updatedBrand.Description;
 
-                existingBrand.Name = updatedBrand.Name;
-                existingBrand.Description = updatedBrand.Description;
+				_context.Update(existingBrand);
+				_context.SaveChanges();
 
-                _context.Update(existingBrand);
-                _context.SaveChanges();
+				return RedirectToAction("Index");
 
-                return RedirectToAction("Index");
-            }
+			}
 
             return View(updatedBrand);
         }
