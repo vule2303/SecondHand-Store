@@ -1,0 +1,117 @@
+﻿@model IEnumerable<SecondHand.Models.Domain.Promotion>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "_AdminLayout";
+    var sttcount = 0;
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lý Khuyến Mãi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" asp-for="#">Quản lý Khuyến Mãi</li>
+                </ol>
+            </div>
+        </div>
+    </div>  
+
+    <section class="content" style="padding-top: 10px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <a asp-action="Create" class="card-tools btn bg-gradient-primary">
+                            <i class="fa-regular fa-plus fa-2xs"></i> Tạo mã khuyến mãi mới
+                        </a>
+                    </div>
+                    <div class="uk-padding-small col-12">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control" placeholder="Tìm kiếm">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiniumOrderAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr style="align-content: center; justify-content:center;">
+                                        <td>@(++sttcount)</td>
+
+
+                                        <td>@Html.DisplayFor(modelItem => item.Code)</td>
+
+                                        <td>@Html.DisplayFor(modelItem => item.DiscountType)</td>
+
+@*                                        <td>@Html.DisplayFor(modelItem => item.DiscountValue)</td>*@
+                                        <td>@item.DiscountValue.ToString().TrimEnd('0').TrimEnd(',') %</td>
+
+@*                                        <td>@Html.DisplayFor(modelItem => item.MiniumOrderAmount)</td>*@
+                                        <td>@item.MiniumOrderAmount.ToString().TrimEnd('.') VNĐ</td>
+
+                                        <td>@Html.DisplayFor(modelItem => item.Created)</td>
+
+
+                                        <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+
+                                        <td>
+                                            <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>Chi tiết</a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
