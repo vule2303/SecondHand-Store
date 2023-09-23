@@ -1,0 +1,39 @@
+﻿@page "/admin/s2Handstore/role/tao-role"
+@model MVC_Core.Areas.Admin.Pages.Role.CreateModel
+@{
+    ViewData["Title"] = "Tạo mới role vai trò";
+    Layout = "_AdminLayout";
+  
+}
+<section class="content" style="padding-top: 10px;">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title" style="color:white">Tạo Role (vai trò) mới</h3>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="card-body">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div class="form-group">
+                    <label asp-for="Input.Name" class="control-label"></label>
+                    <input asp-for="Input.Name" class="form-control" />
+                    <span asp-validation-for="Input.Name" class="text-danger"></span>
+                </div>              
+            </div>
+
+            <div class="card-footer row">
+                <button type="submit" style="width: 150px" class="btn btn-primary">Tạo mới</button>
+                <a asp-page="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary">Trở về</a>
+            </div>
+        </form>
+    </div>
+
+</section>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

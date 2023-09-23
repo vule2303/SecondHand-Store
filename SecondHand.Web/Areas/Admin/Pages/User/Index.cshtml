@@ -1,0 +1,95 @@
+﻿@page "/admin/s2Handstore/nguoi-dung"
+@model MVC_Core.Areas.Admin.Pages.User.IndexModel
+@{
+    ViewData["Title"] = "Danh sách các User";
+    Layout = "_AdminLayout";
+    var sttcount = 0;
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lý Người dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" asp-for="#">Quản lý Người dùng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <section class="content" style="padding-top: 10px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    @*<div class="card-header">
+                        <a asp-page="Create" class="card-tools btn bg-gradient-primary">
+                            <i class="fa-regular fa-plus fa-2xs"></i> Tạo người dùng mới !
+                        </a>
+                    </div>*@
+                    <div class="uk-padding-small col-12">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control" placeholder="Tìm kiếm">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>
+                                        Tên User
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Vai trò (role)
+                                    </th>
+                                    <th>
+                                        
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.users)
+                                {
+                                    <tr style="align-content: center; justify-content:center;">
+                                        <td>@(++sttcount)</td>
+
+
+                                        <td>@item.UserName</td>
+                                        <td>@item.Email</td>
+                                        <td></td>
+
+                                        <td>
+
+                                            <a class="btn btn-info" asp-page="./Edit" asp-route-roleid="@item.Id">Cập nhật</a>
+                                            <a class="btn btn-danger" asp-page="./Delete" asp-route-roleid="@item.Id">Xoá</a>
+                                            <a class="btn btn-danger" asp-page="./AddRole" asp-route-roleid="@item.Id">Xoá</a>
+
+                                        </td>
+
+
+
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

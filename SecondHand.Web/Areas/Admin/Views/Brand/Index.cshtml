@@ -46,11 +46,11 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Nhãn Hàng</th>
-                            <th scope="col">Logo</th>
-                            <th scope="col">Mô Tả</th>
-                            <th scope="col" style="padding-left: 60px">Chức Năng</th>
+                            <th>STT</th>
+                            <th>Nhãn Hàng</th>
+                            <th>Logo</th>
+                            <th>Mô Tả</th>
+                            <th style="padding-left: 60px">Chức Năng</th>
                             
                         </tr>
                     </thead>
@@ -64,9 +64,10 @@
 
                                 <td><img style="width: 80px; height: 80px;" src="~/images/brands/@a.Logo" alt="@a.Name"></td>
                                 <td class="long-text">@(a.Description ?? "Mô tả không có sẵn")</td>
-                                <td><a asp-controller="Brand" asp-action="Edit" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
-                                        <a asp-controller="Brand" asp-action="Delete" asp-route-id="@a.Id" class="btn btn-danger ml-2"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
-                                    </td>
+                                <td>
+                                    <a asp-controller="Brand" asp-action="Edit" asp-route-id="@a.Id" class="btn btn-info"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>                                      
+                                    <a asp-controller="Brand" asp-action="Delete" asp-route-id="@a.Id" class="btn btn-danger"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
+                                </td>
 
                             </tr>
                         }

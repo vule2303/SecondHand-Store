@@ -24,7 +24,7 @@ namespace MVC_Core.Areas.Customer.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
              
             return View();

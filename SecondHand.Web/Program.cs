@@ -61,9 +61,9 @@ namespace SecondHand
                 options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
 
                 // Cấu hình Lockout - khóa user
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
-                options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lầ thì khóa
-                options.Lockout.AllowedForNewUsers = true;
+                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
+               // options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lầ thì khóa
+               // options.Lockout.AllowedForNewUsers = true;
 
                 // Cấu hình về User.
                 options.User.AllowedUserNameCharacters = // các ký tự đặt tên user
@@ -121,6 +121,8 @@ namespace SecondHand
                     CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
 
+
+            builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 
             var app = builder.Build();
 

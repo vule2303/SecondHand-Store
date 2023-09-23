@@ -5,7 +5,7 @@
 @{
     // SignInManager.IsSignedIn(User);
     // UserManager.GetUserName(User);
-    ViewData["Brands"] = "thương hiệu";
+    
 
 }
 <!DOCTYPE html>
@@ -177,7 +177,10 @@
                         <img src="~/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">@UserManager.GetUserName(User)</a>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                           <span class="d-block">@UserManager.GetUserName(User)</span>
+                        }
                     </div>
                 </div>
 
@@ -258,6 +261,24 @@
                                 </p>
                             </a>
 
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/User/Index" class="nav-link">
+                                <i class="fa-solid fa-tag" style="color: #ffffff;"></i>
+                                <p>
+                                    Quản lý User
+                                    <i class="right fas fa-angle-right"></i>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/Role/Index" class="nav-link">
+                                <i class="fa-solid fa-tag" style="color: #ffffff;"></i>
+                                <p>
+                                    Quản lý Role
+                                    <i class="right fas fa-angle-right"></i>
+                                </p>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="ContactManage" asp-action="Index" class="nav-link">

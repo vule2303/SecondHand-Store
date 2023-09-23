@@ -1,0 +1,85 @@
+﻿@page "/admin/s2Handstore/role"
+@model MVC_Core.Areas.Identity.Pages.Role.IndexModel
+@{
+    ViewData["Title"] = "Danh sách các vai trò";
+    Layout = "_AdminLayout";
+    var sttcount = 0;
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Quản lý Role</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" asp-for="#">Quản lý Role (Vai trò)</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <section class="content" style="padding-top: 10px;">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <a asp-page="Create" class="card-tools btn bg-gradient-primary">
+                            <i class="fa-regular fa-plus fa-2xs"></i> Tạo role (vai trò) mới !
+                        </a>
+                    </div>
+                    <div class="uk-padding-small col-12">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control" placeholder="Tìm kiếm">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>
+                                        Tên Role (vai trò)
+                                    </th>
+                                    <th>                               
+                                    </th>                               
+                                  
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.roles)
+                                {
+                                    <tr style="align-content: center; justify-content:center;">
+                                        <td>@(++sttcount)</td>
+
+
+                                        <td>@item.Name</td>
+
+                                        <td>
+                                            
+                                            <a class="btn btn-info" asp-page="./Edit" asp-route-roleid="@item.Id">Cập nhật</a>
+                                            <a class="btn btn-danger" asp-page="./Delete" asp-route-roleid="@item.Id">Xoá</a>
+
+                                        </td>
+                                        
+                                      
+
+                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
