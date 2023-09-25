@@ -52,7 +52,8 @@
                             <th>Trạng thái</th>
                             <th>Ngày đăng</th>                         
                             <th>Size</th>
-                            <th>Thương hiệu</th>
+                                    <th>Thương hiệu</th>
+                                    <th>Mô Tả</th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -104,7 +105,8 @@
                                     {
                                         @Html.DisplayFor(modelItem => item.Brand.Name)
                                     }
-                                </td>                                                
+                                </td>    
+                                <td>@item.Description</td>
                                 <td>
                                     <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
                                 </td>
