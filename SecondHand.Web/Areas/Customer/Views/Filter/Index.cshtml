@@ -2,7 +2,8 @@
     Layout = "_Layout";
 }
 
-                <section class="uk-section uk-section-small">
+@await Component.InvokeAsync("Product")
+@*                 <section class="uk-section uk-section-small">
                     <div class="uk-container">
                         <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
                             <div class="uk-text-center">
@@ -319,7 +320,7 @@
                                                                 class="uk-margin-xsmall-right"
                                                                 uk-icon="icon: close; ratio: .75;"
                                                             ></span
-                                                            >Đặt lại tất cả bộ lọc
+                                                            >Đặt lại bộ lọc
                                                         </button>
                                                     </div>
                                                 </div>
@@ -1571,5 +1572,5 @@
                         </div>
                     </div>
                 </section>
-
+ *@
 
