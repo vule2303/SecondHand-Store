@@ -1,11 +1,11 @@
-﻿using MailKit;
+﻿
 using MailKit.Security;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace SecondHand.Models.Services
+namespace SecondHand.Utility.Services
 {
     public class MailSettings
     {

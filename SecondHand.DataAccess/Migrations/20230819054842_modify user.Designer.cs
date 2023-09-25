@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
-using SecondHand.Models.Services;
+using SecondHand.Utility.Services;
 #nullable disable
 
 namespace SecondHand.DataAccess.Migrations

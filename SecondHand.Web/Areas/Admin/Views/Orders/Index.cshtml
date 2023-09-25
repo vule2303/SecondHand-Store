@@ -55,8 +55,7 @@
                             <th>Mã khuyến mãi</th>
                             <th>ID Người dùng</th>
                             <th></th>
-                            <th></th>
-                            <th></th>
+                            
                         </tr>
                     </thead>
 
@@ -83,14 +82,10 @@
                                 <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
                                 <td>
                                     <a class ="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
-                                   
-                                </td>
-                                 <td>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
                                     <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Chi tiết</a> |
                                 </td>
-                                 <td>
-                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
-                                    </td>
+                                
                             </tr>
                         }
                     </tbody>

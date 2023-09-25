@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SecondHand.Models.Services
+namespace SecondHand.Utility.Services
 {
     public class AppIdentityErrorDescriber : IdentityErrorDescriber
     {
