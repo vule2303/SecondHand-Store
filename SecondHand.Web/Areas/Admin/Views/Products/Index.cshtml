@@ -24,21 +24,39 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">          
+            <div class="card-header">
                 <a asp-action="Create" class="card-tools btn bg-gradient-primary">
                     <i class="fa-regular fa-plus fa-2xs"></i> Tạo sản phẩm mới
                 </a>
             </div>
-            <div class="uk-padding-small col-12">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control" placeholder="Tìm kiếm">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                        </button>
+                    <div class="uk-padding-small col-12">
+                        <form asp-action="Search" method="get">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm mt-2" style="width: 250px;">
+                                <select name="brandId" class="form-control">
+                                    <option value="">Tất cả thương hiệu</option>
+                                    @foreach (var brand in ViewBag.Brands)
+                                    {
+                                        <option value="@brand.Id">@brand.Name</option>
+                                    }
+                                </select>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </div>
-            </div>
+
+
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
@@ -46,11 +64,11 @@
                             <th>ID</th>
                             <th>Tên</th>
                             <th>Loại sản phẩm</th>
-                            <th>Giá</th>                   
+                            <th>Giá</th>
                             <th>Hình ảnh</th>
                             <th>Màu sắc</th>
                             <th>Trạng thái</th>
-                            <th>Ngày đăng</th>                         
+                            <th>Ngày đăng</th>
                             <th>Size</th>
                             <th>Thương hiệu</th>
                             <th></th>
@@ -61,61 +79,67 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr style="align-content: center; justify-content:center;">
-                                <td>@(++sttcount)</td>
-                           
-                                
-                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                <td>
-                                    @if (item.Category != null)
+                        <tr style="align-content: center; justify-content:center;">
+                            <td>@(++sttcount)</td>
+
+
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>
+                                @if (item.Category != null)
                                     {
-                                        @Html.DisplayFor(modelItem => item.Category.Name)
+                                @Html.DisplayFor(modelItem => item.Category.Name)
                                     }
-                                </td>
-                                <td>@item.Price.ToString().TrimEnd('0').TrimEnd('.') VNĐ</td>
-                                <td>
-                                    @if (item.productGallery != null)
+                            </td>
+                            <td>@item.Price.ToString().TrimEnd('0').TrimEnd('.') VNĐ</td>
+                            <td>
+                                @if (item.productGallery != null)
                                     {
-                                        <img style="width: 100px; height: 100px" src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
+                                <img style="width: 100px; height: 100px" src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
                                     }
                                     else
                                     {
-                                        <!-- Hiển thị một hình ảnh mặc định nếu không có hình ảnh -->
-                                        <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
+ <!-- Hiển thị một hình ảnh mặc định nếu không có hình ảnh -->
+                                <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
                                     }
-                              
-                                </td>
-                                <td>@Html.DisplayFor(modelItem => item.Color)</td>
-                                <td>
-                                    @{
+
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Color)</td>
+                            <td>
+                                @{
                                         if (item.Status == true)
                                         {
-                                            <span style="color: green">Còn hàng</span>
+                                    <span style="color: green">Còn hàng</span>
                                         }else
                                         {
-                                            <span style="color:red">Hết hàng</span>
+                                    <span style="color:red">Hết hàng</span>
                                         }
-                                    }
-                                </td>
-                                <td>@Html.DisplayFor(modelItem => item.Created)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Size)</td>
-                                <td>
-                                    @if (item.Brand != null)
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Created)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Size)</td>
+                            <td>
+                                @if (item.Brand != null)
                                     {
-                                        @Html.DisplayFor(modelItem => item.Brand.Name)
+                                @Html.DisplayFor(modelItem => item.Brand.Name)
                                     }
-                                </td>                                                
-                                <td>
-                                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>Chi tiết</a> 
-                                </td>
-                                <td>
-                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
-                                </td>
-                            </tr>
+                            </td>
+                            <td>
+                                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i>Chi tiết</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-regular fa-trash-can" style="color: #ffffff;"></i> Xoá</a>
+                            </td>
+                        </tr>
                         }
+                        @if (!Model.Any())
+                                {
+                        <tr>
+                            <td colspan="13">Không tìm thấy sản phẩm nào.</td>
+                        </tr>
+                                }
                     </tbody>
                 </table>
             </div>
@@ -123,3 +147,5 @@
     </div>
 </div>
 </section>
+
+
