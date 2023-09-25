@@ -1,53 +1,51 @@
-﻿@*@page "/admin/s2Handstore/nguoi-dung/gan-role/{id}"
+﻿@page "/admin/s2Handstore/nguoi-dung/them-role/"
 @model MVC_Core.Areas.Admin.Pages.User.AddRoleModel
 @{
     ViewData["Title"] = "Gán role";
-    Layout = "_AdminLayout";
-   
 }
+<section class="content" style="padding-top: 10px;">
+    <div class="card card-primary">
+        <div class="card-header" style="background-color: #28a745;">
+            <h3 class="card-title" style="color:white;">Thiết lập role cho người dùng</h3>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="card-body">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-<h4>Thiết lập role cho user: @Model.user.UserName</h4>
-
-
-@{
-
-
-}
-<div class="row">
-    <div class="col-md-6">
-        <form id="set-password-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="RoleNames"></label>
-                @Html.ListBoxFor(m => m.RoleNames, @Model.allRoles, new {
-                id = "id-select-roles",
-                @class = "w-100"
+                <div class="form-group">
+                    <label asp-for="RoleNames">Thêm các role (vai trò) cho người dùng: @Model.user.UserName</label>
+                    @Html.ListBoxFor(m => m.RoleNames, @Model.allRoles, new {
+                    id = "id-select-roles",
+                    @class = "w-100"
                 })
                 <span asp-validation-for="RoleNames" class="text-danger"></span>
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-            <a class="btn btn-primary" asp-page="./Index">Danh sách thành viên</a>
+            <div class="card-footer row">
+                <button type="submit" style="width: 150px" class="btn btn-success">Cập nhật</button>
+                <a asp-page="Index" type="submit" style="width: 150px; margin-left: 10px" class="btn btn-secondary">Trở về</a>
+            </div>
         </form>
     </div>
-</div>
 
+</section>
 
 @section Scripts {
 
-    <script src="~/lib/multiple-select/multiple-select.min.js"></script>
-    <link rel="stylesheet" href="~/lib/multiple-select/multiple-select.min.css" />
+        <script src="~/lib/multiple-select/multiple-select.min.js"></script>
+        <link rel="stylesheet" href="~/lib/multiple-select/multiple-select.min.css" />
 
-    <script>
-        $("#id-select-roles").multipleSelect({
-            selectAll: false,
-            keepOpen: false,
-            isOpen: false,
-        });
-    </script>
+        <script>
+            $("#id-select-roles").multipleSelect({
+                selectAll: false,
+                keepOpen: false,
+                isOpen: false,
+            });
+        </script>
 
-    <partial name="_ValidationScriptsPartial" />
+        <partial name="_ValidationScriptsPartial" />
 }
-*@

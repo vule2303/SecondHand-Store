@@ -28,6 +28,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\multiple-select\multiple-select.js" />
+    <None Include="wwwroot\lib\multiple-select\multiple-select.min.css.map" />
+    <None Include="wwwroot\lib\multiple-select\multiple-select.min.js" />
+    <None Include="wwwroot\lib\multiple-select\multiple-select.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MailKit" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.11" />
