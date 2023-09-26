@@ -1,0 +1,199 @@
+﻿@using SecondHand.Models.Models.Domain;
+@using System.Linq;
+@model IEnumerable<SecondHand.Models.Domain.Product>
+
+@{
+    
+}
+<!-- phần nội dung -->
+<div class="flex-box">
+    <div class="left">
+        @foreach (var a in Model.Take(1))
+        {
+            <div class="big-img">
+                <img src="@Url.Content("~/images/products/" + a.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@a.Name" />
+            </div>
+        }
+        <div class="images">
+        @foreach (var a in Model)
+        {
+           
+                <div class="small-img">
+                    <img src="@Url.Content("~/images/products/" + a.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@a.Name" />
+                </div>
+
+
+            }
+        </div>
+        
+    </div>
+
+    <div class="right">
+        @foreach(var b in Model.Take(1)){
+        <div class="pname">@b.Name</div>
+        <div class="pname2">Men's Size @b.Size</div>
+        <div class="ratings">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+        </div>
+        <div class="price"><p>@b.Price<sup>đ</sup></p></div>
+        }
+        <div class="btn-box">
+            <!-- <button class="cart-btn">Add to Cart</button>
+            <button class="buy-btn">Buy Now</button>
+            <button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Button</button> -->
+            <button class="uk-button uk-button-custom">Thêm vào giỏ hàng</button>
+            <button class="uk-button uk-button-custom">Xem Sản Phẩm</button>
+        </div>
+        <div class="details">
+            <p class="detail-heading" onclick="toggleDetails()">CHI TIẾT</p>
+            @foreach (var a in Model.Take(1))
+            {
+            <div class="detail-content">
+               
+                <p class="detail-text">
+                    <a href="#">@a.Name</a> by <a href="#">@a.Brand.Name</a>
+                </p>
+                <div class="norword">
+                        <p>Màu sắc: @a.Color</p>                        
+                        <p>Trạng Thái: @a.Conditon</p>
+                        <p>Kích Thước: @a.Size</p>
+                        <p>Mô tả:</p>
+                        <p> @a.Description</p>
+
+                </div>
+
+            </div>
+            <p class="detail-heading" onclick="toggleDefects()">KHUYẾT ĐIỂM</p>
+            <div class="detail-content">
+                <div class="norword2">
+                        <p>Khiếm Khuyết: @a.Defects</p>
+
+                </div>
+            </div>
+            }
+        </div>
+
+    </div>
+
+
+
+    <script>
+        let bigImg = document.querySelector('.big-img img');
+        function showImg(pic) {
+            bigImg.src = pic;
+        }
+    </script>
+
+</div>
+<section>
+    <div class="text">
+        <p>CÁC SẢN PHẨM LIÊN QUAN</p>
+    </div>
+    
+    <div class="slidershow">
+        @foreach (var a in Model)
+        {
+            <article class="tm-product-card">
+                <div class="tm-product-card-media">
+                    <div class="tm-ratio tm-ratio-4-3">
+                        <a class="tm-media-box uk-padding-remove"
+                           >
+                            <figure class="tm-media-box-wrap">
+                                <img src="@Url.Content("~/images/products/" + a.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@a.Name" />
+                            </figure>
+                        </a>
+                    </div>
+                </div>
+                <div class="tm-product-card-body">
+                    <div class="tm-product-card-info">
+                        <div class="uk-text-meta uk-margin-xsmall-bottom">
+                            @a.Brand.Name
+                        </div>
+                        <h3 class="tm-product-card-title">
+                            <a class="uk-link-heading"
+                               href="#">@a.Name</a>
+                        </h3>
+                    </div>
+                    <div class="tm-product-card-shop product-mg">
+                        <div class="tm-product-card-prices ">
+                            <div class="uk-text-meta">@a.Size</div>
+                            <div class="tm-product-card-price">
+                                @a.Price
+                            </div>
+                        </div>
+                        <div class="tm-product-card-add">
+                            <div class="uk-text-meta tm-product-card-actions">
+                                <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
+                                   title="Yêu thích">
+                                    <span uk-icon="icon: heart; ratio: .75;"></span><span class="tm-product-card-action-text">
+                                       Thêm vào yêu thích
+                                    </span>
+                                </a>
+                            </div>
+                            <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                                <span class="tm-product-card-add-button-icon"
+                                      uk-icon="cart"></span><span class="tm-product-card-add-button-text">add to cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+       
+    </div>
+    <div class="slideshow2">
+        @foreach (var a in Model)
+        {
+            <article class="tm-product-card">
+                <div class="tm-product-card-media">
+                    <div class="tm-ratio tm-ratio-4-3">
+                        <a class="tm-media-box uk-padding-remove">
+                            <figure class="tm-media-box-wrap">
+                                <img src="@Url.Content("~/images/products/" + a.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@a.Name" />
+                            </figure>
+                        </a>
+                    </div>
+                </div>
+                <div class="tm-product-card-body">
+                    <div class="tm-product-card-info">
+                        <div class="uk-text-meta uk-margin-xsmall-bottom">
+                            @a.Brand.Name
+                        </div>
+                        <h3 class="tm-product-card-title">
+                            <a class="uk-link-heading"
+                               href="#">@a.Name</a>
+                        </h3>
+                    </div>
+                    <div class="tm-product-card-shop product-mg">
+                        <div class="tm-product-card-prices ">
+                            <div class="uk-text-meta">@a.Size</div>
+                            <div class="tm-product-card-price">
+                                @a.Price
+                            </div>
+                        </div>
+                        <div class="tm-product-card-add">
+                            <div class="uk-text-meta tm-product-card-actions">
+                                <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
+                                   title="Yêu thích">
+                                    <span uk-icon="icon: heart; ratio: .75;"></span><span class="tm-product-card-action-text">
+                                        Thêm vào yêu thích
+                                    </span>
+                                </a>
+                            </div>
+                            <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                                <span class="tm-product-card-add-button-icon"
+                                      uk-icon="cart"></span><span class="tm-product-card-add-button-text">add to cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+
