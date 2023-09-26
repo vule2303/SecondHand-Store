@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 using SecondHand.Models.Models.Domain;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
@@ -31,9 +32,14 @@ namespace MVC_Core.Areas.Admin.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var products = await _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.productGallery).ToListAsync();
+    var products = await _context.Products.Include(p => p.Brand)
+        .Include(p => p.Category)
+        .Include(p => p.productGallery)
+        .ToListAsync();
 
-            return View(products);
+    ViewBag.Brands = await _context.Brands.ToListAsync(); // Đưa danh sách thương hiệu cho dropdownlist
+
+    return View(products);
         }
 
         // GET: Products/Details/5
@@ -210,6 +216,30 @@ namespace MVC_Core.Areas.Admin.Controllers
             }
 
             return View(product);
+        }
+        // GET: Products/Search/
+        public async Task<IActionResult> Search(string searchTerm, int? brandId)
+        {
+            IQueryable<Product> query = _context.Products;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(searchTerm));
+            }
+
+            if (brandId.HasValue)
+            {
+                query = query.Where(p => p.BrandId == brandId);
+            }
+
+            var products = await query
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .Include(p => p.productGallery)
+                .ToListAsync();
+
+            ViewBag.Brands = await _context.Brands.ToListAsync();
+
+            return View("Index", products);
         }
 
         // POST: Products/Delete/5
