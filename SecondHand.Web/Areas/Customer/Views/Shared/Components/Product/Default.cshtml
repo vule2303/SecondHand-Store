@@ -2,7 +2,8 @@
 @using System.Linq;
 @model IEnumerable<SecondHand.Models.Domain.Product>
 @{
-    var uniqueBrands = Model.Select(b => b.Brand.Name).Distinct().ToList();
+    var uniqueBrands = Model.Select(b => b.Brand.Name).Distinct().ToList();    
+   
 }
 
 
@@ -18,8 +19,8 @@
                 </ul>
                 @foreach (var a in Model.Take(1))
                 {
-                    <h1 class="uk-margin-small-top uk-margin-remove-bottom">
-                        @a.Name
+                    <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
+                        @Model.FirstOrDefault()?.Name
                     </h1>
                 }
                     <div class="uk-text-meta uk-margin-xsmall-top">
@@ -57,8 +58,8 @@
                                             <ul class="uk-nav uk-nav-default">
                                             @foreach (var d in Model)
                                             {
-                                                <li>
-                                                    <a id="abcc">@d.Name</a>
+                                                <li >
+                                                    <a class="product-link" >@d.Name</a>
                                                 </li>
                                             }
                                             
@@ -180,12 +181,12 @@
                                                          uk-grid>
                                                         @foreach (var c in Model)
                                                         {
-                                                            <article class="tm-product-card">
+                                                        <article id="product-title" class="tm-product-card ">
                                                         
                                                                 <div class="tm-product-card-media">
-                                                                    <div class="tm-ratio tm-ratio-4-3">
-                                                                        <a class="tm-media-box uk-padding-remove"
-                                                                           href="product.html">
+                                                                    <div  class="tm-ratio tm-ratio-4-3">
+                                                                        <a asp-controller="ProductDetails" class="tm-media-box uk-padding-remove"
+                                                                           >
                                                                             <figure class="tm-media-box-wrap">
                                                                            
                                                                             <img src="@Url.Content("~/images/products/" + c.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@c.Name" />
@@ -269,7 +270,27 @@
             </div>
            
         </div>
+    <script>
+        // Lấy tất cả các phần tử có class 'product-link' (sản phẩm trong danh sách)
+        var productLinks = document.querySelectorAll('.product-link');
+
+        // Lặp qua từng sản phẩm và thêm sự kiện click
+        productLinks.forEach(function (link) {
+            link.addEventListener('click', function () {
+                // Lấy tên sản phẩm từ thuộc tính 'data-product-id' của sản phẩm được click
+                var productName = link.textContent;
+
+                // Gán tên sản phẩm vào phần tử h1
+                document.getElementById('product-title').textContent = productName;
+            });
+        });
+    </script>
+   
+
+
     </section>
+
+
 
 
 
