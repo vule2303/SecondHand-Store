@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Danh sách các User";
     Layout = "_AdminLayout";
-    var sttcount = 0;
+    var sttcount = (Model.currentPage - 1) * IndexModel.ITEMS_PER_PAGE;
 }
 
 <div class="content-header">
@@ -70,19 +70,14 @@
 
                                         <td>@item.UserName</td>
                                         <td>@item.Email</td>
-                                        <td></td>
-
                                         <td>
-
-                                            <a class="btn btn-info" asp-page="./Edit" asp-route-roleid="@item.Id">Cập nhật</a>
-                                            <a class="btn btn-danger" asp-page="./Delete" asp-route-roleid="@item.Id">Xoá</a>
-                                            <a class="btn btn-danger" asp-page="./AddRole" asp-route-roleid="@item.Id">Xoá</a>
-
+                                            @item.RoleNames
                                         </td>
 
-
-
-
+                                        <td>
+                                                                             
+                                            <a class="btn btn-success" asp-page="./AddRole" asp-route-roleid="@item.Id">Gán Role</a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -93,3 +88,13 @@
         </div>
     </section>
 </div>
+@{
+    var pagingmodel = new SecondHand.Utility.Helper.PagingModel()
+            {
+                currentPage = Model.currentPage,
+                countPages = Model.countPages,
+                generateURL = (int? p) => @Url.Page("./Index", new { p = p })
+
+            };
+}
+<partial name="_PagingModel" model="@pagingmodel" />

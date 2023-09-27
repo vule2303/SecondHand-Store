@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using SecondHand.DataAccess.Data;
-using SecondHand.Models.Services;
+using SecondHand.Utility.Services;
 using SecondHand.Models.Domain;
 using Microsoft.AspNetCore.Builder;
 

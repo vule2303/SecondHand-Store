@@ -150,3 +150,10 @@
         justify-content: center
     }
 }
+
+.long-text {
+    max-width: 200px; /* Đặt chiều rộng tối đa */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

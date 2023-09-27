@@ -20,7 +20,7 @@ namespace MVC_Core.Areas.Admin.Pages.Role
             public string Name { get; set; }
         }
         [BindProperty]
-        public InputModel Input { get; set;}
+        public InputModel Input { get; set; }
 
         public IdentityRole role { get; set; }
 
@@ -30,7 +30,7 @@ namespace MVC_Core.Areas.Admin.Pages.Role
 
             var role = await _roleManager.FindByIdAsync(roleId);
 
-            if (role != null) 
+            if (role != null)
             {
                 Input = new InputModel
                 {
@@ -44,7 +44,7 @@ namespace MVC_Core.Areas.Admin.Pages.Role
             return NotFound("Không tìm thấy role");
 
         }
-        public async Task<IActionResult> OnPostAsync(string roleId) 
+        public async Task<IActionResult> OnPostAsync(string roleId)
         {
             if (roleId == null) return NotFound("Không tìm thấy role");
             var role = await _roleManager.FindByIdAsync(roleId);
@@ -57,8 +57,8 @@ namespace MVC_Core.Areas.Admin.Pages.Role
             }
 
             role.Name = Input.Name;
-            var result =  await _roleManager.UpdateAsync(role);
-           
+            var result = await _roleManager.UpdateAsync(role);
+
             if (result.Succeeded)
             {
                 TempData["Success"] = "Cập nhật Role thành công";
@@ -73,7 +73,7 @@ namespace MVC_Core.Areas.Admin.Pages.Role
                 });
                 return Page();
             }
-           
+
         }
     }
 }
