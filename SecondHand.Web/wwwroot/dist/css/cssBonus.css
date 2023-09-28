@@ -35,7 +35,7 @@
 
     .container .product-item .product {
         width: 100%;
-        height: 350px;
+        height: 300px;
         position: relative;
         overflow: hidden;
         cursor: pointer
@@ -47,23 +47,22 @@
             object-fit: cover
         }
 
-        .container .product-item .product .icons .icon {
-            width: 40px;
-            height: 40px;
+/*        .container .product-item .product .icons .icon {
             background-color: #fff;
-            border-radius: 50%;
+            border-radius: 10px;
             display: flex;
+            align-content:center;
             justify-content: center;
             align-items: center;
             transition: transform 0.6s ease;
-            transform: rotate(180deg);
+            transform: translateY(0);
             cursor: pointer
-        }
+        }*/
 
-            .container .product-item .product .icons .icon:hover {
+/*            .container .product-item .product .icons .icon:hover {
                 background-color: #b71c1c;
                 color: #fff
-            }
+            }*/
 
             .container .product-item .product .icons .icon:nth-last-of-type(3) {
                 transition-delay: 0.2s
@@ -86,18 +85,27 @@
         font-size: 0.75rem;
         font-weight: 500;
         position: absolute;
-        top: 10px;
+        top: 30px;
         left: 20px;
         padding: 0 0.4rem
     }
 
-    .container .product-item .title {
-        text-decoration: none;
-        color: black;
-        font-size: 1rem;
-        font-weight: 600;
-        letter-spacing: 0.5px
+    .container .product-item .heart {
+        position: absolute;
+        top: 30px;
+        right: 20px;
     }
+    #white-heart {
+        color: white; /* Đặt màu của biểu tượng là màu trắng */
+        background-color: transparent; /* Đặt màu nền là trong suốt */
+    }
+.container .product-item .title {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px
+}
 
     .container .product-item .fa-star {
         font-size: 0.65rem;
@@ -156,4 +164,65 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.button-75 {
+    align-items: center;
+    background-color: rgba(61,169,252,0.6);
+    backdrop-filter: blur(10px);
+    border: 0;
+    color:#fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    transition: transform 0.6s ease;
+    transform: translateY(0);
+    height: 54px;
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 3px;
+    text-decoration: none;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: .4px;
+    font-family: "Codec cold",sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+
+    .button-75:active {
+        outline: 0;
+    }
+
+.button-75:hover {
+  outline: 0;
+}
+
+    .button-75 span {
+       
+        transition: all 200ms;
+        color: #fff !important;
+    }
+
+.button-75:hover span {
+  transform: scale(.9);
+/*  opacity: .75;*/
+}
+
+@media screen and (max-width: 991px) {
+  .button-75 {
+    font-size: 15px;
+    height: 50px;
+  }
+
+  .button-75 span {
+    line-height: 50px;
+  }
 }
