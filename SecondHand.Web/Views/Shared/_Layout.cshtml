@@ -1,5 +1,10 @@
-﻿@using SecondHand.Models.Domain;
-@model List<Category>
+﻿@using Microsoft.AspNetCore.Identity;
+@using SecondHand.Models.Domain;
+@using Microsoft.AspNetCore.Http;
+@using SecondHand.Utility;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -171,13 +176,38 @@
                             </div>
                         </div>
                         <partial name="_LoginPartial.cshtml" />
-                        <a class="uk-navbar-item uk-link-muted tm-navbar-button"
-                           href="cart.html"
-                           uk-toggle="target: #cart-offcanvas"
-                           onclick="return false">
-                            <span uk-icon="cart"></span>
-                            <span class="uk-badge">2</span>
-                        </a>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShopingCart) != null)
+                            {
+
+                                <a class="uk-navbar-item uk-link-muted tm-navbar-button"
+                           asp-controller="Cart" asp-action="Index">
+                                    @{
+                                        var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShopingCart);
+                                    }
+                                    <span uk-icon="cart"></span>
+                                    <span class="uk-badge">@count</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="uk-navbar-item uk-link-muted tm-navbar-button"
+                                   href="#">
+                                    <span uk-icon="cart"></span>
+                                    <span class="uk-badge">0</span>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <a class="uk-navbar-item uk-link-muted tm-navbar-button"
+                           asp-area="Identity" asp-page="/Account/Login">
+                                <span uk-icon="cart"></span>
+                                <span class="uk-badge">0</span>
+                            </a>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -468,163 +498,6 @@
                                 </li>
                             </ul>
                         </nav>
-                    </div>
-                </aside>
-            </div>
-            <div id="cart-offcanvas" uk-offcanvas="overlay: true; flip: true">
-                <aside class="uk-offcanvas-bar uk-padding-remove">
-                    <div
-                        class="uk-card uk-card-default uk-card-small uk-height-1-1 uk-flex uk-flex-column tm-shadow-remove"
-                    >
-                        <header class="uk-card-header uk-flex uk-flex-middle">
-                            <div class="uk-grid-small uk-flex-1" uk-grid>
-                                <div class="uk-width-expand">
-                                    <div class="uk-h3">Giỏ Hàng</div>
-                                </div>
-                                <button
-                                    class="uk-offcanvas-close"
-                                    type="button"
-                                    uk-close
-                                ></button>
-                            </div>
-                        </header>
-                        <div class="uk-card-body uk-overflow-auto">
-                            <ul class="uk-list uk-list-divider">
-                                <li class="uk-visible-toggle">
-                                    <arttcle
-                                        ><div class="uk-grid-small" uk-grid>
-                                            <div class="uk-width-1-4">
-                                                <div
-                                                    class="tm-ratio tm-ratio-4-3"
-                                                >
-                                                    <a
-                                                        class="tm-media-box"
-                                                        href="product.html"
-                                                        ><figure
-                                                            class="tm-media-box-wrap"
-                                                        >
-                                                            <img src="~/images/SweaterNike.jpg"
-                                                                alt='Nike Sport Swear Jacket'
-                                                            /></figure
-                                                    ></a>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-expand">
-                                                <div
-                                                    class="uk-text-meta uk-text-xsmall"
-                                                >
-                                                    Áo khoác
-                                                </div>
-                                                <div
-                                                    class="uk-link-heading uk-text-small"
-                                                    
-                                                    >Áo khoác nam Nike Sport</div
-                                                >
-                                                <div
-                                                    class="uk-margin-xsmall uk-grid-small uk-flex-middle"
-                                                    uk-grid
-                                                >
-                                                    <div
-                                                        class="uk-text-bolder uk-text-small"
-                                                    >
-                                                        250.000VNĐ
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <a
-                                                    class="uk-icon-link uk-text-danger uk-invisible-hover"
-                                                    href="#"
-                                                    uk-icon="icon: close; ratio: .75"
-                                                    uk-tooltip="Remove"
-                                                ></a>
-                                            </div></div
-                                    ></arttcle>
-                                </li>
-                                <li class="uk-visible-toggle">
-                                    <arttcle
-                                        ><div class="uk-grid-small" uk-grid>
-                                            <div class="uk-width-1-4">
-                                                <div
-                                                    class="tm-ratio tm-ratio-4-3"
-                                                >
-                                                    <a
-                                                        class="tm-media-box"
-                                                        href="product.html"
-                                                        ><figure
-                                                            class="tm-media-box-wrap"
-                                                        >
-                                                            <img
-                                                                src="~/images/SweaterNike.jpg"
-                                                                alt='Nike Sport Swear Jacket'
-                                                            /></figure
-                                                    ></a>
-                                                </div>
-                                            </div>
-                                            <div class="uk-width-expand">
-                                                <div
-                                                    class="uk-text-meta uk-text-xsmall"
-                                                >
-                                                    Áo khoác
-                                                </div>
-                                                <div
-                                                    class="uk-link-heading uk-text-small"
-                                                   
-                                                    >Áo khoác nam Nike Sport</div
-                                                >
-                                                <div
-                                                    class="uk-margin-xsmall uk-grid-small uk-flex-middle"
-                                                    uk-grid
-                                                >
-                                                    <div
-                                                        class="uk-text-bolder uk-text-small"
-                                                    >
-                                                        250.000VNĐ
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <a
-                                                    class="uk-icon-link uk-text-danger uk-invisible-hover"
-                                                    href="#"
-                                                    uk-icon="icon: close; ratio: .75"
-                                                    uk-tooltip="Remove"
-                                                ></a>
-                                            </div></div
-                                    ></arttcle>
-                                </li>
-                            </ul>
-                        </div>
-                        <footer class="uk-card-footer">
-                            <div class="uk-grid-small" uk-grid>
-                                <div
-                                    class="uk-width-expand uk-text-muted uk-h4"
-                                >
-                                    Tổng
-                                </div>
-                                <div class="uk-h4 uk-text-bolder">500.000VNĐ</div>
-                            </div>
-                            <div
-                                class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m uk-margin-small"
-                                uk-grid
-                            >
-                                <div>
-                                    <a
-                                        class="uk-button uk-button-default uk-margin-small uk-width-1-1"
-                                        href="cart.html"
-                                        >Xem Giỏ Hàng</a
-                                    >
-                                </div>
-                                <div>
-                                    <a
-                                        class="uk-button uk-button-primary uk-margin-small uk-width-1-1"
-                                        asp-controller="Checkout" asp-action="Index"
-                                        >Thanh Toán</a>
-                                </div>
-                            </div>
-                        </footer>
                     </div>
                 </aside>
             </div>

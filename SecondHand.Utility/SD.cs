@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MimeKit.Cryptography;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,11 @@ namespace SecondHand.Utility
         public const string Role_Compa = "Company";
         public const string Role_Admin = "Admin";
         public const string Role_Employee = "Employee";
+        public const string ssShopingCart = "Shoping cart Session";
+
+        public static double GetPriceBaseOnQuanity(int quantity, decimal price)
+        {         
+            return Convert.ToDouble(price * quantity);
+        }
     }
 }

@@ -32,14 +32,14 @@ namespace MVC_Core.Areas.Admin.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-    var products = await _context.Products.Include(p => p.Brand)
-        .Include(p => p.Category)
-        .Include(p => p.productGallery)
-        .ToListAsync();
+            var products = await _context.Products.Include(p => p.Brand)
+                .Include(p => p.Category)
+                .Include(p => p.productGallery)
+                .ToListAsync();
 
-    ViewBag.Brands = await _context.Brands.ToListAsync(); // Đưa danh sách thương hiệu cho dropdownlist
+            ViewBag.Brands = await _context.Brands.ToListAsync(); // Đưa danh sách thương hiệu cho dropdownlist
 
-    return View(products);
+            return View(products);
         }
 
         // GET: Products/Details/5

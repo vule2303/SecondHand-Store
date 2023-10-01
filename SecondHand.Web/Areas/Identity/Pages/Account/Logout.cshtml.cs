@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SecondHand.Models.Domain;
+using SecondHand.Utility;
 
 namespace SecondHand.Areas.Identity.Pages.Account
 {
@@ -26,6 +27,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
+            HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)

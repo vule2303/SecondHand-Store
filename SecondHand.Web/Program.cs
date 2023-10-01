@@ -121,7 +121,12 @@ namespace SecondHand
                     CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
             });
 
-
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 
             var app = builder.Build();
@@ -138,6 +143,7 @@ namespace SecondHand
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession(); 
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();        

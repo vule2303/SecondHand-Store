@@ -15,6 +15,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SecondHand.Models.Domain;
+using SecondHand.DataAccess.Data;
+using SecondHand.Utility.Services;
+using SecondHand.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace SecondHand.Areas.Identity.Pages.Account
 {
@@ -23,11 +27,13 @@ namespace SecondHand.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager)
+        private readonly S2HandDbContext _context;
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, S2HandDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
             _userManager = userManager;
+            _context = context;
         }
 
         /// <summary>
@@ -122,6 +128,9 @@ namespace SecondHand.Areas.Identity.Pages.Account
             
                 if (result.Succeeded)
                 {
+                    var user = _context.ApplicationUsers.FirstOrDefault(x => x.Email == Input.UserNameOrEmail || x.UserName == Input.UserNameOrEmail);
+                    int count = _context.CartItems.Where(u => u.UserId == user.Id).ToList().Count();
+                    HttpContext.Session.SetInt32(SD.ssShopingCart, count);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

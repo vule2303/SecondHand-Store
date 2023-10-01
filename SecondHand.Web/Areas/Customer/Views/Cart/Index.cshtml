@@ -1,0 +1,190 @@
+﻿@using System.Globalization;
+@using SecondHand.Utility;
+@model SecondHand.Models.ViewModels.CartVM
+@inject IHttpContextAccessor HttpContextAccessor
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<section class="uk-section uk-section-small">
+    <div class="uk-container">
+        <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
+            <div class="uk-text-center">
+                <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
+                    <li><a asp-controller="Home" asp-action="Index">Trang Chủ</a></li>
+                    <li><span>Giỏ Hàng</span></li>
+                </ul>
+                <h1 class="uk-margin-small-top uk-margin-remove-bottom">
+                    Giỏ Hàng
+                </h1>
+            </div>
+            @if(Model.ListCart.Count() > 0)
+            {
+                <di class="uk-margin-top">
+                    <div class="uk-grid-medium" uk-grid>
+                        <div class="uk-width-1-1 uk-width-expand@m">
+                            <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
+                                <header class="uk-card-header uk-text-uppercase uk-text-muted uk-text-center uk-text-small uk-visible@m">
+                                    <div class="uk-grid-small uk-child-width-1-2"
+                                    uk-grid>
+                                        <div>Sản phẩm</div>
+                                        <div>
+                                            <div class="uk-grid-small uk-child-width-expand"
+                                            uk-grid>
+                                                <div>Đơn giá</div>
+                                                <div>Số lượng</div>
+                                                <div>Tổng</div>
+                                                <div class="uk-width-auto">
+                                                    <div style="width: 20px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header>
+                                @foreach(var item in Model.ListCart){
+                                    <div class="uk-card-body">
+                                        <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m uk-flex-middle"
+                                             uk-grid>
+                                            <!-- Product cell-->
+                                      
+                                            <div>
+                                                <div class="uk-grid-small"
+                                                     uk-grid>
+                                                    <div class="uk-width-1-3">
+                                                        <div class="tm-ratio tm-ratio-4-3">
+                                                            <a class="tm-media-box"
+                                                               asp-controller="Home" asp-action="Details" asp-route-id ="@item.Id">
+                                                                <figure class="tm-media-box-wrap">
+                                                                    <img src="~/images/products/@item.Product.productGallery.Select(m => m.URL).FirstOrDefault()"
+                                                                         alt='@item.Product.Name' />
+                                                                </figure>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-expand">
+                                                        <div class="uk-text-meta">
+                                                            @item.Product.Category.Name
+                                                        </div>
+                                                        <a class="uk-link-heading"
+                                                   asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">@item.Product.Name</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Other cells-->
+                                            <div>
+                                                <div class="uk-grid-small uk-child-width-1-1 uk-child-width-expand@s uk-text-center"
+                                                     uk-grid>
+                                                    <div>
+                                                        <div class="uk-text-muted uk-hidden@m">
+                                                            Giá
+                                                        </div>
+                                                        <div>
+                                                            @item.Product.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ",")
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-text-muted uk-hidden@m">
+                                                            Số lượng
+                                                        </div>
+                                                        <div>
+                                                            @item.count
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="uk-text-muted uk-hidden@m">
+                                                            Tổng
+                                                        </div>
+                                                        <div>
+                                                            @item.price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ",")
+                                                        </div>
+                                                    </div>
+                                                    <div class="uk-width-auto@s">
+                                                        <a class="uk-text-danger"
+                                                           uk-tooltip="Remove" asp-action="Remove" asp-route-cartId ="@item.Id">
+                                                            <span uk-icon="close"></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="uk-card-footer">
+                                    <label>
+                                        <span class="uk-form-label uk-margin-small-right">Mã Giẩm Giá</span>
+                                        <span class="uk-inline">
+                                            <a class="uk-form-icon uk-form-icon-flip"
+                                               href="#"
+                                               uk-icon="arrow-right"></a><input class="uk-input uk-form-width-small"
+                                                                                type="text" />
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-1-1 tm-aside-column uk-width-1-4@m">
+                            <div class="uk-card uk-card-default uk-card-small tm-ignore-container"
+                                 uk-sticky="offset: 30; bottom: true; media: ">
+                                <div class="uk-card-body">
+                                    <div class="uk-grid-small"
+                                         uk-grid>
+                                        <div class="uk-width-expand uk-text-muted uk-text-bold">
+                                            Số sản phẩm
+                                        </div>
+                                        <div>
+
+                                            @{
+                                                var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShopingCart);
+                                            }
+                                                @count
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid-small"
+                                         uk-grid>
+                                        <div class="uk-width-expand uk-text-muted uk-text-bold">
+                                            Tổng hoá đơn
+                                        </div>
+                                        <div>
+                                            @(((decimal)Model.Order.Total).ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))
+                                        </div>
+                                    </div>
+                                    <div class="uk-grid-small"
+                                         uk-grid>
+                                        <div class="uk-width-expand uk-text-muted uk-text-bold">
+                                            Giảm giá
+                                        </div>
+                                        <div class="uk-text-danger">
+                                            $0
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-card-body">
+                                    <div class="uk-grid-small uk-flex-middle"
+                                         uk-grid>
+                                        <div class="uk-width-expand uk-text-muted uk-text-bold">
+                                            Tổng
+                                        </div>
+                                        <div class="uk-text-lead uk-text-bolder ">
+                                            @(((decimal)Model.Order.Total).ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))
+
+                                        </div>
+                                    </div>
+                                    <a class="uk-button uk-button-primary uk-margin-small uk-width-1-1"
+                                       href="checkout.html">Thanh Toán</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </di>
+            }
+            else
+            {
+                <div>
+                    <h4>Giỏ hàng rỗng</h4>
+                </div>
+            }
+        </div>
+    </div>
+</section>

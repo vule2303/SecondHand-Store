@@ -46,9 +46,9 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Disscount"></label>
-                <input asp-for="Disscount" class="form-control" />
-                <span asp-validation-for="Disscount" class="text-danger"></span>
+                <label asp-for="Discount"></label>
+                <input asp-for="Discount" class="form-control" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -64,8 +64,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Created">Ngày tạo</label>
-                <input asp-for="Created" class="form-control datepicker" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    <label asp-for="ShppingDate">Ngày giao hàng</label>
+                    <input asp-for="ShppingDate" class="form-control datepicker" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
             </div>
 
         </div>

@@ -31,7 +31,7 @@ namespace SecondHand.DataAccess.Data
 
         public virtual DbSet<Order> Orders { get; set; }
 
-        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
 
         public virtual DbSet<Product> Products { get; set; }
 
