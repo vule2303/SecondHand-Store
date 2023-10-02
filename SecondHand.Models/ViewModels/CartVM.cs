@@ -11,5 +11,6 @@ namespace SecondHand.Models.ViewModels
 	{
 		public IEnumerable<CartItem> ListCart { get;set; }
 		public Order Order { get; set; }
+
 	}
 }

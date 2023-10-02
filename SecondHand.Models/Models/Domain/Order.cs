@@ -34,15 +34,16 @@ namespace SecondHand.Models.Domain {
 
         public string? Note { get; set; }
 
-        public DateTime? ShppingDate { get; set; }
+        public DateTime? ShippingDate { get; set; }
 
         public bool? IsCancelled { get; set; }
+        public string? Name { get; set; }
 
         public string? PhoneNumber { get; set; }
         public string? Address { get; set; }
-        public string? Cirty { get; set; }
+        public string? City { get; set; }
         public string? State { get;set; }
-        public string? Name { get; set; }
+        public string? Ward { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 

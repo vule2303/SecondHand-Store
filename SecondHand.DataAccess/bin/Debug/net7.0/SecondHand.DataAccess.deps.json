@@ -2639,7 +2639,8 @@
           "Microsoft.AspNetCore.Identity.UI": "7.0.11",
           "Microsoft.EntityFrameworkCore": "7.0.11",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "7.0.10",
-          "MimeKit": "4.2.0"
+          "MimeKit": "4.2.0",
+          "SecondHand.Utility": "1.0.0"
         },
         "runtime": {
           "SecondHand.Models.dll": {}

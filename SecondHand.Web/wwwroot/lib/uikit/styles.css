@@ -7,6 +7,9 @@ body {
     font-weight: 700;
 }
 
+body a{
+    text-decoration:none;
+}
 /* Dropmenu */
 
 code {
@@ -115,7 +118,6 @@ main {
 
 /* Style for the link inside list items */
 .styles-item a {
-    text-decoration: underline;
     color: #000; /* Set link color */
 }
 
@@ -786,7 +788,7 @@ a.uk-link-text:hover {
 }
 
 .uk-link-heading {
-    font-size: .875rem;
+    font-size: 1.2rem;
     text-decoration: none;
 }
 
@@ -1587,7 +1589,7 @@ select.uk-form-width-xsmall {
 
 .uk-form-label {
     color: #333;
-    font-size: 0.875rem;
+    font-size: 1.1rem;
 }
 
 .uk-form-stacked .uk-form-label {
@@ -2043,6 +2045,7 @@ select.uk-form-width-xsmall {
 }
 
 .uk-grid-small {
+    font-size: 1.1rem;
     margin-left: -15px;
 }
 
@@ -3321,7 +3324,7 @@ ul.uk-nav-sub {
 
         .uk-breadcrumb > * > * {
             display: inline-block;
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: #999;
         }
 
@@ -5073,7 +5076,7 @@ ul.uk-nav-sub {
 }
 
 .uk-text-meta {
-    font-size: 0.875rem;
+    font-size: 1.1rem;
     line-height: 1.4;
     color: #999;
 }
@@ -5087,14 +5090,15 @@ ul.uk-nav-sub {
             text-decoration: none;
         }
 
-.uk-text-large,
 .uk-text-small {
     font-size: 0.875rem;
     line-height: 1.5;
 }
-
+.uk-text-medium {
+    font-size: 1.1rem;
+}
 .uk-text-large {
-    font-size: 1.5rem;
+        font-size: 1.5rem;
 }
 
 .uk-text-bold {
@@ -5114,6 +5118,7 @@ ul.uk-nav-sub {
 }
 
 .uk-text-muted {
+    font-size: 1.1rem;
     color: #999 !important;
 }
 
@@ -8673,3 +8678,5 @@ iframe.uk-cover {
         -webkit-filter: none;
         filter: none;
     }
+
+   

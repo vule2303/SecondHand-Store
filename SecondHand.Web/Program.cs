@@ -12,6 +12,7 @@ using SecondHand.DataAccess.Data;
 using SecondHand.Utility.Services;
 using SecondHand.Models.Domain;
 using Microsoft.AspNetCore.Builder;
+using SecondHand.Models.Services;
 
 namespace SecondHand
 {
@@ -29,6 +30,8 @@ namespace SecondHand
             var mailSettings = builder.Configuration.GetSection("MailSettings");
             builder.Services.Configure<MailSettings>(mailSettings);
             builder.Services.AddSingleton<IEmailSender, SendMailService>();
+            builder.Services.AddScoped<IVnPayService, VnPayService>();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
