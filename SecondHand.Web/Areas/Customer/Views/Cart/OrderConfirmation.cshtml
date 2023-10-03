@@ -1,0 +1,225 @@
+﻿@model SecondHand.Models.Domain.Order
+@using SecondHand.Utility
+@{
+   
+}
+
+<div class="container mt-5 mb-5">
+
+    <div class="row d-flex justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <div class="text-left logo p2 px-5">
+
+                    <img src="~/images/icons8-jake.gif" width="50" style="padding-top: 10px">
+
+                </div>
+
+                <div class="invoice p-5">
+
+                    <h5>Đơn hàng đã xác nhận!</h5>
+
+                    <span class="font-weight-bold d-block mt-4">Chào, @Model.Name</span>
+                    <span>Đơn hàng của bạn đã được xác nhận và sẽ chuyển tới bạn trong 3-4 ngày tới</span>
+
+                    <div class="payment border-top mt-3 mb-3 border-bottom table-responsive">
+
+                        <table class="table table-borderless">
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="py-2">
+
+                                            <span class="d-block text-muted">Ngày đặt hàng</span>
+                                            <span>@Model.OrderDate</span>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="py-2">
+
+                                            <span class="d-block text-muted">Mã đơn hàng</span>
+                                            <span>@Model.OrderCode</span>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="py-2">
+
+                                            <span class="d-block text-muted">Thanh toán</span>
+                                            <span><img src="https://img.icons8.com/color/48/000000/mastercard.png" width="20" /></span>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="py-2">
+
+                                            <span class="d-block text-muted">Địa chỉ</span>
+                                            <span>@Model.Address, @Model.Ward, @Model.State, @Model.City</span>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="product border-bottom table-responsive">
+
+                        <table class="table table-borderless">
+
+                            <tbody>
+                                @foreach (var item in Model.OrderDetails)
+                                {
+                                    <tr>
+                                        <td width="20%">
+
+                                            <img src="~/images/products/@item.Product.productGallery.Select(x => x.URL).FirstOrDefault()" width="90">
+
+                                        </td>
+
+                                        <td width="60%">
+                                            <span class="font-weight-bold">@item.Product.Name</span>
+                                            <div class="product-qty">
+                                                <span class="d-block">Số lượng:1</span>
+                                                <span>Màu sắc:@item.Product.Color</span>
+
+                                            </div>
+                                        </td>
+                                        <td width="20%">
+                                            <div class="text-right">
+                                                <span class="font-weight-bold">@SD.ConvertToCurrencyFormat(item.Price)</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                                               
+                            </tbody>
+
+                        </table>
+
+
+
+                    </div>
+
+
+
+                    <div class="row d-flex justify-content-end">
+
+                        <div class="col-md-5">
+
+                            <table class="table table-borderless">
+
+                                <tbody class="totals">
+
+                                    <tr>
+                                        <td>
+                                            <div class="text-left">
+
+                                                <span class="text-muted">Tổng giá</span>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right">                                                
+                                                    <span>@SD.ConvertToCurrencyFormat(Model.Subtotal)</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="text-left">
+
+                                                <span class="text-muted">Phí ship</span>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right">
+                                                <span>0đ</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                   
+
+                                    <tr>
+                                        <td>
+                                            <div class="text-left">
+
+                                                <span class="text-muted">Giảm giá</span>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right">
+                                                <span class="text-success">@SD.ConvertToCurrencyFormat(Model.Discount)</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="border-top border-bottom">
+                                        <td>
+                                            <div class="text-left">
+
+                                                <span class="font-weight-bold">Tổng</span>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right">
+                                                <span class="font-weight-bold">@SD.ConvertToCurrencyFormat(Model.Total)</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+
+                    </div>
+
+
+                    <p>S2Hand sẽ gửi thông tin đơn hàng của bạn qua email khi đơn hàng được ship !</p>
+                    <p class="font-weight-bold mb-0">Cảm ơn bạn @Model.Name đã mua hàng</p>
+                    <span>S2Hand Team</span>
+
+
+
+
+
+                </div>
+
+
+                <div class="d-flex justify-content-between footer p-3">
+
+                    <span>Cần hỗ trợ hãy<a href="#"> gửi trợ giúp</a></span>
+                    <span>@DateTime.Today.ToString("dd/MM/yyyy")</span>
+
+                    </div>
+                   
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

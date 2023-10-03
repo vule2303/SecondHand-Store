@@ -18,9 +18,11 @@
                     Thanh Toán
                 </h1>
             </section>
+            <form method="post">
             <section>
                 <div class="uk-grid-medium" uk-grid>
-                    <form class="uk-form-stacked uk-width-1-1 tm-checkout uk-width-expand@m">
+                    <div class="uk-form-stacked uk-width-1-1 tm-checkout uk-width-expand@m">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="uk-grid-medium uk-child-width-1-1"
                              uk-grid>
                             <section>
@@ -36,7 +38,7 @@
                                                     Họ và tên
                                                 </div>
                                                 <input asp-for="Order.Name" class="uk-input" type="text" />
-                                                       
+                                                <span asp-validation-for="Order.Name" class="text-danger"></span>
                                             </label>
                                         </div>
                                        
@@ -48,6 +50,7 @@
                                                 <input asp-for ="Order.PhoneNumber" class="uk-input"
                                                        type="tel"
                                                        required />
+                                                <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
                                             </label>
                                         </div>
                                         <div>
@@ -58,6 +61,7 @@
                                                 <input asp-for="Order.User.Email" class="uk-input"
                                                        type="email"
                                                        required />
+                                                <span asp-validation-for="Order.User.Email" class="text-danger"></span>
                                             </label>
                                         </div>
                                     </div>
@@ -81,6 +85,7 @@
                                                         <div class="uk-form-controls">
                                                         <input asp-for="Order.Address" class="uk-input"
                                                                type="text" />
+                                                            <span asp-validation-for="Order.Address" class="text-danger"></span>
                                                         </div>
                                                     </label>
                                                 </div>
@@ -96,6 +101,7 @@
                                                         <select asp-for="Order.City" id="citySelect" class="uk-select">
                                                             <option value="">Chọn thành phố</option>
                                                         </select>
+                                                        <span asp-validation-for="Order.City" class="text-danger"></span>
                                                     </label>
                                                 </div>
                                                 <div>
@@ -106,6 +112,7 @@
                                                         <select asp-for="Order.State" id="districtSelect" class="uk-select">
                                                             <option value="">Chọn quận/huyện</option>
                                                         </select>
+                                                        <span asp-validation-for="Order.State" class="text-danger"></span>
                                                     </label>
                                                 </div>  
                                                 <div>
@@ -116,6 +123,7 @@
                                                         <select asp-for="Order.Ward" id="wardSelect" class="uk-select">
                                                             <option value="">Chọn phường/xã</option>
                                                         </select>
+                                                        <span asp-validation-for="Order.Ward" class="text-danger"></span>
                                                     </label>
                                                 </div>
                                                 <div class="uk-form-group uk-margin-top">
@@ -128,6 +136,7 @@
                                                             <textarea asp-for="Order.Note" class="uk-textarea uk-child-width-1-1 uk-form-control"
                                                                   rows="5"
                                                                   placeholder="Note cho cửa hàng"></textarea>
+                                                        <span asp-validation-for="Order.Note" class="text-danger"></span>
                                                          </div>
                                                     
                                                 </div>
@@ -213,7 +222,7 @@
                                 </div>
                             </section>
                         </div>
-                    </form>
+                    </div>
                     <div class="uk-width-1-1 uk-width-1-4@m tm-aside-column">
                         <div class="uk-card uk-card-default uk-card-small tm-ignore-container"
                              uk-sticky="offset: 30; bottom: true;">
@@ -278,14 +287,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="uk-button uk-button-primary uk-margin-small uk-width-1-1">
+                               
+                                <button type="submit" class="uk-button uk-button-primary uk-margin-small uk-width-1-1">
                                     Đặt hàng
                                 </button>
+                               
                             </section>
                         </div>
                     </div>
                 </div>
             </section>
+            </form>
         </div>
     </div>
 </section>

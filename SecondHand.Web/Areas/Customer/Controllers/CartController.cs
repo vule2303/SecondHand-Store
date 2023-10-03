@@ -19,6 +19,7 @@ namespace MVC_Core.Areas.Customer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IVnPayService _vnPayService;
+        [BindProperty]
         public CartVM CartVM { get; set; }
 
         public CartController(S2HandDbContext context, IEmailSender emailSender, UserManager<ApplicationUser> userManager, IVnPayService vnPayService)
@@ -95,6 +96,65 @@ namespace MVC_Core.Areas.Customer.Controllers
             CartVM.Order.PhoneNumber = CartVM.Order.User.PhoneNumber;
 
             return View(CartVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Checkout()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            CartVM.Order.User = _context.ApplicationUsers.FirstOrDefault(c => c.Id == claim.Value);
+
+            CartVM.ListCart = _context.CartItems.Include(p => p.Product).Where(c => c.UserId == claim.Value).ToList();
+
+            //tao ma don hang ngau nhien
+            Random random = new Random();
+            int randomNumber = random.Next(100000000, 999999999);
+            CartVM.Order.OrderCode = "DH" + randomNumber.ToString();
+            CartVM.Order.PaymentStatus = SD.PaymentStatusPending;
+            CartVM.Order.OrderStatus = SD.OrderStatusPending;
+            CartVM.Order.UserId = claim.Value;
+            CartVM.Order.OrderDate = DateTime.Now;
+
+            _context.Orders.Add(CartVM.Order);
+            _context.SaveChanges();
+            CartVM.Order.Total = 0;
+            List<OrderDetail> orderDetailsList = new List<OrderDetail>();
+
+            foreach (var item in CartVM.ListCart)
+            {
+                OrderDetail orderDetail = new OrderDetail()
+                {
+                    ProductId = item.ProductId,
+                    OrderId = CartVM.Order.Id,
+                    Price = item.Product.Price,
+                    Count = item.count,
+               };
+
+                CartVM.Order.Total += (orderDetail.Count * orderDetail.Price);
+                _context.OrderDetail.Add(orderDetail);
+                _context.SaveChanges();
+            }
+
+            _context.CartItems.RemoveRange(CartVM.ListCart);
+            _context.SaveChanges(); 
+            HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
+
+
+
+            return RedirectToAction("OrderConfirmation","Cart", new {id = CartVM.Order.Id});
+        }
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            var listOdered = _context.Orders
+                .Include(d => d.OrderDetails)
+                .ThenInclude(p => p.Product)
+                .ThenInclude(x => x.productGallery)
+                .Include(u => u.User)
+                .FirstOrDefault(x => x.Id == id);
+            return View(listOdered);
         }
 
         public IActionResult CreatePaymentUrl(PaymentInformationModel model)

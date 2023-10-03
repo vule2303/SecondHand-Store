@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SecondHand.Models.Models.Domain
 {
-    public class PaymentResponseModel
+    public class PaymentDetail
     {
+        public int id { get; set; }
         public string OrderDescription { get; set; }
         public string TransactionId { get; set; }
         public string OrderId { get; set; }
@@ -16,5 +17,6 @@ namespace SecondHand.Models.Models.Domain
         public bool Success { get; set; }
         public string Token { get; set; }
         public string VnPayResponseCode { get; set; }
+
     }
 }

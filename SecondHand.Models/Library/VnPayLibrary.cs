@@ -16,7 +16,7 @@ namespace SecondHand.Models.Library
     {
         private readonly SortedList<string, string> _requestData = new SortedList<string, string>(new VnPayCompare());
         private readonly SortedList<string, string> _responseData = new SortedList<string, string>(new VnPayCompare());
-        public PaymentResponseModel GetFullResponseData(IQueryCollection collection, string hashSecret)
+        public PaymentDetail GetFullResponseData(IQueryCollection collection, string hashSecret)
         {
             var vnPay = new VnPayLibrary();
 
@@ -39,12 +39,12 @@ namespace SecondHand.Models.Library
                 vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
 
             if (!checkSignature)
-                return new PaymentResponseModel()
+                return new PaymentDetail()
                 {
                     Success = false
                 };
 
-            return new PaymentResponseModel()
+            return new PaymentDetail()
             {
                 Success = true,
                 PaymentMethod = "VnPay",

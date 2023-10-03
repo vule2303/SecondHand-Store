@@ -46,7 +46,7 @@ namespace SecondHand.Models.Services
             return paymentUrl;
         }
 
-        public PaymentResponseModel PaymentExecute(IQueryCollection collections)
+        public PaymentDetail PaymentExecute(IQueryCollection collections)
         {
             var pay = new VnPayLibrary();
             var response = pay.GetFullResponseData(collections, _configuration["Vnpay:HashSecret"]);
