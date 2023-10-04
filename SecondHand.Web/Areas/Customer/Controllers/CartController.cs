@@ -100,7 +100,7 @@ namespace MVC_Core.Areas.Customer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Checkout()
+        public IActionResult Checkout(string actionPayment)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -134,13 +134,24 @@ namespace MVC_Core.Areas.Customer.Controllers
 
                 CartVM.Order.Total += (orderDetail.Count * orderDetail.Price);
                 _context.OrderDetail.Add(orderDetail);
-                _context.SaveChanges();
+
             }
 
             _context.CartItems.RemoveRange(CartVM.ListCart);
             _context.SaveChanges(); 
             HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
 
+
+            if(actionPayment == null)
+            {
+
+            }
+            else
+            {
+                //process the payment
+                var url = _vnPayService.CreatePaymentUrl(CartVM.Order, HttpContext);
+                Redirect(url);
+            }
 
 
             return RedirectToAction("OrderConfirmation","Cart", new {id = CartVM.Order.Id});
@@ -157,7 +168,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             return View(listOdered);
         }
 
-        public IActionResult CreatePaymentUrl(PaymentInformationModel model)
+        public IActionResult CreatePaymentUrl(Order model)
         {
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
 

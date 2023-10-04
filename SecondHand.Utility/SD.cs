@@ -32,7 +32,12 @@ namespace SecondHand.Utility
         public const string PaymentStatusPending = "Đang chờ";
         public const string PaymentStatusApproved = "Đã thanh toán";
         public const string PaymentStatusCancel = "Bị huỷ";
-    
+
+        public const string PaymentMethodCod = "Ship COD";
+        public const string PaymentMethodVnPay = "VN Pay";
+        public const string PaymentMethodMoMo = "MOMO";
+
+
         public static string ConvertToCurrencyFormat(decimal price)
             {
                 CultureInfo cultureInfo = CultureInfo.GetCultureInfo("vi-VN");
