@@ -9,6 +9,8 @@ using SecondHand.Models.ViewModels;
 using SecondHand.Utility;
 using SecondHand.Utility.Services;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Runtime.CompilerServices;
 
 namespace MVC_Core.Areas.Customer.Controllers
 {
@@ -100,7 +102,7 @@ namespace MVC_Core.Areas.Customer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Checkout(string actionPayment)
+        public IActionResult Checkout()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
@@ -116,7 +118,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             CartVM.Order.OrderStatus = SD.OrderStatusPending;
             CartVM.Order.UserId = claim.Value;
             CartVM.Order.OrderDate = DateTime.Now;
-
+      
             _context.Orders.Add(CartVM.Order);
             _context.SaveChanges();
             CartVM.Order.Total = 0;
@@ -138,23 +140,29 @@ namespace MVC_Core.Areas.Customer.Controllers
             }
 
             _context.CartItems.RemoveRange(CartVM.ListCart);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
             HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
 
 
-            if(actionPayment == null)
+            if ( CartVM.Order.PaymentMethod == SD.PaymentMethodCod)
             {
-
+              
+                return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.Order.Id });
             }
-            else
+            else if(CartVM.Order.PaymentMethod == SD.PaymentMethodVnPay)
             {
                 //process the payment
                 var url = _vnPayService.CreatePaymentUrl(CartVM.Order, HttpContext);
-                Redirect(url);
+
+                return Redirect(url);
+            }
+            else
+            {
+                return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.Order.Id });
+
             }
 
 
-            return RedirectToAction("OrderConfirmation","Cart", new {id = CartVM.Order.Id});
         }
 
         public IActionResult OrderConfirmation(int id)
@@ -178,7 +186,21 @@ namespace MVC_Core.Areas.Customer.Controllers
         public IActionResult PaymentCallback()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);
+            if(response.Success == true)
+            {
+                var orderFinded = _context.Orders.Where(o => o.Id == response.OrderId).FirstOrDefault();
+                if(orderFinded != null)
+                {
+                    orderFinded.PaymentStatus = SD.PaymentStatusApproved;
+                    orderFinded.OrderStatus = SD.OrderStatusPending;
+                    _context.SaveChanges();
+                    return RedirectToAction("OrderConfirmation", "Cart", new { id = orderFinded.Id }); ;
 
+                }
+
+                return Json(response);
+
+            }
             return Json(response);
         }
     }

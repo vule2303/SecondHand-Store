@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.Models.Domain;
 using SecondHand.Models.Models.Domain;
@@ -37,6 +38,9 @@ namespace SecondHand.DataAccess.Data
         public virtual DbSet<Promotion> Promotions { get; set; }
 
         public virtual DbSet<ProductImages> ProductImages { get; set; }
+        
+        public virtual DbSet<PaymentDetail> PaymentDetails { get; set; }
+        
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public S2HandDbContext(DbContextOptions<S2HandDbContext> options)
             : base(options)
