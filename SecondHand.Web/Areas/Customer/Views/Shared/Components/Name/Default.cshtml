@@ -1,0 +1,25 @@
+﻿@using SecondHand.Models.Models.Domain;
+@using System.Linq;
+@model IEnumerable<SecondHand.Models.Domain.Category>
+@{
+
+}
+            <div class="uk-text-center">
+                <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
+
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="catalog.html">Danh Mục</a></li>
+                </ul>
+                @foreach (var a in Model.Take(1))
+                {
+
+                    <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
+                        @Model.FirstOrDefault()?.Name
+
+                    </h1>
+                
+                <div class="uk-text-meta uk-margin-xsmall-top">
+                   Số lượng:  @Model.Count()
+        </div>
+    }
+            </div>
