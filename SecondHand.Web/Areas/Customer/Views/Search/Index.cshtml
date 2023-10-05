@@ -1,0 +1,54 @@
+﻿@using System.Globalization;
+@model List<SecondHand.Models.Domain.Product>
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "_Layout";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<section class="section-products">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-lg-6">
+				<div class="header">
+					<h2>Kết quả tìm kiếm</h2>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				<div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
+					<div class="product">
+						<a class="tm-media-box" asp-action="Details" asp-route-id="@item.Id">
+							@if (item.productGallery != null)
+							{
+								<img src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
+							}
+							else
+							{
+								<!-- Hiển thị một hình ảnh mặc định nếu không có hình ảnh -->
+								<img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
+							}
+						</a>
+						<form method="post" enctype="multipart/form-data" asp-action="Details">
+							<input hidden asp-for="@item.Id" />
+							<div class="d-flex align-items-center justify-content-center list-unstyled icons">
+								<button class="button-75 icon mx-3" type="submit"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></button>
+							</div>
+						</form>
+					</div>
+					<div class="tag bg-red">sale</div>
+					<div class="heart">
+						<a href="#"><i class="fa fa-heart-o" id="white-heart"></i></a>
+					</div>
+					<a class="title pt-4 pb-1" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+					<a class="size" asp-action="Details" asp-route-id="@item.Id">Size @item.Size</a>
+					<a class="price" asp-action="Details" asp-route-id="@item.Id">@(item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))</a>
+				</div>
+
+			}
+		</div>
+	</div>
+</section>
