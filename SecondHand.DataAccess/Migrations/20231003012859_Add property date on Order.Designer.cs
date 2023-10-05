@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecondHand.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using SecondHand.DataAccess.Data;
 namespace SecondHand.DataAccess.Migrations
 {
     [DbContext(typeof(S2HandDbContext))]
-    partial class S2HandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231003012859_Add property date on Order")]
+    partial class AddpropertydateonOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,6 +156,33 @@ namespace SecondHand.DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("SecondHand.Models.Domain.Adress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AdressId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserAddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserAddressId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Adresses");
                 });
 
             modelBuilder.Entity("SecondHand.Models.Domain.ApplicationUser", b =>
@@ -422,8 +452,11 @@ namespace SecondHand.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Discount")
+                    b.Property<decimal?>("Discount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool?>("IsCancelled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -431,15 +464,14 @@ namespace SecondHand.DataAccess.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("OrderDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderStatus")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PaymentDetailid")
+                        .HasColumnType("int");
 
                     b.Property<string>("PaymentMethod")
                         .HasColumnType("nvarchar(max)");
@@ -459,10 +491,11 @@ namespace SecondHand.DataAccess.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Subtotal")
+                    b.Property<decimal?>("Subtotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("Total")
+                    b.Property<decimal?>("Total")
+                        .IsRequired()
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
@@ -474,6 +507,8 @@ namespace SecondHand.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PaymentDetailid");
 
                     b.HasIndex("PromotionId");
 
@@ -490,18 +525,18 @@ namespace SecondHand.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<int?>("OrderId")
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int?>("ProductId")
                         .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int>("count")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -603,7 +638,7 @@ namespace SecondHand.DataAccess.Migrations
                     b.ToTable("Promotions");
                 });
 
-            modelBuilder.Entity("SecondHand.Models.Models.Domain.PaymentDetail", b =>
+            modelBuilder.Entity("SecondHand.Models.Domain.UserAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -611,20 +646,51 @@ namespace SecondHand.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool?>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Modifiled")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserAddresses");
+                });
+
+            modelBuilder.Entity("SecondHand.Models.Models.Domain.PaymentDetail", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
                     b.Property<string>("OrderDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentMethod")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponseCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -639,11 +705,13 @@ namespace SecondHand.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("VnPayResponseCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("OrderId");
+                    b.HasKey("id");
 
-                    b.ToTable("PaymentDetails");
+                    b.ToTable("PaymentDetail");
                 });
 
             modelBuilder.Entity("SecondHand.Models.Models.Domain.ProductImages", b =>
@@ -723,6 +791,21 @@ namespace SecondHand.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SecondHand.Models.Domain.Adress", b =>
+                {
+                    b.HasOne("SecondHand.Models.Domain.UserAddress", "UserAddress")
+                        .WithMany("Adresses")
+                        .HasForeignKey("UserAddressId");
+
+                    b.HasOne("SecondHand.Models.Domain.ApplicationUser", "User")
+                        .WithMany("Adresses")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+
+                    b.Navigation("UserAddress");
+                });
+
             modelBuilder.Entity("SecondHand.Models.Domain.CartItem", b =>
                 {
                     b.HasOne("SecondHand.Models.Domain.Product", "Product")
@@ -779,6 +862,10 @@ namespace SecondHand.DataAccess.Migrations
 
             modelBuilder.Entity("SecondHand.Models.Domain.Order", b =>
                 {
+                    b.HasOne("SecondHand.Models.Models.Domain.PaymentDetail", "PaymentDetail")
+                        .WithMany()
+                        .HasForeignKey("PaymentDetailid");
+
                     b.HasOne("SecondHand.Models.Domain.Promotion", "Promotion")
                         .WithMany("Orders")
                         .HasForeignKey("PromotionId");
@@ -788,6 +875,8 @@ namespace SecondHand.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PaymentDetail");
 
                     b.Navigation("Promotion");
 
@@ -828,17 +917,6 @@ namespace SecondHand.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SecondHand.Models.Models.Domain.PaymentDetail", b =>
-                {
-                    b.HasOne("SecondHand.Models.Domain.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("SecondHand.Models.Models.Domain.ProductImages", b =>
                 {
                     b.HasOne("SecondHand.Models.Domain.Product", "Products")
@@ -852,6 +930,8 @@ namespace SecondHand.DataAccess.Migrations
 
             modelBuilder.Entity("SecondHand.Models.Domain.ApplicationUser", b =>
                 {
+                    b.Navigation("Adresses");
+
                     b.Navigation("Favorites");
 
                     b.Navigation("Orders");
@@ -888,6 +968,11 @@ namespace SecondHand.DataAccess.Migrations
             modelBuilder.Entity("SecondHand.Models.Domain.Promotion", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("SecondHand.Models.Domain.UserAddress", b =>
+                {
+                    b.Navigation("Adresses");
                 });
 #pragma warning restore 612, 618
         }

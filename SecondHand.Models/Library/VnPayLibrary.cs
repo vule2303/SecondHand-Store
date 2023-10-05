@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using SecondHand.Models.Models.Domain;
+using SecondHand.Utility;
 
 namespace SecondHand.Models.Library
 {
@@ -16,7 +17,7 @@ namespace SecondHand.Models.Library
     {
         private readonly SortedList<string, string> _requestData = new SortedList<string, string>(new VnPayCompare());
         private readonly SortedList<string, string> _responseData = new SortedList<string, string>(new VnPayCompare());
-        public PaymentResponseModel GetFullResponseData(IQueryCollection collection, string hashSecret)
+        public PaymentDetail GetFullResponseData(IQueryCollection collection, string hashSecret)
         {
             var vnPay = new VnPayLibrary();
 
@@ -28,7 +29,7 @@ namespace SecondHand.Models.Library
                 }
             }
 
-            var orderId = Convert.ToInt64(vnPay.GetResponseData("vnp_TxnRef"));
+            var orderId = Convert.ToInt32(vnPay.GetResponseData("vnp_TxnRef"));
             var vnPayTranId = Convert.ToInt64(vnPay.GetResponseData("vnp_TransactionNo"));
             var vnpResponseCode = vnPay.GetResponseData("vnp_ResponseCode");
             var vnpSecureHash =
@@ -39,21 +40,20 @@ namespace SecondHand.Models.Library
                 vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
 
             if (!checkSignature)
-                return new PaymentResponseModel()
+                return new PaymentDetail()
                 {
                     Success = false
                 };
 
-            return new PaymentResponseModel()
+            return new PaymentDetail()
             {
                 Success = true,
-                PaymentMethod = "VnPay",
                 OrderDescription = orderInfo,
-                OrderId = orderId.ToString(),
-                PaymentId = vnPayTranId.ToString(),
+                OrderId = orderId,
+                PaymentMethod = SD.PaymentMethodVnPay,
                 TransactionId = vnPayTranId.ToString(),
                 Token = vnpSecureHash,
-                VnPayResponseCode = vnpResponseCode
+                ResponseCode = vnpResponseCode
             };
         }
         public string GetIpAddress(HttpContext context)

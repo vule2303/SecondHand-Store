@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecondHand.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using SecondHand.DataAccess.Data;
 namespace SecondHand.DataAccess.Migrations
 {
     [DbContext(typeof(S2HandDbContext))]
-    partial class S2HandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231003034149_delete address user")]
+    partial class deleteaddressuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -422,7 +425,7 @@ namespace SecondHand.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Discount")
+                    b.Property<decimal?>("Discount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Name")
@@ -459,10 +462,10 @@ namespace SecondHand.DataAccess.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Subtotal")
+                    b.Property<decimal?>("Subtotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("Total")
+                    b.Property<decimal?>("Total")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
@@ -601,49 +604,6 @@ namespace SecondHand.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Promotions");
-                });
-
-            modelBuilder.Entity("SecondHand.Models.Models.Domain.PaymentDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("OrderDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PaymentMethod")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponseCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Success")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TransactionId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("PaymentDetails");
                 });
 
             modelBuilder.Entity("SecondHand.Models.Models.Domain.ProductImages", b =>
@@ -826,17 +786,6 @@ namespace SecondHand.DataAccess.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("SecondHand.Models.Models.Domain.PaymentDetail", b =>
-                {
-                    b.HasOne("SecondHand.Models.Domain.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("SecondHand.Models.Models.Domain.ProductImages", b =>

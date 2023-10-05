@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecondHand.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using SecondHand.DataAccess.Data;
 namespace SecondHand.DataAccess.Migrations
 {
     [DbContext(typeof(S2HandDbContext))]
-    partial class S2HandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004153838_add table paymentDetails")]
+    partial class addtablepaymentDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

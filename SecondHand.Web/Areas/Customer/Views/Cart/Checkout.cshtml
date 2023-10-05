@@ -1,5 +1,6 @@
 ﻿@using SecondHand.Models.ViewModels;
 @using System.Globalization;
+@using SecondHand.Utility;
 @model CartVM
 @{
     Layout = "_Layout";
@@ -18,9 +19,11 @@
                     Thanh Toán
                 </h1>
             </section>
+            <form method="post">
             <section>
                 <div class="uk-grid-medium" uk-grid>
-                    <form class="uk-form-stacked uk-width-1-1 tm-checkout uk-width-expand@m">
+                    <div class="uk-form-stacked uk-width-1-1 tm-checkout uk-width-expand@m">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="uk-grid-medium uk-child-width-1-1"
                              uk-grid>
                             <section>
@@ -36,7 +39,7 @@
                                                     Họ và tên
                                                 </div>
                                                 <input asp-for="Order.Name" class="uk-input" type="text" />
-                                                       
+                                                <span asp-validation-for="Order.Name" class="text-danger"></span>
                                             </label>
                                         </div>
                                        
@@ -48,6 +51,7 @@
                                                 <input asp-for ="Order.PhoneNumber" class="uk-input"
                                                        type="tel"
                                                        required />
+                                                <span asp-validation-for="Order.PhoneNumber" class="text-danger"></span>
                                             </label>
                                         </div>
                                         <div>
@@ -58,6 +62,7 @@
                                                 <input asp-for="Order.User.Email" class="uk-input"
                                                        type="email"
                                                        required />
+                                                <span asp-validation-for="Order.User.Email" class="text-danger"></span>
                                             </label>
                                         </div>
                                     </div>
@@ -81,6 +86,7 @@
                                                         <div class="uk-form-controls">
                                                         <input asp-for="Order.Address" class="uk-input"
                                                                type="text" />
+                                                            <span asp-validation-for="Order.Address" class="text-danger"></span>
                                                         </div>
                                                     </label>
                                                 </div>
@@ -88,36 +94,44 @@
                                             </div>
                                             <div class="uk-grid-small uk-child-width-1-3 uk-child-width-1-3@s"
                                                  uk-grid>
-                                                <div>
-                                                    <label>
-                                                        <div class="uk-form-label uk-form-label-required">
-                                                            Thành phố
-                                                        </div>
-                                                        <select asp-for="Order.City" id="citySelect" class="uk-select">
-                                                            <option value="">Chọn thành phố</option>
-                                                        </select>
-                                                    </label>
-                                                </div>
-                                                <div>
-                                                    <label>
-                                                        <div class="uk-form-label uk-form-label-required">
-                                                            Quận/Huyện
-                                                        </div>
-                                                        <select asp-for="Order.State" id="districtSelect" class="uk-select">
-                                                            <option value="">Chọn quận/huyện</option>
-                                                        </select>
-                                                    </label>
-                                                </div>  
-                                                <div>
-                                                    <label>
-                                                        <div class="uk-form-label">
-                                                            Phường/Xã
-                                                        </div>
-                                                        <select asp-for="Order.Ward" id="wardSelect" class="uk-select">
-                                                            <option value="">Chọn phường/xã</option>
-                                                        </select>
-                                                    </label>
-                                                </div>
+                                                    <div>
+                                                        <label>
+                                                            <div class="uk-form-label uk-form-label-required">
+                                                                Thành phố
+                                                            </div>
+                                                            <select id="citySelect" class="uk-select">
+                                                                <option value="">Chọn thành phố</option>
+                                                            </select>
+                                                            <input hidden asp-for="Order.City" value="" id="cityInput" />
+                                                            <span asp-validation-for="Order.City" class="text-danger"></span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div>
+                                                        <label>
+                                                            <div class="uk-form-label uk-form-label-required">
+                                                                Quận/Huyện
+                                                            </div>
+                                                            <select id="districtSelect" class="uk-select">
+                                                                <option value="">Chọn quận/huyện</option>
+                                                            </select>
+                                                            <input hidden asp-for="Order.State" value="" id="districtInput" />
+                                                            <span asp-validation-for="Order.State" class="text-danger"></span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div>
+                                                        <label>
+                                                            <div class="uk-form-label">
+                                                                Phường/Xã
+                                                            </div>
+                                                            <select id="wardSelect" class="uk-select">
+                                                                <option value="">Chọn phường/xã</option>
+                                                            </select>
+                                                            <input hidden asp-for="Order.Ward" value="" id="wardInput" />
+                                                            <span asp-validation-for="Order.Ward" class="text-danger"></span>
+                                                        </label>
+                                                    </div>
                                                 <div class="uk-form-group uk-margin-top">
                                                     <label>
                                                         <div class="uk-form-label">
@@ -128,6 +142,7 @@
                                                             <textarea asp-for="Order.Note" class="uk-textarea uk-child-width-1-1 uk-form-control"
                                                                   rows="5"
                                                                   placeholder="Note cho cửa hàng"></textarea>
+                                                        <span asp-validation-for="Order.Note" class="text-danger"></span>
                                                          </div>
                                                     
                                                 </div>
@@ -142,47 +157,44 @@
                                     Phương thức trả tiền
                                 </h2>
                                 <div class="uk-card uk-card-default uk-card-small tm-ignore-container uk-margin-top uk-margin-bottom">
-                                    <div class="uk-card-body">
-                                        <div class="uk-grid-small uk-grid-match uk-child-width-1-1 uk-child-width-1-3@s uk-flex-center"
-                                             uk-switcher="toggle: &gt; * &gt; .tm-choose"
-                                             uk-grid>
-                                            <div>
-                                                <a class="tm-choose"
-                                                   href="#">
-                                                    <div class="tm-choose-title">
-                                                        Trả tiền
-                                                        khi
-                                                        nhận hàng
-                                                    </div>
+                                        <div class="uk-card-body">
+                                            <div class="uk-grid-small uk-grid-match uk-child-width-1-1 uk-child-width-1-3@s uk-flex-center"
+                                                 uk-switcher="toggle: &gt; * &gt; .tm-choose"
+                                                 uk-grid>
+                                                <div>
+                                                    <a class="tm-choose" href="#">
+                                                        <div class="tm-choose-title">
+                                                            Trả tiền khi nhận hàng
+                                                        </div>
+                                                    </a>
                                                     
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a class="tm-choose"
-                                                   href="#">
-                                                    <div class="tm-choose-title">
-                                                        Thẻ trực tuyến
-                                                    </div>
-                                                    <div class="tm-choose-description">
-                                                        Visa,
-                                                        MasterCard
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a class="tm-choose"
-                                                   href="#">
-                                                    <div class="tm-choose-title">
-                                                        Thanh toán
-                                                        điện tử
-                                                    </div>
-                                                    <div class="tm-choose-description">
-                                                        MoMo
-                                                    </div>
-                                                </a>
+                                                </div>
+                                                <div>
+                                                    <a class="tm-choose" href="#">
+                                                        <div class="tm-choose-title">
+                                                            Thẻ trực tuyến
+                                                        </div>
+                                                        <div class="tm-choose-description">
+                                                            VNPay
+                                                        </div>
+                                                    </a>
+                                    
+                                                </div>
+                                                <div>
+                                                    <a class="tm-choose" href="#">
+                                                        <div class="tm-choose-title">
+                                                            Thanh toán điện tử
+                                                        </div>
+                                                        <div class="tm-choose-description">
+                                                            MoMo
+                                                        </div>
+                                                    </a>
+                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <input hidden id="PaymentMethod" asp-for="Order.PaymentMethod" value="@SD.PaymentMethodCod" />
+
                                     <div class="uk-card-footer">
                                         <div class="uk-grid-small uk-flex-middle uk-flex-center uk-text-center"
                                              uk-grid>
@@ -213,7 +225,7 @@
                                 </div>
                             </section>
                         </div>
-                    </form>
+                    </div>
                     <div class="uk-width-1-1 uk-width-1-4@m tm-aside-column">
                         <div class="uk-card uk-card-default uk-card-small tm-ignore-container"
                              uk-sticky="offset: 30; bottom: true;">
@@ -278,14 +290,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button class="uk-button uk-button-primary uk-margin-small uk-width-1-1">
+                               
+                                <button type="submit" class="uk-button uk-button-primary uk-margin-small uk-width-1-1">
                                     Đặt hàng
                                 </button>
+                               
                             </section>
                         </div>
                     </div>
                 </div>
             </section>
+            </form>
         </div>
     </div>
 </section>
@@ -293,7 +308,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Đặt Token API của GHN
         var apiToken = '11bc5038-6046-11ee-a59f-a260851ba65c';
 
         // Lấy danh sách Tỉnh/Thành phố từ API và cập nhật trường select #citySelect
@@ -315,6 +329,13 @@
                         value: city.ProvinceID,
                         text: city.ProvinceName
                     }));
+                });
+
+                // Bắt sự kiện thay đổi lựa chọn thành phố và cập nhật giá trị của input hidden
+                citySelect.on('change', function () {
+                    var selectedCityName = citySelect.find(':selected').text();
+                    $('#cityInput').val(selectedCityName);
+                    console.log('Thành phố đã chọn:', selectedCityName);
                 });
             }
         });
@@ -346,6 +367,15 @@
                                 text: district.DistrictName
                             }));
                         });
+                        // Bắt sự kiện thay đổi lựa chọn thành phố và cập nhật giá trị của input hidden
+                        districtSelect.on('change', function () {
+                            var selectedDistrictName = districtSelect.find(':selected').text();
+                            $('#districtInput').val(selectedDistrictName);
+                            console.log('Quận/Huyện đã chọn:', selectedDistrictName);
+                        });
+                        // Reset giá trị input quận/huyện và phường/xã khi thay đổi tỉnh/thành phố
+                        $('#districtInput').val('');
+                        $('#wardInput').val('');
                     }
                 });
             }
@@ -378,10 +408,57 @@
                                 text: ward.WardName
                             }));
                         });
+                        // Bắt sự kiện thay đổi lựa chọn thành phố và cập nhật giá trị của input hidden
+                        wardSelect.on('change', function () {
+                            var selectedWardName = wardSelect.find(':selected').text();
+                            $('#wardInput').val(selectedWardName);
+                            console.log('Phường/xã đã chọn:', selectedWardName);
+                        });
+                        // Reset giá trị input quận/huyện và phường/xã khi thay đổi tỉnh/thành phố
+                        $('#wardInput').val('');
+                     
                     }
                 });
             }
         });
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lấy danh sách tất cả các phương thức thanh toán
+        var paymentMethods = document.querySelectorAll(".tm-choose");
+
+        // Lặp qua từng phương thức thanh toán
+        paymentMethods.forEach(function (method) {
+            method.addEventListener("click", function () {
+                // Lấy nội dung trong thẻ div có class "tm-choose-title"
+                var paymentMethodName = this.querySelector(".tm-choose-title").textContent.trim();
+
+                // Đối tượng input PaymentMethod
+                var paymentMethodInput = document.querySelector("#PaymentMethod");
+
+                // Thay đổi giá trị PaymentMethod tương ứng với phương thức thanh toán
+                switch (paymentMethodName) {
+                    case "Trả tiền khi nhận hàng":
+                        paymentMethodInput.setAttribute("value", "@SD.PaymentMethodCod");
+                        break;
+                    case "Thẻ trực tuyến":
+                        paymentMethodInput.setAttribute("value", "@SD.PaymentMethodVnPay");
+                        break;
+                    case "Thanh toán điện tử":
+                        paymentMethodInput.setAttribute("value", "@SD.PaymentMethodMoMo");
+                        break;
+                    default:
+                        // Mặc định, bạn có thể đặt giá trị tùy ý ở đây
+                        paymentMethodInput.setAttribute("value", "null");
+                        break;
+                }
+            });
+        });
+    });
+
+</script>
+
+
 

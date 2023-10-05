@@ -11,7 +11,6 @@ namespace SecondHand.Models.Domain
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? Created { get; set; }
-        public virtual ICollection<Adress> Adresses { get; set; } = new List<Adress>();
 
         public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 
