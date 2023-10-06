@@ -143,9 +143,17 @@
                                                                   rows="5"
                                                                   placeholder="Note cho cửa hàng"></textarea>
                                                         <span asp-validation-for="Order.Note" class="text-danger"></span>
+                                                           
+
                                                          </div>
                                                     
-                                                </div>
+                                               
+                                                    
+                                                        <div>
+                                                            <input asp-for="Order.FeeShipping" value="" id="feeShippingInput" />
+                                                        </div>
+
+                                                    
                                             </div>
                                            
                                         </section>
@@ -271,10 +279,23 @@
                                     </div>
                                     <div class="uk-text-right">
                                         <div class="uk-text-danger">
-                                            −$0
+                                            0đ
                                         </div>
                                     </div>
                                 </div>
+                                    <div class="uk-grid-small"
+                                         uk-grid>
+                                        <div class="uk-width-expand">
+                                            <div class="uk-text-muted">
+                                                Phí giao hàng
+                                            </div>
+                                        </div>
+                                        <div class="uk-text-right">
+                                            <div class="uk-text-danger" id="feeShippingDiv">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
                             </section>
                             <section class="uk-card-body">
                                 <div class="uk-grid-small uk-flex-middle"
@@ -285,7 +306,7 @@
                                         </div>
                                     </div>
                                     <div class="uk-text-right">
-                                        <div class="uk-text-lead uk-text-bolder">
+                                        <div class="uk-text-lead uk-text-bolder" id="totalOrderDiv">
                                             @(((decimal)Model.Order.Total).ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))
                                         </div>
                                     </div>
@@ -421,6 +442,87 @@
                 });
             }
         });
+
+
+
+        //Tính phí ship
+        // Sử dụng giá trị mặc định cho shop_id và from_district
+        var defaultShopId = 2559527;
+        var defaultFromDistrictId = 1550;
+
+    // Bắt sự kiện khi người dùng chọn Quận/Huyện và tự động lấy danh sách phương thức giao hàng
+    $('#districtSelect').on('change', function () {
+            var selectedDistrictIdString = $(this).val(); // Lấy giá trị dạng chuỗi
+            var selectedDistrictId = parseInt(selectedDistrictIdString, 10); // Chuyển đổi sang kiểu số nguyên
+            var toDistrictId = selectedDistrictId;
+
+        // Kiểm tra xem đã chọn giá trị to_district chưa
+        if (!toDistrictId) {
+            alert('Vui lòng chọn quận/huyện.');
+            return;
+        }
+            $('#wardSelect').on('change', function () {
+            var selectedWardCode = $(this).val();
+            // Lấy giá trị từ phần tử <div> có id="totalValue"
+            
+            var insuranceValue = @Model.Order.Total; // Chuyển đổi sang kiểu số thực
+            // Lấy các thông tin khác cần thiết để tính phí cước
+            //var serviceId = /* Lấy ID của gói dịch vụ từ API lấy gói dịch vụ */
+            //var weight = /* Lấy trọng lượng hàng hóa từ nguồn dữ liệu hoặc người dùng */
+            //var length = /* Lấy chiều dài từ nguồn dữ liệu hoặc người dùng */
+            //var width = /* Lấy chiều rộng từ nguồn dữ liệu hoặc người dùng */
+            //var height = /* Lấy chiều cao từ nguồn dữ liệu hoặc người dùng */
+            var toWardCode = selectedWardCode;
+
+                $.ajax({
+                    url: 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
+                    type: 'POST',
+                    headers: {
+                        'Token': apiToken
+                    },
+                    data: JSON.stringify({
+                        shop_id: defaultShopId,
+                        insurance_value: insuranceValue,
+                        coupon: null,
+                        from_district_id: defaultFromDistrictId,
+                        to_district_id: toDistrictId,
+                        to_ward_code: toWardCode,
+                        service_type_id: 2,
+                        weight: 1000,
+                        length: 15,
+                        width: 15,
+                        height: 15
+                    }),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        // Kiểm tra nếu có giá trị total trong dữ liệu
+                        if (data.data.total !== undefined) {
+                            var formattedTotal = data.data.total.toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            }).replace(/\s*đ/g, '').replace('.', ',');
+                       
+                            // Lấy thẻ <input> dựa trên thuộc tính asp-for
+                            var feeShippingInput = $('#feeShippingInput');
+                            var feeShippingDiv = $('#feeShippingDiv');
+                            var totalOrderDiv = $('#totalOrderDiv');
+                            var totalOrder = insuranceValue + data.data.total;
+                            
+                            // Gán giá trị từ data.total vào thuộc tính value của thẻ <input>
+                            feeShippingInput.val(data.data.total);
+                            feeShippingDiv.text(formattedTotal);
+                            totalOrderDiv.text(totalOrder.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace(/\s*đ/g, '').replace('.', ','));
+                            // In ra giá trị đã gán để kiểm tra
+                            console.log('Giá cước vận chuyển:', data.data.total);
+                        } else {
+                            
+                            console.error('Không có giá cước vận chuyển trong dữ liệu.');
+                        }
+                    }
+                });
+            });
+    });
+
     });
 </script>
 

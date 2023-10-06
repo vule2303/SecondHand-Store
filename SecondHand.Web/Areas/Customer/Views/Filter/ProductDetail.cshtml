@@ -1,7 +1,11 @@
-﻿@{
+﻿@using SecondHand.Models.Models.Domain;
+@using System.Linq;
+@model SecondHand.Models.ViewModels.ProCate
+@{
     Layout = "_Layout";
+
 }
-@model IEnumerable<SecondHand.Models.Domain.Product>
+
 
 <section class="uk-section uk-section-small">
     <div class="uk-container">
@@ -13,17 +17,17 @@
                     <li><a href="index.html">Trang Chủ</a></li>
                     <li><a href="catalog.html">Danh Mục</a></li>
                 </ul>
-                @foreach (var a in Model.Take(1))
+
+                @foreach (var a in ViewBag.ProductNames)
                 {
-
                     <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
-                       Chọn sản phẩm tìm kiếm
-
+                        @a
                     </h1>
 
                     <div class="uk-text-meta uk-margin-xsmall-top">
-                        Số lượng:  @Model.Count()
+                        369 sản phẩm
                     </div>
+
                 }
             </div>
 
@@ -87,14 +91,13 @@
                                         <div class="uk-accordion-content">
                                             @await Component.InvokeAsync("Brandd")
 
+
                                         </div>
                                     </section>
                                     <div class="uk-card-body">
-                                        <button asp-controller="Filter" asp-action="Index" class="uk-button uk-button-default uk-width-1-1">
-
+                                        <button class="uk-button uk-button-default uk-width-1-1">
                                             <span class="uk-margin-xsmall-right"
                                                   uk-icon="icon: close; ratio: .75;"></span>Đặt lại bộ lọc
-
                                         </button>
                                     </div>
                                 </div>
@@ -153,7 +156,88 @@
                                         </div>
                                         <div>
                                             <div class="uk-card uk-card-default tm-ignore-container">
-                                                @await Component.InvokeAsync("Product")
+                                              
+                                                <div class="uk-grid-collapse uk-child-width-1-4 tm-products-grid js-products-grid" uk-grid>
+                                                    @if (Model != null )
+                                                    {
+                                                        <article class="tm-product-card">
+                                                            <div class="tm-product-card-media">
+                                                            <div class="tm-ratio tm-ratio-4-3">
+                                                                <a asp-controller="ProductDetails" asp-action="Details" asp-route-id="Model.DanhMuc.Id" class="tm-media-box uk-padding-remove">
+                                                                    <figure class="tm-media-box-wrap">
+                                                                        <img src="@Url.Content("~/images/products/" + @Model.AnhSP.Select(p=>p.URL).FirstOrDefault())" alt="Ảnh SP" />
+                                                                       
+
+                                                                    </figure>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tm-product-card-body">
+                                                            <div class="tm-product-card-info">
+                                                                    @if (Model.ThuongHieu != null)
+                                                                    {
+                                                                        <div class="uk-text-meta uk-margin-xsmall-bottom">
+                                                                            @Model.ThuongHieu.Name
+                                                                        </div>
+                                                                    }else{
+                                                                        <div class="uk-text-meta uk-margin-xsmall-bottom">
+                                                                            Không có thương hiệu
+                                                                        </div>
+                                                                    }
+                                                                    @if (Model.DanhMuc != null)
+                                                                    {
+                                                                        <h3 class="tm-product-card-title">
+                                                                            <a class="uk-link-heading">@Model.DanhMuc.Name</a>
+                                                                        </h3>
+                                                                    }else{
+                                                                         <h3 class="tm-product-card-title">
+                                                                    <a class="uk-link-heading">Empty</a>
+                                                                </h3>
+                                                                    }
+                                                                   
+                                                            </div>
+                                                            <div class="tm-product-card-shop product-mg">
+                                                                    @if(Model.DanhMuc != null)
+                                                                    {
+                                                                        <div class="tm-product-card-prices">
+                                                                            <div class="uk-text-meta">@Model.DanhMuc.Size</div>
+                                                                            <div class="tm-product-card-price">
+                                                                                @Model.DanhMuc.Price
+                                                                            </div>
+                                                                        </div>
+                                                                    }else{
+                                                                        <div class="tm-product-card-prices">
+                                                                            <div class="uk-text-meta">Size empty</div>
+                                                                            <div class="tm-product-card-price">
+                                                                                0đ
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    
+                                                                <div class="tm-product-card-add">
+                                                                    <div class="uk-text-meta tm-product-card-actions">
+                                                                        <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to" title="Yêu thích">
+                                                                            <span uk-icon="icon: heart; ratio: .75;"></span>
+                                                                            <span class="tm-product-card-action-text">Add to favorites</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                                                                        <span class="tm-product-card-add-button-icon" uk-icon="cart"></span>
+                                                                        <span class="tm-product-card-add-button-text">add to cart</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </article>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Không có dữ liệu!</p>
+                                                    }
+
+
+                                                </div>
+                                                
                                             </div>
 
                                         </div>
@@ -210,3 +294,7 @@
 
 
 </section>
+
+
+
+

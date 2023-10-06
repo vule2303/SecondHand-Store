@@ -123,7 +123,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             _context.SaveChanges();
             CartVM.Order.Total = 0;
             List<OrderDetail> orderDetailsList = new List<OrderDetail>();
-
+            var subTotal = 0;
             foreach (var item in CartVM.ListCart)
             {
                 OrderDetail orderDetail = new OrderDetail()
@@ -134,11 +134,13 @@ namespace MVC_Core.Areas.Customer.Controllers
                     Count = item.count,
                };
 
-                CartVM.Order.Total += (orderDetail.Count * orderDetail.Price);
+                CartVM.Order.Subtotal += (orderDetail.Count * orderDetail.Price);
+                subTotal += Convert.ToInt32(CartVM.Order.Subtotal);
                 _context.OrderDetail.Add(orderDetail);
 
             }
-
+            var feeShip = CartVM.Order.FeeShipping;
+            CartVM.Order.Total = subTotal + feeShip;
             _context.CartItems.RemoveRange(CartVM.ListCart);
             _context.SaveChanges();
             HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
@@ -164,7 +166,7 @@ namespace MVC_Core.Areas.Customer.Controllers
 
 
         }
-
+       
         public IActionResult OrderConfirmation(int id)
         {
             var listOdered = _context.Orders

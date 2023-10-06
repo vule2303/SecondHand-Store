@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+
 using MVC_Core.Areas.Customer.Repository;
 
 namespace MVC_Core.Areas.Customer.ViewComponents
@@ -15,6 +16,7 @@ namespace MVC_Core.Areas.Customer.ViewComponents
         {
             var listSp = _loaiBrand.GetAllLoaiSP().OrderBy(x => x.Id);
             return View(listSp);
+
         }
     }
 }

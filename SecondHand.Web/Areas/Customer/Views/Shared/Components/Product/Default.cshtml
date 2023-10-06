@@ -2,11 +2,19 @@
 @using System.Linq;
 @model IEnumerable<SecondHand.Models.Domain.Product>
 @{
-
-    var uniqueBrands = Model.Select(b => b.Brand.Name).Distinct().ToList();    
+     
    
 
 }
+<div class="uk-grid-collapse uk-child-width-1-4 tm-products-grid js-products-grid"
+     uk-grid>
+    @foreach (var c in Model)
+    {
+
+        <article id="product-title" class="tm-product-card ">
+
+            <div class="tm-product-card-media">
+                <div class="tm-ratio tm-ratio-4-3">
 
 
     <section class="uk-section uk-section-small">
@@ -86,7 +94,7 @@
                                             <h4 class="uk-accordion-title uk-margin-remove">
                                                 Nhãn Hiệu
                                             </h4>
-@await Component.InvokeAsync("Brandd")
+                                            @await Component.InvokeAsync("Brandd")
                                         </section>
                                         <div class="uk-card-body">
                                             <button class="uk-button uk-button-default uk-width-1-1">
@@ -238,34 +246,34 @@
                                     </ul>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+                    <div class="tm-product-card-add">
+                        <div class="uk-text-meta tm-product-card-actions">
+                            <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
+                               title="Yêu thích">
+                                <span uk-icon="icon: heart; ratio: .75;"></span><span class="tm-product-card-action-text">
+                                    Add to
+                                    favorites
+                                </span>
+                            </a>
+                        </div>
+                        <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                            <span class="tm-product-card-add-button-icon"
+                                  uk-icon="cart"></span><span class="tm-product-card-add-button-text">add to cart</span>
+                        </button>
+                    </div>
                 </div>
-            
             </div>
-           
-        </div>
 
-    <script>
-        // Lấy tất cả các phần tử có class 'product-link' (sản phẩm trong danh sách)
-        var productLinks = document.querySelectorAll('.product-link');
-
-        // Lặp qua từng sản phẩm và thêm sự kiện click
-        productLinks.forEach(function (link) {
-            link.addEventListener('click', function () {
-                // Lấy tên sản phẩm từ thuộc tính 'data-product-id' của sản phẩm được click
-                var productName = link.textContent;
-
-                // Gán tên sản phẩm vào phần tử h1
-                document.getElementById('product-title').textContent = productName;
-            });
-        });
-    </script>
-   
+        </article>
+    }
 
 
+</div>
 
-    </section>
+
 
 
 
