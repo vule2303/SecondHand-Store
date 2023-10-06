@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.ViewModels;
-using System.Data.Entity;
+
 
 namespace MVC_Core.Areas.Customer.Controllers
 {

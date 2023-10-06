@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
-using System.Data.Entity;
+
 
 namespace MVC_Core.Areas.Customer.ViewComponents
 {
