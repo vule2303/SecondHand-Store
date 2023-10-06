@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Brand>
+
+<div class="uk-accordion-content">
+
+    <ul class="uk-list tm-scrollbox">
+        @foreach (var brandName in Model)
+        {
+            <li>
+               <label>
+                    <a asp-controller="Filter"
+                       asp-action="SPTheoBrand"
+                       asp-route-loaiSp="@brandName.Id">
+                        @brandName.Name
+                        <span class="uk-text-meta uk-text-xsmall"></span>
+                    </a>
+                </label>
+            </li>
+        }
+
+    </ul>
+
+
+</div>

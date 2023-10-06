@@ -19,17 +19,19 @@
                         <li><a href="index.html">Trang Chủ</a></li>
                         <li><a href="catalog.html">Danh Mục</a></li>                    
                 </ul>
-                @foreach (var a in Model.Take(1))
-                {
+                
 
                     <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
-                        @Model.FirstOrDefault()?.Name
-
+                        Vui lòng chọn sản phẩm
                     </h1>
-                }
+                
+                @foreach(var item in Model.Take(1))
+                {
                     <div class="uk-text-meta uk-margin-xsmall-top">
-                        367 sản phẩm
+                      Tổng sản phẩm:  @Model.Count()
                     </div>
+                }
+                
                 </div>
                 
                 <div>
@@ -55,23 +57,7 @@
                                     <div class="uk-margin-remove uk-flex-1 uk-overflow-auto"
                                          uk-accordion="multiple: true; targets: &gt; .js-accordion-section"
                                          style="flex-basis: auto">
-                                        <section class="uk-card-small uk-card-body">
-                                            <h4 class="uk-margin-small-bottom">
-                                                Giỏ Hàng
-                                            </h4>
-                                            <ul class="uk-nav uk-nav-default">
-                                            @foreach (var d in Model)
-                                            {
-
-                                                <li >
-                                                    <a class="product-link" >@d.Name</a>
-
-                                                </li>
-                                            }
-                                            
-
-                                            </ul>
-                                        </section>
+                                         @await Component.InvokeAsync("DanhMuc")
                                         <section class="uk-card-body uk-open js-accordion-section">
                                             <h4 class="uk-accordion-title uk-margin-remove">
                                                 Giá Tiền
@@ -100,26 +86,7 @@
                                             <h4 class="uk-accordion-title uk-margin-remove">
                                                 Nhãn Hiệu
                                             </h4>
-                                            <div class="uk-accordion-content">
-                                                
-                                                    <ul class="uk-list tm-scrollbox">
-                                                @foreach (var brandName in uniqueBrands)
-                                                {
-                                                        <li>
-                                                            <input class="tm-checkbox"
-                                                                   type="checkbox" /><label>
-                                                                <span>
-                                                                    @brandName
-                                                                    <span class="uk-text-meta uk-text-xsmall"></span>
-                                                                </span>
-                                                            </label>
-                                                        </li>
-                                                }
-
-                                                    </ul>
-                                               
-                                               
-                                            </div>
+@await Component.InvokeAsync("Brandd")
                                         </section>
                                         <div class="uk-card-body">
                                             <button class="uk-button uk-button-default uk-width-1-1">
