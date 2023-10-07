@@ -1,22 +1,16 @@
-using Microsoft.AspNetCore.Mvc;
-
-using MVC_Core.Areas.Customer.Repository;
+﻿using Microsoft.AspNetCore.Mvc;
+using SecondHand.DataAccess.Data;
 
 namespace MVC_Core.Areas.Customer.ViewComponents
 {
-    public class BranddViewComponent: ViewComponent
+    public class BranddViewComponent : ViewComponent
     {
-        private readonly IBrandRepository _loaiBrand;
-
-        public BranddViewComponent(IBrandRepository brandRepository)
-        {
-            _loaiBrand = brandRepository;
-        }
+        S2HandDbContext _context = new S2HandDbContext();
         public IViewComponentResult Invoke()
         {
-            var listSp = _loaiBrand.GetAllLoaiSP().OrderBy(x => x.Id);
-            return View(listSp);
+            var pro = _context.Brands.ToList();
 
+            return View(pro);
         }
     }
 }
