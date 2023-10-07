@@ -13,6 +13,7 @@ using SecondHand.Utility.Services;
 using SecondHand.Models.Domain;
 using Microsoft.AspNetCore.Builder;
 using SecondHand.Models.Services;
+using MVC_Core.Areas.Customer.Repository;
 
 namespace SecondHand
 {
@@ -34,6 +35,11 @@ namespace SecondHand
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            var connectionString = builder.Configuration.GetConnectionString("S2HandDbContext");
+            builder.Services.AddDbContext<S2HandDbContext>(x => x.UseSqlServer(connectionString));
+
+            builder.Services.AddScoped<IDanhMucSPRepository, DanhMucSPRepository>();
+            builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddRazorPages();
             //Add DbContext
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));

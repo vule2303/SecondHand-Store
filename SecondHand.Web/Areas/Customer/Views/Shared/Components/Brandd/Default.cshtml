@@ -1,23 +1,23 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model IEnumerable<SecondHand.Models.Domain.Brand>
-@{
-    @*var uniqueBrands = Model.Select(b => b.Name).Distinct().ToList();*@
-}
+﻿@model IEnumerable<Brand>
 
-<ul class="uk-list tm-scrollbox">
-    @foreach (var brandName in Model)
-    {
-        <li>
-            <input class="tm-checkbox"
-                   type="checkbox" /><label>
-                <span>
-                    @Html.ActionLink(brandName.Name,"ProductDetail","Filter", new {@Id = brandName.Id}, null)
-                    <span class="uk-text-meta uk-text-xsmall"></span>
-                </span>
-            </label>
-        </li>
-    }
+<div class="uk-accordion-content">
 
-</ul>
+    <ul class="uk-list tm-scrollbox">
+        @foreach (var brandName in Model)
+        {
+            <li>
+                <label>
+                    <a asp-controller="Filter"
+                       asp-action="SPTheoBrand"
+                       asp-route-loaiSp="@brandName.Id">
+                        @brandName.Name
+                        <span class="uk-text-meta uk-text-xsmall"></span>
+                    </a>
+                </label>
+            </li>
+        }
+
+    </ul>
+
+
+</div>
