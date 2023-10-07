@@ -129,8 +129,66 @@ namespace MVC_Core.Areas.Customer.Controllers
 
          
         }
+		[HttpPost]
+		public async Task<IActionResult> AddCart(int productID)
+		{
+            CartItem temp = new CartItem();
+			temp.Id = 0;
+            temp.ProductId = productID;
+            temp.count = 1;
+			if (ModelState.IsValid)
+			{
+				var claimsIdenity = (ClaimsIdentity)User.Identity;
+				var claim = claimsIdenity.FindFirst(ClaimTypes.NameIdentifier);
+				temp.UserId = claim.Value;
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+				CartItem cartFromDb = _context.CartItems.Include(db => db.Product).FirstOrDefault(u => u.UserId == temp.UserId && u.ProductId == temp.ProductId);
+
+				if (cartFromDb == null)
+				{
+					_context.CartItems.Add(temp);
+				}
+				else
+				{
+					cartFromDb.count += temp.count;
+					//_context.CartItems.Update(cartFromDb);
+				}
+				_context.SaveChanges();
+
+				var count = _context.CartItems
+					.Where(c => c.UserId == temp.UserId)
+					.Select(m => m.count)
+					.Count();
+				HttpContext.Session.SetInt32(SD.ssShopingCart, count);
+
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				var product = await _context.Products
+			   .Include(p => p.Brand)
+			   .Include(p => p.Category)
+			   .Include(p => p.productGallery)
+			   .FirstOrDefaultAsync(m => m.Id == temp.ProductId);
+				CartItem cartObj = new CartItem()
+				{
+					Product = product,
+					ProductId = product.Id
+				};
+				if (product == null)
+				{
+					return NotFound();
+				}
+
+				return View(cartObj);
+			}
+
+
+
+
+
+		}
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

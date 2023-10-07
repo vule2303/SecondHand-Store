@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Bcpg.Sig;
 using SecondHand.DataAccess.Data;
+using SecondHand.Models.Domain;
 
 namespace MVC_Core.Areas.Customer.ViewComponents
 {
@@ -21,8 +22,20 @@ namespace MVC_Core.Areas.Customer.ViewComponents
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
                 .Include(p => p.productGallery).ToList();
+            var listCartItem = new List<CartItem>();
+            foreach(var product in listSuggestItem)
+            {
+                CartItem cartObj = new CartItem()
+                {
+                    Product = product,
+                    ProductId = product.Id
+                };
+                listCartItem.Add(cartObj);
+            }
+                           
 
-            return View(listSuggestItem);
+           
+            return View(listCartItem);
         }
     }
 }
