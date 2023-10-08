@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using SecondHand.Models.Domain;
+@model IEnumerable<Order>
+
+<h1>Lịch sử đơn hàng</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID đơn hàng</th>
+            <th>Tên Người Dùng</th>
+            <th>Trạng Thái</th>
+            <th>Ngày đặt</th>
+            <th>Address</th>
+            <th>SĐT</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.User.LastName  @order.User.FirstName</td>
+                <td>@order.PaymentStatus</td>
+                <td>@order.User.Created</td>
+                <td>@order.Address</td>
+                <td>@order.User.PhoneNumber</td>
+                <td>@order.Subtotal</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

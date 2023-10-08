@@ -22,6 +22,9 @@
                 <a href="#">Đơn hàng  <span class="uk-badge">2</span></a>
             </li>
             <li>
+                @await Component.InvokeAsync("History")
+            </li>
+            <li>
               <a  asp-controller="Favorites">Yêu thích <span class="uk-badge">2</span> </a>
             </li>
             <li>
