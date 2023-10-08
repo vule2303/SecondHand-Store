@@ -11,7 +11,7 @@
 {
     @foreach (var item in Model.Take(1))
     {
-        <a asp-controller="History" asp-action="Index" asp-route-user_id="@((await UserManager.GetUserAsync(User))?.Id)">Lịch sử đơn hàng </a>
+        <a asp-controller="History" asp-action="Index" asp-route-user_id="@((await UserManager.GetUserAsync(User))?.Id)">Đơn hàng </a>
 
     }
 }

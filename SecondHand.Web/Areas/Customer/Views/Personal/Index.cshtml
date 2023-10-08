@@ -22,7 +22,8 @@
 
                                 <div class="uk-text-center">
                                     <div class="uk-h4 uk-margin-remove">
-                                        @UserManager.GetUserName(User)
+                                        @((await UserManager.GetUserAsync(User))?.LastName)
+                                        @((await UserManager.GetUserAsync(User))?.FirstName)
                                     </div>
                                     <div class="uk-text-meta">
                                         Đã tham gia @((await UserManager.GetUserAsync(User))?.Created?.ToString("dd-MM-yyyy"))
@@ -54,10 +55,7 @@
                             <nav>
                                 <ul class="uk-nav uk-nav-default tm-nav">
                                     <li>
-                                        <a href="account.html">
-                                            Đơn hàng
-                                            <span>(2)</span>
-                                        </a>
+                                        @await Component.InvokeAsync("History")
                                     </li>
                                     <li>
                                         <a asp-controller="Favorites">
