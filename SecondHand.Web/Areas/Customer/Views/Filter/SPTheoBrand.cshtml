@@ -1,9 +1,12 @@
-﻿@using SecondHand.Models.Models.Domain;
+﻿@{
+    ViewData["Title"] = "SPTheoLoai";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using SecondHand.Models.Models.Domain;
 @using System.Linq;
 @model IEnumerable<SecondHand.Models.Domain.Product>
 @{
-
-    var uniqueBrands = Model.Select(b => b.Brand.Name).Distinct().ToList();
 
 
 }
@@ -16,19 +19,21 @@
             <div class="uk-text-center">
                 <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
 
-                    <li><a href="index.html">Trang Chủ</a></li>
-                    <li><a href="catalog.html">Danh Mục</a></li>
+                    <li><a asp-controller="Home" asp-action="Index">Trang Chủ</a></li>
+                    <li><a href="catalog.html">Thương Hiệu</a></li>
                 </ul>
+                @foreach (var item in ViewBag.TenDanhMuc)
+                {
+                    <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
+                        @item.Name
+                    </h1>
 
-
-                <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
-                    Welcome to S2Hand ^_^
-                </h1>
+                }
 
                 @foreach (var item in Model.Take(1))
                 {
                     <div class="uk-text-meta uk-margin-xsmall-top">
-                        Tổng sản phẩm:  @Model.Count()
+                        Tổng sản phẩm: @Model.Count()
                     </div>
                 }
 
@@ -89,10 +94,10 @@
                                         @await Component.InvokeAsync("Brandd")
                                     </section>
                                     <div class="uk-card-body">
-                                        <button class="uk-button uk-button-default uk-width-1-1">
+                                        <a asp-controller="Filter" asp-action="Index" class="uk-button uk-button-default uk-width-1-1">
                                             <span class="uk-margin-xsmall-right"
                                                   uk-icon="icon: close; ratio: .75;"></span>Đặt lại bộ lọc
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -152,6 +157,13 @@
                                             <div class="uk-card uk-card-default tm-ignore-container">
                                                 <div class="uk-grid-collapse uk-child-width-1-4 tm-products-grid js-products-grid"
                                                      uk-grid>
+                                                    @if (ViewBag.Empty != null)
+                                                    {
+                                                        @foreach (var item in ViewBag.Empty)
+                                                        {
+                                                            @item
+                                                        }
+                                                    }
                                                     @foreach (var c in Model)
                                                     {
 
@@ -205,8 +217,10 @@
                                                             </div>
 
                                                         </article>
-                                                    }
 
+
+
+                                                    }
 
                                                 </div>
                                             </div>
@@ -245,9 +259,14 @@
 
     </div>
 
-  
+
+
+
+
 
 </section>
+
+
 
 
 

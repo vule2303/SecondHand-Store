@@ -1,0 +1,16 @@
+﻿@model IEnumerable<Category>
+
+<section class="uk-card-small uk-card-body">
+    <h4 class="uk-margin-small-bottom">
+        Danh Mục
+    </h4>
+    <ul class="uk-nav uk-nav-default">
+        @foreach (var item in Model)
+        {
+            <li>
+                <a asp-controller="Filter" asp-action="SPTheoLoai"
+                   asp-route-loaiSp="@item.Id">@item.Name</a>
+            </li>
+        }
+    </ul>
+</section>

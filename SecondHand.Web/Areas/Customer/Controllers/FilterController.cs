@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
+using SecondHand.Models.Domain;
 using SecondHand.Models.ViewModels;
 
 
@@ -12,61 +13,41 @@ namespace MVC_Core.Areas.Customer.Controllers
         S2HandDbContext _context = new S2HandDbContext();
         public IActionResult Index()
         {
-            var a = _context.Products.ToList();
-            return View(a);
+            return View();
         }
-        public ActionResult ProductCategory(int id)
+        public IActionResult SPTheoLoai(int loaiSp)
         {
-            var listpro = _context.Categories
-                .Include(p=>p.Products)
-                .Where(p => p.Id==id)
-            .ToList();
-                   
-
-
-            return View(listpro);
+            List<Product> lstSp = _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Brand)
+                .Include(x => x.productGallery)
+                .Where(x => x.Category.Id == loaiSp)
+                .OrderBy(x => x.Name).ToList();
+            if(lstSp == null || lstSp.Count == 0)
+            {
+                ViewBag.Empty = "Không có sản phẩm nào!!!";
+            }
+            var aidi = _context.Categories
+                .Where(x => x.Id == loaiSp).ToList();
+            ViewBag.TenDanhMuc = aidi;
+            return View(lstSp);
         }
-        public IActionResult ProductDetail(int id)
+        public IActionResult SPTheoBrand(int loaiSp)
         {
-            var SanPham = _context.Products.SingleOrDefault(p => p.Id == id);
-            var anhSP = _context.ProductImages.Where(p => p.Id == id).ToList();
-            var TH = _context.Brands.SingleOrDefault(p => p.Id == id);
-            var proDetailViewModel = new ProCate
+            List<Product> lstSp = _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Brand)
+                .Include(x => x.productGallery)
+                .Where(x => x.Brand.Id == loaiSp)
+                .OrderBy(x => x.Name).ToList();
+            if (lstSp == null || lstSp.Count == 0)
             {
-                DanhMuc = SanPham,    
-                ThuongHieu = TH,
-                AnhSP = anhSP
-            };
-            var productNames = _context.Categories
-                  .Where(p => p.Id == id).Select(c => c.Name).ToList();
-
-            if (productNames.Any())
-            {
-                ViewBag.ProductNames = productNames;
+                ViewBag.Empty = "Không có sản phẩm nào!!!";
             }
-            else
-            {
-                ViewBag.ProductNames = new List<string> { "Không có sản phẩm nào phù hợp" };
-            }
-            ViewBag.ThuongHieu = TH;
-            return View(proDetailViewModel);
-        }
-
-        public ActionResult BrandCategory(int id)
-        {
-            var listpro = _context.Brands.Where(p => p.Id == id).ToList();
-            var productNames = _context.Brands
-                 .Where(p => p.Id==id).Select(c => c.Name).ToList();
-
-            if (productNames.Any())
-            {
-                ViewBag.BrandName = productNames;
-            }
-            else
-            {
-                ViewBag.BrandName = new List<string> { "Không có sản phẩm nào phù hợp" };
-            }
-            return View(listpro);
+            var aidi = _context.Brands
+                .Where(x => x.Id == loaiSp).ToList();
+            ViewBag.TenDanhMuc = aidi;
+            return View(lstSp);
         }
 
     }
