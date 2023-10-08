@@ -19,7 +19,7 @@ public partial class Promotion
 
         [Display(Name = "Giá trị giảm giá")]
 
-        public decimal? DiscountValue { get; set; }
+        public decimal DiscountValue { get; set; }
 
         [Display(Name = "Giá trị đơn hàng tối thiểu")]
 
