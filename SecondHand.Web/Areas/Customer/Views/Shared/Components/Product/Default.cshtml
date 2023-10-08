@@ -16,8 +16,10 @@
             <div class="uk-text-center">
                 <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
 
+
                     <li ><a asp-controller="Home">Trang Chủ</a></li>
                    
+
                 </ul>
 
 
@@ -161,6 +163,7 @@
                                                                 <div class="tm-ratio tm-ratio-4-3">
 
                                                                     <a asp-controller="Home" asp-action="Details" asp-route-id="@c.Id" class="tm-media-box uk-padding-remove">
+
                                                                         <figure class="tm-media-box-wrap">
 
                                                                             <img src="@Url.Content("~/images/products/" + c.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@c.Name" />

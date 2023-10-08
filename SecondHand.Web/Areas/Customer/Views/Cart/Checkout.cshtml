@@ -267,7 +267,7 @@
                                         </div>
                                     </div>
                                     <div class="uk-text-right">
-                                        <div>@(((decimal)Model.Order.Total).ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))</div>
+                                        <div>@(((decimal)Model.Order.Subtotal).ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))</div>
                                     </div>
                                 </div>
                                 <div class="uk-grid-small"
@@ -279,7 +279,8 @@
                                     </div>
                                     <div class="uk-text-right">
                                         <div class="uk-text-danger">
-                                            0đ
+                                            @SD.ConvertToCurrencyFormat(Model.Order.Discount)
+                                            <input hidden asp-for="Order.Discount"/>
                                         </div>
                                     </div>
                                 </div>

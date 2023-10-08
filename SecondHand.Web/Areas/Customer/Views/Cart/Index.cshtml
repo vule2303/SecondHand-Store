@@ -110,18 +110,18 @@
                                         </div>
                                     </div>
                                 }
-
-                                <div class="uk-card-footer">
-                                    <label>
-                                        <span class="uk-form-label uk-margin-small-right">Mã Giảm Giá</span>
-                                        <span class="uk-inline">
-                                            <a class="uk-form-icon uk-form-icon-flip"
-                                               href="#"
-                                               uk-icon="arrow-right"></a><input class="uk-input uk-form-width-small"
-                                                                                type="text" />
-                                        </span>
-                                    </label>
-                                </div>
+                                <form method="post" asp-action="ApplyPromotion">
+                                    <div class="uk-card-footer">
+                                        <label>
+                                            <span class="uk-form-label uk-margin-small-right">Mã Giảm Giá</span>
+                                            <span class="uk-inline">
+                                                <button type="submit" class="uk-form-icon uk-form-icon-flip"                                                  
+                                                   uk-icon="arrow-right"></button><input asp-for="PromotionCode" class="uk-input uk-form-width-small"
+                                                                                    type="text" />
+                                            </span>
+                                        </label>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="uk-width-1-1 tm-aside-column uk-width-1-4@m">
@@ -144,10 +144,10 @@
                                     <div class="uk-grid-small"
                                          uk-grid>
                                         <div class="uk-width-expand uk-text-muted uk-text-bold">
-                                            Tổng hoá đơn
+                                            Tạm tính 
                                         </div>
                                         <div>
-                                            @(((decimal)Model.Order.Total).ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))
+                                            @SD.ConvertToCurrencyFormat(Model.Order.Subtotal)
                                         </div>
                                     </div>
                                     <div class="uk-grid-small"
@@ -156,7 +156,7 @@
                                             Giảm giá
                                         </div>
                                         <div class="uk-text-danger">
-                                            $0
+                                            @SD.ConvertToCurrencyFormat(Model.Order.Discount)
                                         </div>
                                     </div>
                                 </div>
