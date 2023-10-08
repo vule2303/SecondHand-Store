@@ -40,6 +40,8 @@ namespace MVC_Core.Areas.Customer.Controllers
                    .Count();
                 HttpContext.Session.SetInt32(SD.ssShopingCart, count);
             }
+            var hist = _context.Orders.ToList();
+            ViewBag.History = hist;
             return View();
         }
         

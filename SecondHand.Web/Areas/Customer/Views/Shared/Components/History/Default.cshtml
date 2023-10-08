@@ -1,0 +1,17 @@
+﻿
+@using SecondHand.Models.Domain;
+@using Microsoft.AspNetCore.Identity;
+@using SecondHand.DataAccess.Data;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<ApplicationUser>
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @foreach (var item in Model.Take(1))
+    {
+        <a asp-controller="History" asp-action="Index" asp-route-user_id="@((await UserManager.GetUserAsync(User))?.Id)">Đơn hàng </a>
+
+    }
+}
