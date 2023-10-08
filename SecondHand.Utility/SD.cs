@@ -38,7 +38,11 @@ namespace SecondHand.Utility
         public const string PaymentMethodMoMo = "MOMO";
 
 
-        public static string ConvertToCurrencyFormat(decimal price)
+        public const string PromotionPercent = "Percentage";
+        public const string PromotionAmount = "FixedAmount";
+
+
+		public static string ConvertToCurrencyFormat(decimal price)
             {
                 CultureInfo cultureInfo = CultureInfo.GetCultureInfo("vi-VN");
                 string formattedPrice = price.ToString("C", cultureInfo)

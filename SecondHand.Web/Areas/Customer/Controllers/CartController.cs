@@ -11,6 +11,7 @@ using SecondHand.Utility.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Runtime.CompilerServices;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MVC_Core.Areas.Customer.Controllers
 {
@@ -53,12 +54,79 @@ namespace MVC_Core.Areas.Customer.Controllers
             foreach(var list in CartVM.ListCart)
             {
                 list.price = list.Product.Price;
-                CartVM.Order.Total += Convert.ToDecimal(list.price * list.count);
+                CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
             }
 
+            var getPromotion = HttpContext.Session.GetString("promotionCode");
 
+            CartVM.Order.Total = CartVM.Order.Subtotal;
+
+            if (!string.IsNullOrEmpty(getPromotion))
+            {
+                var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
+                var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+                CartVM.Order.Discount = countValue;
+                CartVM.Order.Total -= countValue;
+            }
             return View(CartVM);
         }
+        [HttpPost]
+        public IActionResult ApplyPromotion(string promotionCode)
+        {
+
+            //var claimsIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            //var promotion = _context.Promotions.Where(c => c.Code == promotionCode).FirstOrDefault();
+            
+            //CartVM = new CartVM()
+            //{
+            //    Order = new Order(),
+            //    ListCart = _context.CartItems.Where(u => u.UserId == claim.Value)
+            //                .Include(p => p.Product)
+            //                .ThenInclude(o => o.productGallery)
+            //                .Include(p => p.Product.Category)
+            //                .ToList()
+
+            //};
+            //CartVM.Order.Total = 0;
+            //CartVM.Order.User = _context.ApplicationUsers
+            //                    .FirstOrDefault(u => u.Id == claim.Value);
+
+            //foreach (var list in CartVM.ListCart)
+            //{
+            //    list.price = list.Product.Price;
+            //    CartVM.Order.Total += Convert.ToDecimal(list.price * list.count);
+            //}
+
+            //var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+            //CartVM.Order.Discount = countValue;
+            //CartVM.Order.Total -= countValue;
+
+            HttpContext.Session.SetString("promotionCode", promotionCode);
+
+
+            return RedirectToAction("Index");
+        }
+
+        private decimal CalculateDiscount(decimal total, Promotion promotion)
+        {
+            // Thực hiện tính toán giảm giá dựa trên loại giảm giá và giá trị giảm giá trong promotion
+            // Đây là nơi bạn triển khai logic tính toán giảm giá tùy theo yêu cầu của ứng dụng của bạn.
+            // Ví dụ: Nếu DiscountType là "Percentage" thì giảm giá theo tỷ lệ, nếu là "FixedAmount" thì giảm giá một số tiền cố định.
+
+            if (promotion.DiscountType == SD.PromotionPercent)
+            {
+                return total * promotion.DiscountValue / 100;
+            }
+            else if (promotion.DiscountType == SD.PromotionAmount)
+            {
+
+                return promotion.DiscountValue;
+            }
+
+            return 0; // Mặc định không có giảm giá
+        }
+
         public IActionResult Remove(int cartId)
         {
             var cart = _context.CartItems.FirstOrDefault(u => u.Id == cartId);
@@ -74,6 +142,8 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var getPromotion = HttpContext.Session.GetString("promotionCode");
+
             CartVM = new CartVM()
             {
                 Order = new Order(),
@@ -84,16 +154,24 @@ namespace MVC_Core.Areas.Customer.Controllers
                             .ToList()
             };
 
-            CartVM.Order.Total = 0;
+            
             CartVM.Order.User = _context.ApplicationUsers
                                 .FirstOrDefault(c => c.Id == claim.Value);
 
             foreach (var list in CartVM.ListCart)
             {
                 list.price = list.Product.Price;
-                CartVM.Order.Total += Convert.ToDecimal(list.price * list.count);
+                CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
             }
+            CartVM.Order.Total = CartVM.Order.Subtotal;
 
+            if (!string.IsNullOrEmpty(getPromotion))
+            {       
+                var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
+                var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+                CartVM.Order.Discount = countValue;
+                CartVM.Order.Total -= countValue;
+            }
             CartVM.Order.Name = CartVM.Order.User.UserName;
             CartVM.Order.PhoneNumber = CartVM.Order.User.PhoneNumber;
 
@@ -106,11 +184,13 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var getPromotionCode = HttpContext.Session.GetString("promotionCode");
+            var promotion = _context.Promotions.Where(c => c.Code == getPromotionCode).FirstOrDefault();
             CartVM.Order.User = _context.ApplicationUsers.FirstOrDefault(c => c.Id == claim.Value);
-
             CartVM.ListCart = _context.CartItems.Include(p => p.Product).Where(c => c.UserId == claim.Value).ToList();
 
             //tao ma don hang ngau nhien
+
             Random random = new Random();
             int randomNumber = random.Next(100000000, 999999999);
             CartVM.Order.OrderCode = "DH" + randomNumber.ToString();
@@ -118,7 +198,12 @@ namespace MVC_Core.Areas.Customer.Controllers
             CartVM.Order.OrderStatus = SD.OrderStatusPending;
             CartVM.Order.UserId = claim.Value;
             CartVM.Order.OrderDate = DateTime.Now;
-      
+            
+            if(promotion != null)
+            {
+                CartVM.Order.PromotionId = promotion.Id;
+            }
+
             _context.Orders.Add(CartVM.Order);
             _context.SaveChanges();
             CartVM.Order.Total = 0;
@@ -139,8 +224,11 @@ namespace MVC_Core.Areas.Customer.Controllers
                 _context.OrderDetail.Add(orderDetail);
 
             }
+     
             var feeShip = CartVM.Order.FeeShipping;
-            CartVM.Order.Total = subTotal + feeShip;
+            CartVM.Order.Total = subTotal + feeShip - CartVM.Order.Discount;
+
+         
             _context.CartItems.RemoveRange(CartVM.ListCart);
             _context.SaveChanges();
             HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
@@ -178,13 +266,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             return View(listOdered);
         }
 
-        public IActionResult CreatePaymentUrl(Order model)
-        {
-            var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
-
-            return Redirect(url);
-        }
-
+     
         public IActionResult PaymentCallback()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);

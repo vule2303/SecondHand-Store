@@ -32,7 +32,7 @@
                                             <th>@Html.DisplayNameFor(model => model.DiscountValue)</th>
                                             <td>
                                                 @{
-                                                  string formattedDiscountValue = Model.DiscountValue?.ToString().TrimEnd('0').TrimEnd(',');
+                                                  string formattedDiscountValue = Model.DiscountValue.ToString().TrimEnd('0').TrimEnd(',');
                                                  }
                                                 @formattedDiscountValue
                                           %</td>
