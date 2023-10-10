@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Gabarito&family=Handjet:wght@200;300&family=Montserrat+Alternates:ital,wght@0,500;1,200;1,400;1,500&family=Philosopher:ital@1&display=swap" rel="stylesheet">
 
 @using SecondHand.Models.Domain;
+@using SecondHand.Utility;
 @model IEnumerable<Order>
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -122,7 +123,7 @@
                                             <th class="uk-width-medium">
                                                 Tổng tiền
                                             </th>
-                                            <td><p>@item.Subtotal<sup>đ</sup></p></td>
+                                            <td><p>@SD.ConvertToCurrencyFormat(item.Total) </p></td>
                                         </tr>
                                         <tr>
                                             <th class="uk-width-medium">
