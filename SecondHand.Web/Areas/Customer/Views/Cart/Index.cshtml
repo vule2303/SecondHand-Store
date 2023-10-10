@@ -1,12 +1,34 @@
 ﻿@using System.Globalization;
+@using SecondHand.DataAccess.Data;
 @using SecondHand.Utility;
 @model SecondHand.Models.ViewModels.CartVM
 @inject IHttpContextAccessor HttpContextAccessor
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    var promotion = ViewData["getPromotion"] as SecondHand.Models.Domain.Promotion;
+   
 }
+
+
+
+@if(ViewBag.DiscountExist == false)
+{
+    <div class="alert alert-danger">
+        <strong>Mã giảm giá không tồn tại</strong>
+    </div>
+}
+else if (ViewBag.DiscountExpired == true)
+{
+    <div class="alert alert-danger">
+        <strong>Mã giảm giá đã hết hạn ngày @promotion.EndDate?.ToString("yyyy-MM-dd")</strong>
+    </div>
+}
+else if (ViewBag.ApplyDiscount == false)
+{
+    <div class="alert alert-danger">
+        <strong>Mã giảm áp dụng cho đơn hàng @SD.ConvertToCurrencyFormat(promotion.MiniumOrderAmount)</strong>
+    </div>
+}
+
 <section class="uk-section uk-section-small">
     <div class="uk-container">
         <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
@@ -113,11 +135,13 @@
                                 <form method="post" asp-action="ApplyPromotion">
                                     <div class="uk-card-footer">
                                         <label>
-                                            <span class="uk-form-label uk-margin-small-right">Mã Giảm Giá</span>
+                                            <label class="uk-form-label uk-margin-small-right" asp-for="PromotionCode"></label>
                                             <span class="uk-inline">
                                                 <button type="submit" class="uk-form-icon uk-form-icon-flip"                                                  
-                                                   uk-icon="arrow-right"></button><input asp-for="PromotionCode" class="uk-input uk-form-width-small"
-                                                                                    type="text" />
+                                                   uk-icon="arrow-right"></button>
+                                                <input asp-for="PromotionCode" class="uk-input uk-form-width-small" type="text" /> 
+                                                
+                                                <span asp-validation-for="PromotionCode" class="text-danger"></span>
                                             </span>
                                         </label>
                                     </div>
@@ -189,3 +213,8 @@
         </div>
     </div>
 </section>
+
+@section Scripts {@{
+
+    <partial name="_ValidationScriptsPartial"/>
+}}

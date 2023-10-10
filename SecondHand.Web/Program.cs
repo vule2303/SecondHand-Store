@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using SecondHand.Models.Services;
 using MVC_Core.Areas.Customer.Repository;
 
+
 namespace SecondHand
 {
     public class Program
@@ -32,7 +33,6 @@ namespace SecondHand
             builder.Services.Configure<MailSettings>(mailSettings);
             builder.Services.AddSingleton<IEmailSender, SendMailService>();
             builder.Services.AddScoped<IVnPayService, VnPayService>();
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             var connectionString = builder.Configuration.GetConnectionString("S2HandDbContext");
@@ -40,8 +40,11 @@ namespace SecondHand
 
             builder.Services.AddScoped<IDanhMucSPRepository, DanhMucSPRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+          //  builder.Services.AddScoped<INotyfService, NotyfService>();
             builder.Services.AddRazorPages();
             //Add DbContext
+         
+
             builder.Services.AddDbContext<S2HandDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("S2HandStore")));
 
 
@@ -150,7 +153,7 @@ namespace SecondHand
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+  
             app.UseRouting();
             app.UseSession(); 
             app.UseCookiePolicy();

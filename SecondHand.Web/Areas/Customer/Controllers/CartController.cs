@@ -12,6 +12,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Runtime.CompilerServices;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 
 namespace MVC_Core.Areas.Customer.Controllers
 {
@@ -22,11 +24,13 @@ namespace MVC_Core.Areas.Customer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IVnPayService _vnPayService;
+ 
         [BindProperty]
         public CartVM CartVM { get; set; }
 
         public CartController(S2HandDbContext context, IEmailSender emailSender, UserManager<ApplicationUser> userManager, IVnPayService vnPayService)
         {
+           
             _context = context;
             _emailSender = emailSender;
             _userManager = userManager;
@@ -55,7 +59,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             {
                 list.price = list.Product.Price;
                 CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
-            }
+            }   
 
             var getPromotion = HttpContext.Session.GetString("promotionCode");
 
@@ -64,45 +68,45 @@ namespace MVC_Core.Areas.Customer.Controllers
             if (!string.IsNullOrEmpty(getPromotion))
             {
                 var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
-                var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
-                CartVM.Order.Discount = countValue;
-                CartVM.Order.Total -= countValue;
+                ViewData["getPromotion"] = promotion;
+                if(promotion != null)
+                {
+                    if(promotion.EndDate != null && promotion.EndDate > DateTime.Now)
+                    {
+                        if (CartVM.Order.Total >= promotion.MiniumOrderAmount)
+                        {
+                            ViewBag.ApplyDiscount = true;
+                            var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+                            CartVM.Order.Discount = countValue;
+                            CartVM.Order.Total -= countValue;
+                        }
+                        else
+                        {
+                            ViewBag.ApplyDiscount = false;
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.DiscountExpired = true;
+                    }
+
+                }
+                else
+                {
+                    ViewBag.DiscountExist = false;
+                }
+
             }
             return View(CartVM);
         }
         [HttpPost]
         public IActionResult ApplyPromotion(string promotionCode)
         {
+            if (!string.IsNullOrEmpty(promotionCode))
+            {
+                HttpContext.Session.SetString("promotionCode", promotionCode);
 
-            //var claimsIdentity = (ClaimsIdentity)User.Identity;
-            //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            //var promotion = _context.Promotions.Where(c => c.Code == promotionCode).FirstOrDefault();
-            
-            //CartVM = new CartVM()
-            //{
-            //    Order = new Order(),
-            //    ListCart = _context.CartItems.Where(u => u.UserId == claim.Value)
-            //                .Include(p => p.Product)
-            //                .ThenInclude(o => o.productGallery)
-            //                .Include(p => p.Product.Category)
-            //                .ToList()
-
-            //};
-            //CartVM.Order.Total = 0;
-            //CartVM.Order.User = _context.ApplicationUsers
-            //                    .FirstOrDefault(u => u.Id == claim.Value);
-
-            //foreach (var list in CartVM.ListCart)
-            //{
-            //    list.price = list.Product.Price;
-            //    CartVM.Order.Total += Convert.ToDecimal(list.price * list.count);
-            //}
-
-            //var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
-            //CartVM.Order.Discount = countValue;
-            //CartVM.Order.Total -= countValue;
-
-            HttpContext.Session.SetString("promotionCode", promotionCode);
+            }
 
 
             return RedirectToAction("Index");
@@ -223,8 +227,12 @@ namespace MVC_Core.Areas.Customer.Controllers
                 subTotal += Convert.ToInt32(CartVM.Order.Subtotal);
                 _context.OrderDetail.Add(orderDetail);
 
+
             }
-     
+
+            var listOrder = _context.ApplicationUsers.Include(o => o.Orders).Where(o => o.Id == CartVM.Order.UserId);
+
+
             var feeShip = CartVM.Order.FeeShipping;
             CartVM.Order.Total = subTotal + feeShip - CartVM.Order.Discount;
 
