@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Gabarito&family=Handjet:wght@200;300&family=Montserrat+Alternates:ital,wght@0,500;1,200;1,400;1,500&family=Philosopher:ital@1&display=swap" rel="stylesheet">
+
+@using SecondHand.Models.Domain;
+@model IEnumerable<Order>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <section class="uk-section uk-section-small">
+        <div class="uk-container">
+            <div class="uk-grid-medium" uk-grid>
+                <div class="uk-width-1-1 uk-width-1-4@m tm-aside-column">
+                    <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
+                        <div class="uk-card-header">
+                            <div class="uk-grid-small uk-child-width-1-1"
+                                 uk-grid>
+
+                                <div class="uk-text-center">
+                                    <div class="uk-h4 uk-margin-remove">
+                                        @((await UserManager.GetUserAsync(User))?.LastName) 
+                                        @((await UserManager.GetUserAsync(User))?.FirstName)
+                                    </div>
+                                    <div class="uk-text-meta">
+                                        Đã tham gia @((await UserManager.GetUserAsync(User))?.Created?.ToString("dd-MM-yyyy"))
+                                    </div>
+                                </div>
+                                <div class="uk-margin-top">
+                                    <div class="uk-grid-small uk-flex-center"
+                                         uk-grid>
+                                        <div>
+                                            <a class="uk-button uk-button-default uk-button-small"
+                                               href="settings.html">
+                                                <span class="uk-margin-xsmall-right"
+                                                      uk-icon="icon: cog; ratio: .75;"></span><span>Cài đặt</span>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                                                <button class=" nav-link btn btn-link text-dark uk-button uk-button-default uk-button-small"
+                                                        title="Đăng xuất" type="submit">
+                                                    <span uk-icon="icon: sign-out; ratio: .75;"></span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <nav>
+                                <ul class="uk-nav uk-nav-default tm-nav">
+                                    <li class ="uk-active">
+                                        @await Component.InvokeAsync("History")
+                                    </li>
+                                    <li>
+                                        <a asp-controller="Favorites">
+                                            Yêu thích
+                                            <span>(3)</span>
+                                        </a>
+                                    </li>
+                                    <li >
+                                        <a asp-controller="Personal">Thông tin cá nhân</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-width-expand@m">
+                    <div class="uk-card uk-card-default uk-card-small tm-ignore-container">
+                        <header class="uk-card-header">
+                            <h1 class="uk-h2">Đơn Hàng</h1>
+                        </header>
+                        @foreach (var item in Model)
+                        {
+                            <section class="uk-card-body">
+                                <h3>
+                                    <a asp-controller="Cart" asp-action="OrderConfirmation" asp-route-id="@item.Id" class="uk-link-heading" >
+                                        #@item.OrderCode
+                                        @if(item.OrderDate!=null){
+                                            <span class="uk-text-muted uk-text-small">từ ngày @item.OrderDate</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="uk-text-muted uk-text-small"> từ ngày không xác định! </span>
+
+                                        }
+                                    </a>
+                                </h3>
+                                <table class="uk-table uk-table-small uk-table-justify uk-table-responsive uk-table-divider uk-margin-small-top uk-margin-remove-bottom">
+                                    <tbody>
+                                        <tr>
+                                            <th class="uk-width-medium">
+                                                Số lượng sản phẩm
+                                            </th>
+                                            <td>1</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th class="uk-width-medium">
+                                                Vận chuyển
+                                            </th>
+                                            <td>Nhận từ cửa hàng</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="uk-width-medium">
+                                                Phương thức chi trả
+                                            </th>
+                                            <td>@item.PaymentMethod</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="uk-width-medium">
+                                                Tổng tiền
+                                            </th>
+                                            <td><p>@item.Subtotal<sup>đ</sup></p></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="uk-width-medium">
+                                                Tình trạng
+                                            </th>
+                                            <td>
+                                                <span class="uk-label">@item.PaymentStatus</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+
+                        }
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<style>
+    h1,th {
+        font-family: 'Cormorant Garamond', serif;
+        font-family: 'Gabarito', cursive;
+        font-family: 'Handjet', cursive;
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-family: 'Philosopher', sans-serif;
+    }
+</style>
