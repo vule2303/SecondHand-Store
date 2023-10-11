@@ -24,10 +24,20 @@ namespace MVC_Core.Areas.Admin.Controllers
         // GET: Admin/Promotions
         public async Task<IActionResult> Index()
         {
-              return _context.Promotions != null ? 
-                          View(await _context.Promotions.ToListAsync()) :
-                          Problem("Entity set 'S2HandDbContext.Promotions'  is null.");
+            var promotions = await _context.Promotions.ToListAsync();
+            ViewBag.DiscountType = new SelectList(new List<string>
+                    {
+        "Type 1",
+        "Type 2",
+        "Type 3"
+    });
+
+            ViewBag.Promotions = promotions;
+
+
+            return View(promotions);
         }
+
 
         // GET: Admin/Promotions/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -167,7 +177,43 @@ namespace MVC_Core.Areas.Admin.Controllers
 
         private bool PromotionExists(int id)
         {
-          return (_context.Promotions?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Promotions?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        // GET: Promotion/Search/
+        //// GET: Promotion/Search/
+        //public async Task<IActionResult> Search(string searchTerm, string? promotionDiscountType)
+        //{
+        //    IQueryable<Promotion> query = _context.Promotions;
+
+        //    if (!string.IsNullOrEmpty(searchTerm))
+        //    {
+        //        query = query.Where(p => p.Code == searchTerm);
+        //    }
+
+
+        //    List<Promotion> searchResults = await query.ToListAsync();
+        //    ViewBag.SearchTerm = searchTerm;
+
+        //    // Cập nhật ViewBag.Promotions sau khi tìm kiếm
+        //    ViewBag.Promotions = await _context.Promotions.ToListAsync();
+
+        //    return View("Index", searchResults);
+        //}
+
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            IQueryable<Promotion> query = _context.Promotions;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Code.Contains(searchTerm));
+            }
+
+            List<Promotion> searchResults = await query.ToListAsync(); // Lấy kết quả tìm kiếm
+            ViewBag.SearchTerm = searchTerm;
+
+
+            return View("Index", searchResults); // Truyền kết quả tìm kiếm vào trang Index
         }
     }
 }

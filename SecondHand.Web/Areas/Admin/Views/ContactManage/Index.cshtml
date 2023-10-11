@@ -9,12 +9,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Hỗ trợ khách hàng</h1>
+                <h1 class="m-0"><a asp-controller="ContactManage" asp-action="Index" style="color: black; text-decoration: none;">Hỗ trợ khách hàng</a></h1>
+
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                    <li class="breadcrumb-item active" asp-for="Brand">Hỗ trợ khách hàng</li>
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="ContactManage" asp-action="Index">Hỗ trợ khách hàng</a></li>
                 </ol>
             </div>
         </div>
@@ -30,14 +31,16 @@
                 </a>
             </div>
             <div class=" uk-padding-small col-12">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control " placeholder="Search">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
+                            <form asp-action="Search" method="get">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
             </div>
             <div class="card-body table-responsive p-0">
 

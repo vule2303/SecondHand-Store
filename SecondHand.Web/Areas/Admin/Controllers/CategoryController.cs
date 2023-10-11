@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.ObjectModelRemoting;
+using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 
@@ -113,6 +114,21 @@ namespace MVC_Core.Areas.Admin.Controllers
             TempData["Success"] = "Xoá thành công";
             return RedirectToAction("Index");
 
+        }
+        // GET: Category/Search/
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            IQueryable<Category> query = _context.Categories;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(searchTerm));
+            }
+
+            List<Category> searchResults = await query.ToListAsync(); 
+            ViewBag.SearchTerm = searchTerm;
+
+
+            return View("Index", searchResults); 
         }
     }
 }
