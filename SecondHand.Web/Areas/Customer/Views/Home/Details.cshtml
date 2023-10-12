@@ -91,7 +91,7 @@
                                 <div class="purchase-info">
                                   
                                     @if(SignInManager.IsSignedIn(User)){
-                                            <button type="submit" class="btn">
+                                            <button type="submit" class="btn" disabled="@ViewBag.IsProductInCart">
                                                 Thêm vào giỏ hàng<i class="fas fa-shopping-cart"></i>
                                             </button>
                                             <button type="button" class="btn">Yêu thích</button>

@@ -52,6 +52,9 @@ namespace MVC_Core.Areas.Customer.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            var claimsIdenity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdenity.FindFirst(ClaimTypes.NameIdentifier);
+            var getUserId = claim.Value;
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -62,18 +65,24 @@ namespace MVC_Core.Areas.Customer.Controllers
                 .Include(p => p.Category)
                 .Include(p => p.productGallery)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            CartItem cartObj = new CartItem()
-            {
-                Product = product,
-                ProductId = product.Id
-            };  
-
             if (product == null)
             {
                 return NotFound();
             }
 
+            var checkProductExisted = CheckIfProductIsInCart(id, getUserId);
+            ViewBag.IsProductInCart = checkProductExisted;
+
+            CartItem cartObj = new CartItem()
+            {
+                Product = product,
+                ProductId = product.Id
+            };
+
             return View(cartObj);
+
+           
+
         }
         [HttpPost]
         public async Task<IActionResult> Details(CartItem CartObject)
@@ -104,7 +113,7 @@ namespace MVC_Core.Areas.Customer.Controllers
                     .Count();
                 HttpContext.Session.SetInt32(SD.ssShopingCart, count);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             else
             {
@@ -126,11 +135,74 @@ namespace MVC_Core.Areas.Customer.Controllers
                 return View(cartObj);
             }
         }
-		
+
+		[HttpPost]
+		public async Task<IActionResult> Home(CartItem CartObject)
+		{
+			CartObject.Id = 0;
+			if (ModelState.IsValid)
+			{
+				var claimsIdenity = (ClaimsIdentity)User.Identity;
+				var claim = claimsIdenity.FindFirst(ClaimTypes.NameIdentifier);
+				CartObject.UserId = claim.Value;
+
+				CartItem cartFromDb = _context.CartItems.Include(db => db.Product).FirstOrDefault(u => u.UserId == CartObject.UserId && u.ProductId == CartObject.ProductId);
+
+				if (cartFromDb == null)
+				{
+					_context.CartItems.Add(CartObject);
+				}
+				else
+				{
+					cartFromDb.count += CartObject.count;
+					//_context.CartItems.Update(cartFromDb);
+				}
+				_context.SaveChanges();
+
+				var count = _context.CartItems
+					.Where(c => c.UserId == CartObject.UserId)
+					.Select(m => m.count)
+					.Count();
+				HttpContext.Session.SetInt32(SD.ssShopingCart, count);
+
+				return RedirectToAction("Index");
+			}
+			else
+			{
+				var product = await _context.Products
+			   .Include(p => p.Brand)
+			   .Include(p => p.Category)
+			   .Include(p => p.productGallery)
+			   .FirstOrDefaultAsync(m => m.Id == CartObject.ProductId);
+				CartItem cartObj = new CartItem()
+				{
+					Product = product,
+					ProductId = product.Id
+				};
+				if (product == null)
+				{
+					return NotFound();
+				}
+
+				return View(cartObj);
+			}
+		}
+
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public bool CheckIfProductIsInCart(int productId, string userId)
+        {
+            
+            var check =  _context.CartItems.Where(a => a.UserId == userId && a.ProductId == productId).FirstOrDefault();
+            if(check != null)
+            {
+                return true;
+            }else
+                return false;
         }
     }
 }
