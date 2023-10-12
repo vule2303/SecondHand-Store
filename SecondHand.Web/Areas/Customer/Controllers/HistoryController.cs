@@ -22,7 +22,13 @@ namespace MVC_Core.Areas.Customer.Controllers
             List<Order> history = _context.Orders
                 .Include(x=>x.User)
                 .Where(x=>x.User.Id == user_id)
-                .ToList();  
+                .ToList();
+
+            
+                ViewBag.SLL = history.Count();
+           
+            
+            
             
             return View(history);
         }

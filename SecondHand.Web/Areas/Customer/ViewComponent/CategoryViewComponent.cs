@@ -1,19 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MVC_Core.Areas.Customer.Repository;
 using SecondHand.DataAccess.Data;
 
 namespace MVC_Core.Areas.Customer.ViewComponents
 {
     public class CategoryViewComponent : ViewComponent
     {
-        private readonly S2HandDbContext _context;
+        private readonly IDanhMucSPRepository _loaiSp;
 
-        public CategoryViewComponent(S2HandDbContext context) {
-            _context = context;
+        public CategoryViewComponent(IDanhMucSPRepository danhMucSPRepository)
+        {
+            _loaiSp = danhMucSPRepository;
         }
         public IViewComponentResult Invoke()
         {
-            var a = _context.Categories.ToList();
-            return View(a);
+            var listSp = _loaiSp.GetAllLoaiSP().OrderBy(x => x.Name);
+            return View(listSp);
         }
     }
 }

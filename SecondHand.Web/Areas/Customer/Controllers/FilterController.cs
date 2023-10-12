@@ -49,6 +49,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             ViewBag.TenDanhMuc = aidi;
             return View(lstSp);
         }
+        
 
     }
 }
