@@ -55,8 +55,13 @@ namespace SecondHand.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
-        }
+			builder.Entity<CartItem>()
+			.HasOne(c => c.Product)
+			.WithMany(p => p.CartItems)
+			.HasForeignKey(c => c.ProductId)
+			.OnDelete(DeleteBehavior.Cascade);
+
+		}
 
 
 

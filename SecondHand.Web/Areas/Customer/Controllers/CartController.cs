@@ -127,9 +127,9 @@ namespace MVC_Core.Areas.Customer.Controllers
 
                 return promotion.DiscountValue;
             }
-
-            return 0; // Mặc định không có giảm giá
-        }
+            else
+				return 0; // Mặc định không có giảm giá
+		}
 
         public IActionResult Remove(int cartId)
         {
@@ -172,9 +172,12 @@ namespace MVC_Core.Areas.Customer.Controllers
             if (!string.IsNullOrEmpty(getPromotion))
             {       
                 var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
-                var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
-                CartVM.Order.Discount = countValue;
-                CartVM.Order.Total -= countValue;
+                if(promotion != null)
+                {
+					var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+					CartVM.Order.Discount = countValue;
+					CartVM.Order.Total -= countValue;
+				}
             }
             CartVM.Order.Name = CartVM.Order.User.UserName;
             CartVM.Order.PhoneNumber = CartVM.Order.User.PhoneNumber;
@@ -212,7 +215,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             _context.SaveChanges();
             CartVM.Order.Total = 0;
             List<OrderDetail> orderDetailsList = new List<OrderDetail>();
-            var subTotal = 0;
+            decimal subTotal = 0;
             foreach (var item in CartVM.ListCart)
             {
                 OrderDetail orderDetail = new OrderDetail()
@@ -223,17 +226,19 @@ namespace MVC_Core.Areas.Customer.Controllers
                     Count = item.count,
                };
 
+//                item.Product.Status = false;
+
                 CartVM.Order.Subtotal += (orderDetail.Count * orderDetail.Price);
-                subTotal += Convert.ToInt32(CartVM.Order.Subtotal);
+           
                 _context.OrderDetail.Add(orderDetail);
 
 
             }
 
             var listOrder = _context.ApplicationUsers.Include(o => o.Orders).Where(o => o.Id == CartVM.Order.UserId);
+            subTotal = CartVM.Order.Subtotal;
 
-
-            var feeShip = CartVM.Order.FeeShipping;
+			var feeShip = CartVM.Order.FeeShipping;
             CartVM.Order.Total = subTotal + feeShip - CartVM.Order.Discount;
 
          

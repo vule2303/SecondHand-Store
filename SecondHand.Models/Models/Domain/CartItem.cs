@@ -25,7 +25,7 @@ public class CartItem
         [ForeignKey("ProductId")]
         public Product? Product { get; set; }
 
-        [Range(1, 1000,ErrorMessage = "Hãy nhập giá trị từ 1 đến 1000")]
+   
         public int count { get; set; }
         [NotMapped]
         public decimal price { get; set; }

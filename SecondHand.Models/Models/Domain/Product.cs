@@ -45,8 +45,9 @@ public partial class Product
     public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 
     public virtual ICollection<OrderDetail> OrderItems { get; set; } = new List<OrderDetail>();
+	public virtual ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
 
-    [Display(Name = "Tải ảnh lên")]
+		[Display(Name = "Tải ảnh lên")]
     [NotMapped]
     public IFormFileCollection? MultipleImages { get; set; }
     [NotMapped]
