@@ -7,12 +7,13 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Quản lý Đơn hàng</h1>
+                <h1 class="m-0"><a asp-controller="Orders" asp-action="Index" style="color: black; text-decoration: none;">Quản lý Đơn hàng</a></h1>
+
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                    <li class="breadcrumb-item active" asp-for="Brand">Quản lý Đơn hàng</li>
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Orders" asp-action="Index">Quản lý Đơn hàng</a></li>
                 </ol>
             </div>
         </div>
@@ -29,32 +30,29 @@
                 </a>
             </div>
             <div class="uk-padding-small col-12">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control" placeholder="Search">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                            <i class="fas fa-search"></i>
-                        </button>
+                    <form asp-action="Search" method="get">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                     </div>
-                </div>
+                    </form>
             </div>
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Tình trạng thanh toán</th>
-                            <th>Phương thức thanh toán</th>
+                            <th>OrderCode</th>
+                            <th>Tình trạng</th>
+                            <th>Phương thức</th>
                             <th>Tình trạng đơn hàng</th>
                             <th>Tổng tiền trước giảm giá</th>
                             <th>Giảm giá</th>
                             <th>Tổng tiền</th>
-                            <th>Ghi chú</th>
-                            <th>Ngày tạo</th>
-                            <th>Đã hủy</th>
-                            <th>Mã khuyến mãi</th>
                             <th>ID Người dùng</th>
-                            <th></th>
                             
                         </tr>
                     </thead>
@@ -63,21 +61,19 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OrderCode)</td>
                                 <td>@Html.DisplayFor(modelItem => item.PaymentStatus)</td>
                                 <td>@Html.DisplayFor(modelItem => item.PaymentMethod)</td>
                                 <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Discount)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Total)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Note)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ShippingDate)</td>
-                                <td>
+@*                                <td>
                                     @if (item.Promotion != null)
                                     {
                                         @Html.DisplayFor(modelItem => item.Promotion.Code)
                                     }
-                                </td>
+                                </td>*@
                                 <td>@Html.DisplayFor(modelItem => item.User.Email)</td>
                                 <td>
                                     <a class ="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Cập nhật</a>

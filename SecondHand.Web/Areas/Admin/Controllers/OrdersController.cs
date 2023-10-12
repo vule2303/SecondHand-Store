@@ -174,5 +174,19 @@ namespace MVC_Core.Areas.Admin.Controllers
         {
             return (_context.Orders?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            IQueryable<Order> query = _context.Orders;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.OrderCode.Contains(searchTerm));
+            }
+
+            List<Order> searchResults = await query.ToListAsync(); // Lấy kết quả tìm kiếm
+            ViewBag.SearchTerm = searchTerm;
+
+
+            return View("Index", searchResults); // Truyền kết quả tìm kiếm vào trang Index
+        }
     }
 }

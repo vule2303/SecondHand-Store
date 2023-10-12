@@ -179,7 +179,10 @@
                     <div class="info">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                           <span class="d-block">@UserManager.GetUserName(User)</span>
+                            string email = UserManager.GetUserName(User);
+                            int atIndex = email.IndexOf('@');
+                            string username = atIndex != -1 ? email.Substring(0, atIndex) : email;
+                            <span class="d-block" style="color: white;">@username</span>
                         }
                     </div>
                 </div>
@@ -228,7 +231,7 @@
                                 <i class="nav-icon fa-solid fa-code-branch" style="color: #ffffff;"></i>
                                 <p>
                                     
-                                    Quản lý Nhãn Hàng
+                                    Quản lý Thương hiệu
                                     <i class="right fas fa-angle-right"></i>
                                 </p>
                             </a>

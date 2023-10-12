@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 
@@ -109,6 +110,21 @@ namespace MVC_Core.Areas.Admin.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+        // GET: Promotion/Search/
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            IQueryable<Contact> query = _context.Contacts;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Email.Contains(searchTerm));
+            }
+
+            List<Contact> searchResults = await query.ToListAsync();
+            ViewBag.SearchTerm = searchTerm;
+
+
+            return View("Index", searchResults);
         }
     }
 }
