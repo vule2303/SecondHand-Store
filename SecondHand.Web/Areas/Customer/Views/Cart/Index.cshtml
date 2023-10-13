@@ -28,7 +28,12 @@ else if (ViewBag.ApplyDiscount == false)
         <strong>Mã giảm áp dụng cho đơn hàng @SD.ConvertToCurrencyFormat(promotion.MiniumOrderAmount)</strong>
     </div>
 }
-
+else if(ViewBag.PromotionIsUsed == true)
+{
+    <div class="alert alert-danger">
+        <strong>Bạn đã sử dụng mã giảm giá này</strong>
+    </div>
+}
 <section class="uk-section uk-section-small">
     <div class="uk-container">
         <div class="uk-grid-medium uk-child-width-1-1" uk-grid>

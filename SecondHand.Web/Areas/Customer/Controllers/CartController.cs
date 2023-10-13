@@ -24,10 +24,10 @@ namespace MVC_Core.Areas.Customer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IVnPayService _vnPayService;
- 
+
         [BindProperty]
         public CartVM CartVM { get; set; }
-
+        public static bool CheckPomotionIsUsed {get;set;}
         public CartController(S2HandDbContext context, IEmailSender emailSender, UserManager<ApplicationUser> userManager, IVnPayService vnPayService)
         {
            
@@ -71,26 +71,40 @@ namespace MVC_Core.Areas.Customer.Controllers
                 ViewData["getPromotion"] = promotion;
                 if(promotion != null)
                 {
-                    if(promotion.EndDate != null && promotion.EndDate > DateTime.Now)
+                    var checkPromotionIsUsed = _context.Orders.Where(p => p.PromotionId == promotion.Id && p.UserId == claim.Value).FirstOrDefault();
+
+                    if (checkPromotionIsUsed == null)
                     {
-                        if (CartVM.Order.Total >= promotion.MiniumOrderAmount)
-                        {
-                            ViewBag.ApplyDiscount = true;
-                            var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
-                            CartVM.Order.Discount = countValue;
-                            CartVM.Order.Total -= countValue;
-                        }
-                        else
-                        {
-                            ViewBag.ApplyDiscount = false;
-                        }
-                    }
-                    else
+                        CheckPomotionIsUsed = false;
+
+                        if (promotion.EndDate != null && promotion.EndDate > DateTime.Now)
+						{
+							if (CartVM.Order.Total >= promotion.MiniumOrderAmount)
+							{
+								ViewBag.ApplyDiscount = true;
+								var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+								CartVM.Order.Discount = countValue;
+								CartVM.Order.Total -= countValue;
+							}
+							else
+							{
+								ViewBag.ApplyDiscount = false;
+							}
+						}
+						else
+						{
+							ViewBag.DiscountExpired = true;
+						}
+
+					}
+
+                    else 
                     {
-                        ViewBag.DiscountExpired = true;
+                        CheckPomotionIsUsed = true;
+                        ViewBag.PromotionIsUsed = true; 
                     }
 
-                }
+				}
                 else
                 {
                     ViewBag.DiscountExist = false;
@@ -146,8 +160,7 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            var getPromotion = HttpContext.Session.GetString("promotionCode");
-
+           
             CartVM = new CartVM()
             {
                 Order = new Order(),
@@ -168,17 +181,22 @@ namespace MVC_Core.Areas.Customer.Controllers
                 CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
             }
             CartVM.Order.Total = CartVM.Order.Subtotal;
+            if (CheckPomotionIsUsed == false) 
+            {
+                var getPromotion = HttpContext.Session.GetString("promotionCode");
 
-            if (!string.IsNullOrEmpty(getPromotion))
-            {       
-                var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
-                if(promotion != null)
+                if (!string.IsNullOrEmpty(getPromotion))
                 {
-					var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
-					CartVM.Order.Discount = countValue;
-					CartVM.Order.Total -= countValue;
-				}
+                    var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
+                    if (promotion != null)
+                    {
+                        var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+                        CartVM.Order.Discount = countValue;
+                        CartVM.Order.Total -= countValue;
+                    }
+                }
             }
+           
             CartVM.Order.Name = CartVM.Order.User.UserName;
             CartVM.Order.PhoneNumber = CartVM.Order.User.PhoneNumber;
 
