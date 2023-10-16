@@ -1,8 +1,37 @@
-﻿@page
+﻿@page "/xac-nhan-email"
 @model ConfirmEmailModel
 @{
-    ViewData["Title"] = "Confirm email";
+    ViewData["Title"] = "Xác thực email";
+    Layout = "_LoginLayout";
+
 }
 
-<h1>@ViewData["Title"]</h1>
+
 <partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row justify-content-center centerDiv">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+                    <div class="col-lg-6">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1>@ViewData["Title"]</h1>
+                                <img src="~/images/success.gif" />
+                                <p>
+                                    Email đã xác thực. Hãy <a asp-page="./Login">đăng nhập</a>.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

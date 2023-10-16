@@ -72,8 +72,8 @@ namespace SecondHand.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage ="Phải nhập {0} ")]
-            [Display(Name = "Nhập tên tài khoản hoặc email")]
+            [Required(ErrorMessage ="Phải {0} ")]
+            [Display(Name = "nhập tên tài khoản hoặc email")]
             //[EmailAddress]
             public string UserNameOrEmail { get; set; }
 
@@ -81,7 +81,8 @@ namespace SecondHand.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Phải nhập {0} ")]
+            [Display(Name = "mật khẩu")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -145,7 +146,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Sai tài khoản hoặc mật khẩu!");
                     return Page();
                 }
             }

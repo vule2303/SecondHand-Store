@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -15,6 +15,7 @@ using SecondHand.Models.Domain;
 
 namespace SecondHand.Areas.Identity.Pages.Account
 {
+    [Area("Identity")]
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -74,15 +75,17 @@ namespace SecondHand.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
-            if (code == null)
+            string email = Request.Query["Email"];
+            if (code == null || email == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return BadRequest("Token không hợp lệ");
             }
             else
             {
                 Input = new InputModel
                 {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code)),
+                    Email = email
                 };
                 return Page();
             }
@@ -96,11 +99,11 @@ namespace SecondHand.Areas.Identity.Pages.Account
             }
 
             var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
-            }
+            //if (user == null)
+            //{             
+            //    ModelState.AddModelError(string.Empty, "Email không tồn tại!");
+            //    return Page();
+            //}
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)

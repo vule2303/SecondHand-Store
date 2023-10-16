@@ -74,43 +74,45 @@ namespace SecondHand.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        ///  [TempData]
+        public string StatusMessage { get; set; }
         public class InputModel
         {
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Phải nhập {0} ")]
             [DataType(DataType.Text)]
             [Display(Name = "Họ")]
             public string FirstName { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Phải nhập {0} ")]
             [DataType(DataType.Text)]
             [Display(Name = "Tên")]
             public string LastName { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Phải nhập {0} ")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-            [Required]
+            [Required (ErrorMessage ="Phải nhập {0} ")]
             [DataType(DataType.Text)]
-            [Display(Name = "Tên tài khoản")]
+            [Display(Name = "tên tài khoản")]
             public string UserName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "Phải nhập {0} ")]
             [StringLength(100, ErrorMessage = "{0} phải từ {2} đến {1} ký tự", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }          
  
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Xác nhận password")]
+            [Compare("Password", ErrorMessage = "Mật khẩu nhập lại không đúng")]
             public string ConfirmPassword { get; set; }
-            [Required]
+            [Required(ErrorMessage = "Phải nhập {0} ")]
             [StringLength(10, ErrorMessage = "{0} phải nhập {1} chữ số")]
             [DataType(DataType.PhoneNumber)]
             [Display(Name = "Số điện thoại")]
@@ -120,13 +122,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!_roleManager.RoleExistsAsync(SD.Role_User_Cust).GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_User_Cust)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Compa)).GetAwaiter().GetResult();
-            }
+            
             if (User.Identity.IsAuthenticated)
             {
                 Response.Redirect("/");
@@ -146,6 +142,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName; 
                 user.LastName = Input.LastName;
                 user.Created = DateTime.Now;
+                Input.UserName = Input.Email;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 await _userManager.SetPhoneNumberAsync(user, Input.Phone);

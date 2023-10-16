@@ -1,8 +1,15 @@
-﻿@page
+﻿@page "/xac-nhan-thay-doi-email"
 @model ConfirmEmailChangeModel
 @{
-    ViewData["Title"] = "Confirm email change";
+    ViewData["Title"] = "Xác thực thay đổi Email";
+    Layout = "_LoginLayout";
 }
+<div class="centerDiv">
+    <h1>@ViewData["Title"]</h1>
+    <img src="~/images/success.gif" />
+    <p>
+        Email đã xác thực. Hãy <a asp-page="./Login">đăng nhập</a>.
+    </p>
+</div>
 
-<h1>@ViewData["Title"]</h1>
 <partial name="_StatusMessage" model="Model.StatusMessage" />

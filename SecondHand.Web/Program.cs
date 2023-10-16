@@ -14,7 +14,7 @@ using SecondHand.Models.Domain;
 using Microsoft.AspNetCore.Builder;
 using SecondHand.Models.Services;
 using MVC_Core.Areas.Customer.Repository;
-
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace SecondHand
 {
@@ -88,7 +88,7 @@ namespace SecondHand
 
 
             });
-
+           
             //Add Authenticate Services
             builder.Services.AddAuthentication().AddGoogle(options =>
             {

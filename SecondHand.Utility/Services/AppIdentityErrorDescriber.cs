@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,13 @@ namespace SecondHand.Utility.Services
 
         public override IdentityError DuplicateEmail(string email)
         {
-            return base.DuplicateEmail(email);
+            var er = base.DuplicateEmail(email);
+            return new IdentityError()
+            {
+                Code = er.Code,
+                Description = $"Email {email} đã tồn tại",
+                
+            };
         }
 
         public override IdentityError DuplicateRoleName(string role)
