@@ -1,7 +1,19 @@
-﻿@model IEnumerable<SecondHand.Models.Domain.Order>
+﻿@using SecondHand.Models.Domain;
+@using SecondHand.Models.Models.Domain;
+
+@model IEnumerable<SecondHand.Models.Domain.Order>
 @{
     ViewData["Title"] = "Index";
     Layout = "_AdminLayout";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 <div class="content-header">
     <div class="container-fluid">
@@ -85,6 +97,7 @@
                         }
                     </tbody>
                 </table>
+                    <partial name="_pager" model="@pager" />
             </div>
         </div>
     </div>

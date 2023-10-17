@@ -8,6 +8,7 @@ using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.IO;
+using SecondHand.Models.Models.Domain;
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
@@ -25,10 +26,27 @@ namespace MVC_Core.Areas.Admin.Controllers
         }
 
         // GET: BrandController
-        public IActionResult Index()
+        public IActionResult Index(int pg = 1)
         {
             List<Brand>? brandList = _context.Brands.ToList();
-            return View(brandList);
+            const int pageSize = 5;
+            if (pg < 1)
+                pg = 1;
+
+            int recsCount = brandList.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = brandList.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
+            //return View(brandList);
         }
 
         // GET: BrandController/Details/5

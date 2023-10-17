@@ -5,6 +5,8 @@ using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
+
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
@@ -20,10 +22,27 @@ namespace MVC_Core.Areas.Admin.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pg = 1)
         {
             List<Category>? cateList = _context.Categories.ToList();
-            return View(cateList);
+
+            const int pageSize = 5;
+            if (pg < 1)
+                pg = 1;
+
+            int recsCount = cateList.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = cateList.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
         }
         public IActionResult Create()
 
