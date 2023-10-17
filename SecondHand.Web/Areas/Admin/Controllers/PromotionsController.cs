@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
+
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
@@ -22,20 +24,38 @@ namespace MVC_Core.Areas.Admin.Controllers
         }
 
         // GET: Admin/Promotions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
             var promotions = await _context.Promotions.ToListAsync();
             ViewBag.DiscountType = new SelectList(new List<string>
-                    {
-        "Type 1",
-        "Type 2",
-        "Type 3"
-    });
+            {
+                "Type 1",
+                "Type 2",
+                "Type 3"
+             });
 
             ViewBag.Promotions = promotions;
 
+            const int pageSize = 3;
+            if (pg < 1)
+                pg = 1;
 
-            return View(promotions);
+            int recsCount = promotions.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = promotions.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
+
+
+            //return View(promotions);
         }
 
 

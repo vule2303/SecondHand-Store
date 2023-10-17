@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
@@ -15,10 +16,27 @@ namespace MVC_Core.Areas.Admin.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int pg = 1)
         {
             List<Contact> contacts = _context.Contacts.ToList();
-            return View(contacts);
+            //return View(contacts);
+            const int pageSize = 3;
+            if (pg < 1)
+                pg = 1;
+
+            int recsCount = contacts.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = contacts.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
         }
         public ActionResult Create()
         {

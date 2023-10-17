@@ -30,7 +30,7 @@ namespace MVC_Core.Areas.Admin.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
             var products = await _context.Products.Include(p => p.Brand)
                 .Include(p => p.Category)
@@ -39,7 +39,25 @@ namespace MVC_Core.Areas.Admin.Controllers
 
             ViewBag.Brands = await _context.Brands.ToListAsync(); // Đưa danh sách thương hiệu cho dropdownlist
 
-            return View(products);
+            const int pageSize = 5;
+            if (pg < 1)
+                pg = 1;
+
+            int recsCount = products.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = products.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
+
+            //return View(products);
         }
 
         // GET: Products/Details/5
