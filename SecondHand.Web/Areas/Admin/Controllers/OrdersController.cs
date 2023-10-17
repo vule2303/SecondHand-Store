@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
@@ -22,10 +23,29 @@ namespace MVC_Core.Areas.Admin.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
             var s2HandDbContext = await _context.Orders.Include(o => o.Promotion).Include(o => o.User).ToListAsync();
-            return View(s2HandDbContext);
+            //return View(s2HandDbContext);
+
+
+            const int pageSize = 7;
+            if (pg < 1)
+                pg = 1;
+
+            int recsCount = s2HandDbContext.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = s2HandDbContext.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
         }
 
         // GET: Orders/Details/5
