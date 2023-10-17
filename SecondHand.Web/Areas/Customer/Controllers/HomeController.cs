@@ -54,7 +54,7 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var claimsIdenity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdenity.FindFirst(ClaimTypes.NameIdentifier);
-            var getUserId = claim.Value;
+           
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -69,9 +69,12 @@ namespace MVC_Core.Areas.Customer.Controllers
             {
                 return NotFound();
             }
-
-            var checkProductExisted = CheckIfProductIsInCart(id, getUserId);
-            ViewBag.IsProductInCart = checkProductExisted;
+            if (claim != null)
+            {
+                var getUserId = claim.Value;
+                var checkProductExisted = CheckIfProductIsInCart(id, getUserId);
+                ViewBag.IsProductInCart = checkProductExisted;
+            }
 
             CartItem cartObj = new CartItem()
             {

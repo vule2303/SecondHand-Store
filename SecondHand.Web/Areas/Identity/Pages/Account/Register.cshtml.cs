@@ -33,6 +33,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -40,7 +41,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -49,6 +50,7 @@ namespace SecondHand.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _hostEnvironment = hostEnvironment; 
         }
 
         /// <summary>
@@ -161,8 +163,30 @@ namespace SecondHand.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    var PathToFile = _hostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplates" + Path.DirectorySeparatorChar.ToString() + "confirm_Account_Registration.html";
+                    var subject = "Xác nhận Email đăng ký";
+                    string htmlBody = "";
+                    using (StreamReader streamReader = System.IO.File.OpenText(PathToFile))
+                    {
+                        htmlBody = streamReader.ReadToEnd();
+                    }
+                    var getTime = String.Format("{0:dddd, dd MM yyyy}", DateTime.Now);
+
+
+
+                    string Message = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
+                    string messageBody = string.Format(htmlBody,
+                        subject,
+                        getTime,
+                        user.FirstName + user.LastName,
+                        user.Email,
+                        Message,
+                        callbackUrl
+                        );
+
+
+                    await _emailSender.SendEmailAsync(Input.Email, subject, messageBody);
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
