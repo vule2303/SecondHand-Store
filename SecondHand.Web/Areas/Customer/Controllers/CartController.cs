@@ -13,7 +13,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Runtime.CompilerServices;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
+using SecondHand.DataAccess.Migrations;
+using System.Globalization;
+using Microsoft.Build.ObjectModelRemoting;
 
 namespace MVC_Core.Areas.Customer.Controllers
 {
@@ -24,17 +26,20 @@ namespace MVC_Core.Areas.Customer.Controllers
         private readonly IEmailSender _emailSender;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IVnPayService _vnPayService;
+        private readonly IWebHostEnvironment _hostEnvironment;
+
 
         [BindProperty]
         public CartVM CartVM { get; set; }
-        public static bool CheckPomotionIsUsed {get;set;}
-        public CartController(S2HandDbContext context, IEmailSender emailSender, UserManager<ApplicationUser> userManager, IVnPayService vnPayService)
+        public static bool CheckPomotionIsUsed { get; set; }
+        public CartController(S2HandDbContext context, IEmailSender emailSender, UserManager<ApplicationUser> userManager, IVnPayService vnPayService, IWebHostEnvironment hostEnvironment)
         {
-           
+
             _context = context;
             _emailSender = emailSender;
             _userManager = userManager;
             _vnPayService = vnPayService;
+            _hostEnvironment = hostEnvironment;
         }
         public IActionResult Index()
         {
@@ -49,17 +54,17 @@ namespace MVC_Core.Areas.Customer.Controllers
                             .ThenInclude(o => o.productGallery)
                             .Include(p => p.Product.Category)
                             .ToList()
-                
+
             };
             CartVM.Order.Total = 0;
             CartVM.Order.User = _context.ApplicationUsers
                                 .FirstOrDefault(u => u.Id == claim.Value);
 
-            foreach(var list in CartVM.ListCart)
+            foreach (var list in CartVM.ListCart)
             {
                 list.price = list.Product.Price;
                 CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
-            }   
+            }
 
             var getPromotion = HttpContext.Session.GetString("promotionCode");
 
@@ -69,7 +74,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             {
                 var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
                 ViewData["getPromotion"] = promotion;
-                if(promotion != null)
+                if (promotion != null)
                 {
                     var checkPromotionIsUsed = _context.Orders.Where(p => p.PromotionId == promotion.Id && p.UserId == claim.Value).FirstOrDefault();
 
@@ -78,33 +83,33 @@ namespace MVC_Core.Areas.Customer.Controllers
                         CheckPomotionIsUsed = false;
 
                         if (promotion.EndDate != null && promotion.EndDate > DateTime.Now)
-						{
-							if (CartVM.Order.Total >= promotion.MiniumOrderAmount)
-							{
-								ViewBag.ApplyDiscount = true;
-								var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
-								CartVM.Order.Discount = countValue;
-								CartVM.Order.Total -= countValue;
-							}
-							else
-							{
-								ViewBag.ApplyDiscount = false;
-							}
-						}
-						else
-						{
-							ViewBag.DiscountExpired = true;
-						}
+                        {
+                            if (CartVM.Order.Total >= promotion.MiniumOrderAmount)
+                            {
+                                ViewBag.ApplyDiscount = true;
+                                var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
+                                CartVM.Order.Discount = countValue;
+                                CartVM.Order.Total -= countValue;
+                            }
+                            else
+                            {
+                                ViewBag.ApplyDiscount = false;
+                            }
+                        }
+                        else
+                        {
+                            ViewBag.DiscountExpired = true;
+                        }
 
-					}
-
-                    else 
-                    {
-                        CheckPomotionIsUsed = true;
-                        ViewBag.PromotionIsUsed = true; 
                     }
 
-				}
+                    else
+                    {
+                        CheckPomotionIsUsed = true;
+                        ViewBag.PromotionIsUsed = true;
+                    }
+
+                }
                 else
                 {
                     ViewBag.DiscountExist = false;
@@ -142,8 +147,8 @@ namespace MVC_Core.Areas.Customer.Controllers
                 return promotion.DiscountValue;
             }
             else
-				return 0; // Mặc định không có giảm giá
-		}
+                return 0; // Mặc định không có giảm giá
+        }
 
         public IActionResult Remove(int cartId)
         {
@@ -152,7 +157,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             _context.CartItems.Remove(cart);
             _context.SaveChanges();
 
-            HttpContext.Session.SetInt32(SD.ssShopingCart, cnt - 1) ;
+            HttpContext.Session.SetInt32(SD.ssShopingCart, cnt - 1);
 
             return RedirectToAction("Index");
         }
@@ -160,7 +165,7 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-           
+
             CartVM = new CartVM()
             {
                 Order = new Order(),
@@ -171,7 +176,7 @@ namespace MVC_Core.Areas.Customer.Controllers
                             .ToList()
             };
 
-            
+
             CartVM.Order.User = _context.ApplicationUsers
                                 .FirstOrDefault(c => c.Id == claim.Value);
 
@@ -181,7 +186,7 @@ namespace MVC_Core.Areas.Customer.Controllers
                 CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
             }
             CartVM.Order.Total = CartVM.Order.Subtotal;
-            if (CheckPomotionIsUsed == false) 
+            if (CheckPomotionIsUsed == false)
             {
                 var getPromotion = HttpContext.Session.GetString("promotionCode");
 
@@ -196,7 +201,7 @@ namespace MVC_Core.Areas.Customer.Controllers
                     }
                 }
             }
-           
+
             CartVM.Order.Name = CartVM.Order.User.UserName;
             CartVM.Order.PhoneNumber = CartVM.Order.User.PhoneNumber;
 
@@ -223,8 +228,8 @@ namespace MVC_Core.Areas.Customer.Controllers
             CartVM.Order.OrderStatus = SD.OrderStatusPending;
             CartVM.Order.UserId = claim.Value;
             CartVM.Order.OrderDate = DateTime.Now;
-            
-            if(promotion != null)
+
+            if (promotion != null)
             {
                 CartVM.Order.PromotionId = promotion.Id;
             }
@@ -242,12 +247,12 @@ namespace MVC_Core.Areas.Customer.Controllers
                     OrderId = CartVM.Order.Id,
                     Price = item.Product.Price,
                     Count = item.count,
-               };
+                };
 
-//                item.Product.Status = false;
+                //                item.Product.Status = false;
 
                 CartVM.Order.Subtotal += (orderDetail.Count * orderDetail.Price);
-           
+
                 _context.OrderDetail.Add(orderDetail);
 
 
@@ -256,21 +261,21 @@ namespace MVC_Core.Areas.Customer.Controllers
             var listOrder = _context.ApplicationUsers.Include(o => o.Orders).Where(o => o.Id == CartVM.Order.UserId);
             subTotal = CartVM.Order.Subtotal;
 
-			var feeShip = CartVM.Order.FeeShipping;
+            var feeShip = CartVM.Order.FeeShipping;
             CartVM.Order.Total = subTotal + feeShip - CartVM.Order.Discount;
 
-         
+
             _context.CartItems.RemoveRange(CartVM.ListCart);
             _context.SaveChanges();
             HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
 
 
-            if ( CartVM.Order.PaymentMethod == SD.PaymentMethodCod)
+            if (CartVM.Order.PaymentMethod == SD.PaymentMethodCod)
             {
-              
+                SendOrderEmail(claim.Value, CartVM.Order.Id);
                 return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.Order.Id });
             }
-            else if(CartVM.Order.PaymentMethod == SD.PaymentMethodVnPay)
+            else if (CartVM.Order.PaymentMethod == SD.PaymentMethodVnPay)
             {
                 //process the payment
                 var url = _vnPayService.CreatePaymentUrl(CartVM.Order, HttpContext);
@@ -285,7 +290,7 @@ namespace MVC_Core.Areas.Customer.Controllers
 
 
         }
-       
+
         public IActionResult OrderConfirmation(int id)
         {
             var listOdered = _context.Orders
@@ -294,22 +299,79 @@ namespace MVC_Core.Areas.Customer.Controllers
                 .ThenInclude(x => x.productGallery)
                 .Include(u => u.User)
                 .FirstOrDefault(x => x.Id == id);
+           
+
             return View(listOdered);
         }
+        public void SendOrderEmail(string Userid, int orderId)
+        {
 
-     
+            var getUser = _context.ApplicationUsers.Find(Userid);
+            var getOrder = _context.Orders.Find(orderId);
+            var listOrders = getOrder.OrderDetails.ToList();
+            var listOdered = _context.Orders
+                .Include(d => d.OrderDetails)
+                .ThenInclude(p => p.Product)
+                .ThenInclude(x => x.productGallery)
+                .Include(u => u.User)
+                .FirstOrDefault(x => x.Id == orderId);
+            int count = 1;
+            var PathToFile = _hostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplates" + Path.DirectorySeparatorChar.ToString() + "confirm_Order.html";
+            var subject = "Thông báo đơn hàng";
+            string htmlBody = "";
+            using (StreamReader streamReader = System.IO.File.OpenText(PathToFile))
+            {
+                htmlBody = streamReader.ReadToEnd();
+            }
+            //get time Vetnam
+            CultureInfo vietnameseCulture = new CultureInfo("vi-VN");
+            DateTime now = DateTime.Now;
+            var name = getUser.FirstName + " " + getUser.LastName;
+            var address = getOrder.Address;
+            var phone = getOrder.PhoneNumber;
+            var orderCode = getOrder.OrderCode;
+            var dateOrder = getOrder.OrderDate;
+            var paymentMethod = getOrder.PaymentMethod;
+            var status = getOrder.OrderStatus;
+            var subTotal = SD.ConvertToCurrencyFormat(getOrder.Subtotal);
+            var total = SD.ConvertToCurrencyFormat(getOrder.Total);
+            var feeShipping = SD.ConvertToCurrencyFormat(getOrder.FeeShipping);
+            var discount = SD.ConvertToCurrencyFormat(getOrder.Discount);
+
+            var listProduct = "";
+            foreach(var item in listOdered.OrderDetails)
+            {
+                listProduct += $"<div\r\nclass=\"row mb-2 mb-sm-0 py-25\"\r\nstyle=\"\r\nbox-sizing: border-box;\r\ndisplay: flex;\r\n-ms-flex-wrap: wrap;\r\nflex-wrap: wrap;\r\nmargin-right: -15px;\r\nmargin-left: -15px;\r\nmargin-bottom: 0 !important;\r\npadding-bottom: 0.75rem !important;\r\npadding-top: 0.75rem !important;\r\n\"\r\n>\r\n<div\r\nclass=\"d-none d-sm-block col-1\"\r\nstyle=\"\r\nbox-sizing: border-box;\r\nposition: relative;\r\nwidth: 100%;\r\npadding-right: 15px;\r\npadding-left: 15px;\r\n-ms-flex: 0\r\n0\r\n8.333333%;\r\nflex: 0 0\r\n8.333333%;\r\nmax-width: 8.333333%;\r\ndisplay: block !important;\r\n\"\r\n>\r\n{count++}\r\n</div>\r\n<div\r\nclass=\"col-9 col-sm-5\"\r\nstyle=\"\r\nbox-sizing: border-box;\r\nposition: relative;\r\nwidth: 100%;\r\npadding-right: 15px;\r\npadding-left: 15px;\r\n-ms-flex: 0\r\n0\r\n41.666667%;\r\nflex: 0 0\r\n41.666667%;\r\nmax-width: 41.666667%;\r\n\"\r\n>\r\n{item.Product.Name}\r\n</div>\r\n<div\r\nclass=\"d-none d-sm-block col-2\"\r\nstyle=\"\r\nbox-sizing: border-box;\r\nposition: relative;\r\nwidth: 100%;\r\npadding-right: 15px;\r\npadding-left: 15px;\r\n-ms-flex: 0\r\n0\r\n16.666667%;\r\nflex: 0 0\r\n16.666667%;\r\nmax-width: 16.666667%;\r\ndisplay: block !important;\r\n\"\r\n>\r\n1\r\n</div>\r\n<div\r\nclass=\"d-none d-sm-block col-2 text-95\"\r\nstyle=\"\r\nbox-sizing: border-box;\r\nposition: relative;\r\nwidth: 100%;\r\npadding-right: 15px;\r\npadding-left: 15px;\r\n-ms-flex: 0\r\n0\r\n16.666667%;\r\nflex: 0 0\r\n16.666667%;\r\nmax-width: 16.666667%;\r\ndisplay: block !important;\r\n\"\r\n>\r\n{item.Product.Color}\r\n</div>\r\n<div\r\nclass=\"col-2 text-secondary-d2\"\r\nstyle=\"\r\nbox-sizing: border-box;\r\nposition: relative;\r\nwidth: 100%;\r\npadding-right: 15px;\r\npadding-left: 15px;\r\n-ms-flex: 0\r\n0\r\n16.666667%;\r\nflex: 0 0\r\n16.666667%;\r\nmax-width: 16.666667%;\r\n\"\r\n>\r\n{SD.ConvertToCurrencyFormat(item.Product.Price)}\r\n</div>\r\n</div>";
+            }
+
+            try
+            {
+            string messageBody = string.Format(htmlBody, subject, name, address, phone, orderCode, dateOrder, status, listProduct, paymentMethod, subTotal, discount, feeShipping, total);
+            // Tiếp tục xử lý messageBody và gửi email
+            _emailSender.SendEmailAsync(getUser.Email, subject, messageBody);
+            }
+            catch (FormatException ex)
+            {
+            // Xử lý lỗi định dạng cụ thể
+            // In ra thông báo lỗi hoặc thực hiện các hành động cần thiết để xử lý lỗi
+                Console.WriteLine("Lỗi định dạng: " + ex.Message);
+            }
+        }
+
         public IActionResult PaymentCallback()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);
-            if(response.Success == true)
+            if (response.Success == true)
             {
-                var orderFinded = _context.Orders.Where(o => o.Id == response.OrderId).FirstOrDefault();
-                if(orderFinded != null)
+                var orderFound = _context.Orders.Where(o => o.Id == response.OrderId).FirstOrDefault();
+                if (orderFound != null)
                 {
-                    orderFinded.PaymentStatus = SD.PaymentStatusApproved;
-                    orderFinded.OrderStatus = SD.OrderStatusPending;
+                    orderFound.PaymentStatus = SD.PaymentStatusApproved;
+                    orderFound.OrderStatus = SD.OrderStatusPending;
                     _context.SaveChanges();
-                    return RedirectToAction("OrderConfirmation", "Cart", new { id = orderFinded.Id }); ;
+                    SendOrderEmail(orderFound.UserId, orderFound.Id);
+
+                    return RedirectToAction("OrderConfirmation", "Cart", new { id = orderFound.Id }); ;
 
                 }
 

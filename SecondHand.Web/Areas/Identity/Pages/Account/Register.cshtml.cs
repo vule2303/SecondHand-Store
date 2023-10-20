@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -170,22 +171,29 @@ namespace SecondHand.Areas.Identity.Pages.Account
                     {
                         htmlBody = streamReader.ReadToEnd();
                     }
-                    var getTime = String.Format("{0:dddd, dd MM yyyy}", DateTime.Now);
+                    //get time Vetnam
+                    CultureInfo vietnameseCulture = new CultureInfo("vi-VN");
+                    DateTime now = DateTime.Now;
+                    var getTime = String.Format("{0}, {1:dd MM yyyy}", now.ToString("dddd", vietnameseCulture),now);
 
 
 
-                    string Message = $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.";
-                    string messageBody = string.Format(htmlBody,
-                        subject,
-                        getTime,
-                        user.FirstName + user.LastName,
-                        user.Email,
-                        Message,
-                        callbackUrl
-                        );
+                   string Message = $"Bạn nhận được email này bởi vì bạn đã đăng ký tài khoản mua sắm tại S2HandStore\r\nHãy ấn vào nút Xác thực để tiến hành xác thực Email của bạn!";
+                    try
+                    {
+                        string messageBody = string.Format(htmlBody, subject, getTime,user.Email, user.FirstName + user.LastName, Message, callbackUrl);
+                        // Tiếp tục xử lý messageBody và gửi email
+                        await _emailSender.SendEmailAsync(Input.Email, subject, messageBody);
+                    }
+                    catch (FormatException ex)
+                    {
+                        // Xử lý lỗi định dạng cụ thể
+                        // In ra thông báo lỗi hoặc thực hiện các hành động cần thiết để xử lý lỗi
+                        Console.WriteLine("Lỗi định dạng: " + ex.Message);
+                    }
 
 
-                    await _emailSender.SendEmailAsync(Input.Email, subject, messageBody);
+                   
 
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)

@@ -1,9 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Hosting;
 using SecondHand.Models.Domain;
 
 namespace SecondHand.Areas.Identity.Pages.Account
@@ -21,11 +23,13 @@ namespace SecondHand.Areas.Identity.Pages.Account
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender, IWebHostEnvironment hostEnvironment)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _hostEnvironment = hostEnvironment;
         }
 
         /// <summary>
@@ -69,12 +73,37 @@ namespace SecondHand.Areas.Identity.Pages.Account
                     "/Account/ResetPassword",
                     pageHandler: null,
                     values: new { area = "Identity",Input.Email,code },
-                    protocol: Request.Scheme);
+                protocol: Request.Scheme);
 
-                await _emailSender.SendEmailAsync(
-                    Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                var PathToFile = _hostEnvironment.WebRootPath + Path.DirectorySeparatorChar.ToString() + "Templates" + Path.DirectorySeparatorChar.ToString() + "EmailTemplates" + Path.DirectorySeparatorChar.ToString() + "confirm_Forgot_Password.html";
+                var subject = "Đặt lại mật khẩu";
+                string htmlBody = "";
+                using (StreamReader streamReader = System.IO.File.OpenText(PathToFile))
+                {
+                    htmlBody = streamReader.ReadToEnd();
+                }
+                //get time Vetnam
+                CultureInfo vietnameseCulture = new CultureInfo("vi-VN");
+                DateTime now = DateTime.Now;
+                var getTime = String.Format("{0}, {1:dd MM yyyy}", now.ToString("dddd", vietnameseCulture), now);
+
+
+
+                string Message = $"Có vẻ bạn đã quên mật khẩu đăng nhập tại S2HandStore. Để đặt lại mật khẩu hãy ấn vào nút đặt lại mật khẩu";
+                try
+                {
+                    string messageBody = string.Format(htmlBody, subject, getTime, user.FirstName + user.LastName, Message, callbackUrl);
+                    // Tiếp tục xử lý messageBody và gửi email
+                    await _emailSender.SendEmailAsync(Input.Email, subject, messageBody);
+                }
+                catch (FormatException ex)
+                {
+                    // Xử lý lỗi định dạng cụ thể
+                    // In ra thông báo lỗi hoặc thực hiện các hành động cần thiết để xử lý lỗi
+                    Console.WriteLine("Lỗi định dạng: " + ex.Message);
+                }
+
+                
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
