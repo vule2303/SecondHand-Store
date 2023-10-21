@@ -38,17 +38,14 @@ namespace MVC_Core.Areas.Customer.Controllers
                    .Select(m => m.count)
                    .ToList()
                    .Count();
+                var countOrderUser = _context.Orders.Where(x => x.UserId == claim.Value).ToList().Count();
+
+                HttpContext.Session.SetInt32("CountOrders", countOrderUser);
                 HttpContext.Session.SetInt32(SD.ssShopingCart, count);
             }
-            var hist = _context.Orders.ToList();
-            ViewBag.History = hist;
             return View();
         }
         
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         public async Task<IActionResult> Details(int id)
         {

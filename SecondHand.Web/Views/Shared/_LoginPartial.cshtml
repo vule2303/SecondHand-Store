@@ -3,9 +3,12 @@
 @using SecondHand.DataAccess.Data;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     // SignInManager.IsSignedIn(User);
     // UserManager.GetUserName(User);
+    var getOrderCount = HttpContextAccessor.HttpContext.Session.GetInt32("CountOrders");
 }
 
 @if (SignInManager.IsSignedIn(User))
@@ -19,7 +22,9 @@
     style="min-width: 150px">
         <ul class="uk-nav uk-dropdown-nav">
             <li>
-               @await Component.InvokeAsync("History")
+                <a asp-controller="History" asp-action="Index">
+                    Đơn hàng <span class="uk-badge">@getOrderCount</span>
+                </a>
             </li>
             
             <li>

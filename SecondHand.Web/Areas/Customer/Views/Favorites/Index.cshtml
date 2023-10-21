@@ -6,7 +6,13 @@
 @using SecondHand.DataAccess.Data;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 
+@{
+    // SignInManager.IsSignedIn(User);
+    // UserManager.GetUserName(User);
+    var getOrderCount = HttpContextAccessor.HttpContext.Session.GetInt32("CountOrders");
+}
 <section class="uk-section uk-section-small">
     <div class="uk-container">
         <div class="uk-grid-medium" uk-grid>
@@ -18,10 +24,11 @@
                              uk-grid>
                             <div class="uk-text-center">
                                 <div class="uk-h4 uk-margin-remove">
-                                    ADMIN
+                                    @((await UserManager.GetUserAsync(User))?.LastName)
+                                    @((await UserManager.GetUserAsync(User))?.FirstName)
                                 </div>
                                 <div class="uk-text-meta">
-                                    Đã tham gia 8/6/2023
+                                    Đã tham gia @((await UserManager.GetUserAsync(User))?.Created?.ToString("dd-MM-yyyy"))
                                 </div>
                             </div>
                             <div class="uk-margin-top">
@@ -34,13 +41,15 @@
                                                   uk-icon="icon: cog; ratio: .75;"></span><span>Cài đặt</span>
                                         </a>
                                     </div>
-                                    <div>
-                                        <button class="uk-button uk-button-default uk-button-small"
-                                                href="#"
-                                                title="Đăng xuất">
-                                            <span uk-icon="icon: sign-out; ratio: .75;"></span>
-                                        </button>
-                                    </div>
+                                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                                        <div>
+                                            <button class="uk-button uk-button-default uk-button-small"
+                                                    type="submit"
+                                                    title="Đăng xuất">
+                                                <span uk-icon="icon: sign-out; ratio: .75;"></span>
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -49,9 +58,9 @@
                         <nav>
                             <ul class="uk-nav uk-nav-default tm-nav">
                                 <li>
-                                    <a href="account.html">
-                                        Đơn hàng
-                                        <span>(2)</span>
+                                    <a asp-controller="History">
+                                        Lịch sử đơn hàng
+                                        <span>(@getOrderCount)</span>
                                     </a>
                                 </li>
                                 <li class="uk-active">

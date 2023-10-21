@@ -7,7 +7,13 @@
 @using SecondHand.DataAccess.Data;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
 
+@{
+    // SignInManager.IsSignedIn(User);
+    // UserManager.GetUserName(User);
+    var getOrderCount = HttpContextAccessor.HttpContext.Session.GetInt32("CountOrders");
+}
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -39,14 +45,16 @@
                                                   uk-icon="icon: cog; ratio: .75;"></span><span>Cài đặt</span>
                                             </a>
                                         </div>
-                                        <div>
-                                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
-                                                <button class=" nav-link btn btn-link text-dark uk-button uk-button-default uk-button-small"
-                                                    title="Đăng xuất" type="submit">
-                                                    <span uk-icon="icon: sign-out; ratio: .75;"></span>
-                                                </button>
+                                   
+                                            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+                                                <div>
+                                                    <button class="uk-button uk-button-default uk-button-small"
+                                                            type="submit"
+                                                            title="Đăng xuất">
+                                                        <span uk-icon="icon: sign-out; ratio: .75;"></span>
+                                                    </button>
+                                                </div>
                                             </form>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +63,10 @@
                             <nav>
                                 <ul class="uk-nav uk-nav-default tm-nav">
                                     <li>
-                                        @await Component.InvokeAsync("History")
+                                        <a asp-controller="History">
+                                            Lịch sử đơn hàng
+                                            <span>(@getOrderCount)</span>
+                                        </a>
                                     </li>
                                     <li>
                                         <a asp-controller="Favorites">
