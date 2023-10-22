@@ -100,7 +100,6 @@ namespace MVC_Core.Areas.Customer.Controllers
                         {
                             ViewBag.DiscountExpired = true;
                         }
-
                     }
 
                     else
@@ -108,13 +107,11 @@ namespace MVC_Core.Areas.Customer.Controllers
                         CheckPomotionIsUsed = true;
                         ViewBag.PromotionIsUsed = true;
                     }
-
                 }
                 else
                 {
                     ViewBag.DiscountExist = false;
                 }
-
             }
             return View(CartVM);
         }
@@ -124,10 +121,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             if (!string.IsNullOrEmpty(promotionCode))
             {
                 HttpContext.Session.SetString("promotionCode", promotionCode);
-
             }
-
-
             return RedirectToAction("Index");
         }
 
@@ -248,28 +242,17 @@ namespace MVC_Core.Areas.Customer.Controllers
                     Price = item.Product.Price,
                     Count = item.count,
                 };
-
-                //                item.Product.Status = false;
-
+                //item.Product.Status = false;
                 CartVM.Order.Subtotal += (orderDetail.Count * orderDetail.Price);
-
                 _context.OrderDetail.Add(orderDetail);
-
-
             }
-
             var listOrder = _context.ApplicationUsers.Include(o => o.Orders).Where(o => o.Id == CartVM.Order.UserId);
             subTotal = CartVM.Order.Subtotal;
-
             var feeShip = CartVM.Order.FeeShipping;
             CartVM.Order.Total = subTotal + feeShip - CartVM.Order.Discount;
-
-
             _context.CartItems.RemoveRange(CartVM.ListCart);
             _context.SaveChanges();
             HttpContext.Session.SetInt32(SD.ssShopingCart, 0);
-
-
             if (CartVM.Order.PaymentMethod == SD.PaymentMethodCod)
             {
                 SendOrderEmail(claim.Value, CartVM.Order.Id);
@@ -285,7 +268,6 @@ namespace MVC_Core.Areas.Customer.Controllers
             else
             {
                 return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.Order.Id });
-
             }
 
 
@@ -305,7 +287,6 @@ namespace MVC_Core.Areas.Customer.Controllers
         }
         public void SendOrderEmail(string Userid, int orderId)
         {
-
             var getUser = _context.ApplicationUsers.Find(Userid);
             var getOrder = _context.Orders.Find(orderId);
             var listOrders = getOrder.OrderDetails.ToList();
@@ -370,11 +351,8 @@ namespace MVC_Core.Areas.Customer.Controllers
                     orderFound.OrderStatus = SD.OrderStatusPending;
                     _context.SaveChanges();
                     SendOrderEmail(orderFound.UserId, orderFound.Id);
-
                     return RedirectToAction("OrderConfirmation", "Cart", new { id = orderFound.Id }); ;
-
                 }
-
                 return Json(response);
 
             }

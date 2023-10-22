@@ -45,15 +45,12 @@ namespace MVC_Core.Areas.Admin.Controllers
             return View(data);
         }
         public IActionResult Create()
-
         {
-
             return View();
         }
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-
             if (ModelState.IsValid)
             {
                 _context.Categories.Add(obj);
@@ -67,8 +64,6 @@ namespace MVC_Core.Areas.Admin.Controllers
         }
         public IActionResult Update(int? id)
         {
-
-
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -77,10 +72,7 @@ namespace MVC_Core.Areas.Admin.Controllers
             if (categoryFromDb == null)
             {
                 return NotFound();
-
             }
-
-
             return View(categoryFromDb);
         }
         [HttpPost]
@@ -101,8 +93,6 @@ namespace MVC_Core.Areas.Admin.Controllers
         }
         public IActionResult Delete(int? id)
         {
-
-
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -111,11 +101,7 @@ namespace MVC_Core.Areas.Admin.Controllers
             if (categoryFromDb == null)
             {
                 return NotFound();
-
             }
-
-
-
             return View(categoryFromDb);
         }
         [HttpPost]
@@ -145,8 +131,6 @@ namespace MVC_Core.Areas.Admin.Controllers
 
             List<Category> searchResults = await query.ToListAsync(); 
             ViewBag.SearchTerm = searchTerm;
-
-
             return View("Index", searchResults); 
         }
     }
