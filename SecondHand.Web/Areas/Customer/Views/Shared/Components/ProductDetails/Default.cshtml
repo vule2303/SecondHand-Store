@@ -11,7 +11,7 @@
         @foreach (var a in Model.Take(1))
         {
             <div class="big-img">
-                <img src="@Url.Content("~/images/products/" + a.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@a.Name" />
+                <img src="@Url.Content("~/images/products/" + a.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@a.Name" width="500" height="500" />
             </div>
         }
         <div class="images">

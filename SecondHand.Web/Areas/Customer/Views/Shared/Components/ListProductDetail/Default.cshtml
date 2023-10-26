@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SecondHand.Models.Domain.Product>
+@using System.Globalization;
+
+
+
+<section class="section-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <div class="header">
+                    <h2>Gợi ý cho bạn</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.Take(4))
+            {
+                    <div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
+                        <div class="product">
+                        <a class="tm-media-box" asp-action="Details" asp-route-id="@item.Id">
+                            
+                               @foreach (var a in Model.Take(1))
+                                {
+                                    <div >
+                                        <img src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
+                                    </div>
+                                }
+                            </a>
+
+                        </div>
+                        <div class="tag bg-red">sale</div>
+                        <div class="heart">
+                            <a href="#"><i class="fa fa-heart-o" id="white-heart"></i></a>
+                        </div>
+                    <a class="title pt-4 pb-1" asp-action="Details" asp-route-id="@item.Id"> @item.Name</a>
+                    <a class="size" asp-action="Details" asp-route-id="@item.Id">Size @item.Size</a>
+                    <a class="price asp-action=" Details" asp-route-id="@item.Id">@(item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))</a>
+                    </div>
+            }
+        </div>
+    </div>
+</section>
+
