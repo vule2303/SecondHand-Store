@@ -81,14 +81,24 @@
             </div>
 
 
+       
         <div class="card card-success">
             <div class="card-header">
-                <h3 class="card-title">Stacked Bar Chart</h3>               
+                <h3 class="card-title" style="font-weight: 700;">DOANH THU BÁN HÀNG</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             </div>
             <div class="card-body">
                 <div class="chart">
                     <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                    <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 558px;" width="558" height="250" class="chartjs-render-monitor"></canvas>
+                    <canvas id="barChart" style="min-height: 250px; height: 700px; max-height: 100%; max-width: 100%; display: block; width: 230px;" width="230" height="250" class="chartjs-render-monitor"></canvas>
                 </div>
             </div>
 
@@ -96,5 +106,158 @@
 
         </div>
     </section>
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="~/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="~/plugins/chart.js/chart.min.js"></script>
 
+<script>
+
+    //$(document).ready(function () {       
+    //    var stackedBarChartData = {
+    //        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+    //    datasets: [
+    //        {
+    //            label: 'Doanh thu',
+    //            backgroundColor: 'rgba(60,141,188,0.9)',
+    //            borderColor: 'rgba(60,141,188,0.8)',
+    //            pointRadius: false,
+    //            pointColor: '#3b8bba',
+    //            pointStrokeColor: 'rgba(60,141,188,1)',
+    //            pointHighlightFill: '#fff',
+    //            pointHighlightStroke: 'rgba(60,141,188,1)',
+    //            data: [7000000, 4800000, 40000, 1900000, 860000, 2700000, 1000000]
+    //        },
+    //        {
+    //            label: 'Đơn hàng',
+    //            backgroundColor: 'rgba(210, 214, 222, 1)',
+    //            borderColor: 'rgba(210, 214, 222, 1)',
+    //            pointRadius: false,
+    //            pointColor: 'rgba(210, 214, 222, 1)',
+    //            pointStrokeColor: '#c1c7d1',
+    //            pointHighlightFill: '#fff',
+    //            pointHighlightStroke: 'rgba(220,220,220,1)',
+    //            data: [65, 59, 80, 81, 56, 55, 40]
+    //        },
+    //    ]
+    //}  
+    //    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    //    var barChartData = $.extend(true, {}, stackedBarChartData)
+    //    var temp0 = stackedBarChartData.datasets[0]
+    //    var temp1 = stackedBarChartData.datasets[1]
+    //        barChartData.datasets[0] = temp1
+    //        barChartData.datasets[1] = temp0
+
+    //        var barChartOptions = {
+    //            responsive: true,
+    //            maintainAspectRatio: false,
+    //            datasetFill: false,
+    //        }
+
+    //        new Chart(barChartCanvas, {
+    //            type: 'bar',
+    //            data: barChartData,
+    //            options: barChartOptions
+    //        })
+    //});
+
+    // Hàm chuyển đổi giá trị thành định dạng VNĐ
+    function formatCurrency(value) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
+    }
+    // Thêm plugin để tùy chỉnh hiển thị giá trị
+    Chart.plugins.register({
+        afterDatasetsDraw: function (chart, easing) {
+            var ctx = chart.ctx;
+
+            chart.data.datasets.forEach(function (dataset, i) {
+                var meta = chart.getDatasetMeta(i);
+                if (!meta.hidden) {
+                    meta.data.forEach(function (element, index) {
+                        // Lấy giá trị từ dataset
+                        var data = dataset.data[index];
+
+                        // Chuyển đổi giá trị thành định dạng VNĐ
+                        var value = formatCurrency(data);
+
+                        // Vẽ giá trị trên cột
+                        ctx.fillStyle = 'black'; // Màu sắc của văn bản
+                        ctx.fillText(value, element._model.x, element._model.y - 10); // Điều chỉnh vị trí văn bản
+                    });
+                }
+            });
+        }
+    });
+    $(document).ready(function () {
+        var stackedBarChartData = {
+            labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+            datasets: [
+                {
+                    label: 'Doanh thu',
+                    backgroundColor: 'rgba(60,141,188,0.9)',
+                    borderColor: 'rgba(60,141,188,0.8)',
+                    yAxisID: 'doanhThu', // Sử dụng trục thứ nhất
+                    data: [7000000, 4800000, 40000, 1900000, 860000, 2700000, 1000000]
+                },
+                {
+                    label: 'Đơn hàng',
+                    backgroundColor: 'rgba(210, 214, 222, 1)',
+                    borderColor: 'rgba(210, 214, 222, 1)',
+                    yAxisID: 'donHang', // Sử dụng trục thứ hai
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+            ]
+        }
+        var barChartCanvas = $('#barChart').get(0).getContext('2d');
+            var barChartData = $.extend(true, {}, stackedBarChartData)
+            var temp0 = stackedBarChartData.datasets[0]
+            var temp1 = stackedBarChartData.datasets[1]
+                barChartData.datasets[0] = temp0
+                barChartData.datasets[1] = temp1
+        var barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false,
+            scales: {
+                xAxes: [{
+                    stacked: false,
+                }],
+                yAxes: [
+                    {
+                        id: 'doanhThu',
+                        position: 'left',
+                        gridLines: {
+                            display: false,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Doanh thu (VNĐ)',
+                        },
+                    },
+                    {
+                        id: 'donHang',
+                        position: 'right',
+                        gridLines: {
+                            display: false,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Số lượng đơn hàng',
+                        },
+                    },
+                ],
+            },
+        }
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        });
+    });
+    
+
+
+</script>
 
