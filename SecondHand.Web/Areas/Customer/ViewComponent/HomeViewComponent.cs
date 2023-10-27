@@ -51,7 +51,6 @@ namespace MVC_Core.Areas.Customer.ViewComponents
 				listCartItem.Add(cartObj);
 			}
 
-            ViewBag.IsProductInCartList = isProductInCartList;
             HttpContext.Session.SetObject("isProductInCartList", isProductInCartList);
 			return View(listCartItem);
         }

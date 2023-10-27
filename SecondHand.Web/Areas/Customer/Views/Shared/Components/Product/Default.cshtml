@@ -128,7 +128,8 @@
                                                                                 <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
                                                                             }
                                                                         </a>
-                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Filter" asp-action="Index">
+                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Home">
+                                                                         
                                                                             @if (_SignInManaer.IsSignedIn(User))
                                                                             {
                                                                                 <input hidden name="ProductId" value="@item.Id" />

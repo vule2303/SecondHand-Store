@@ -41,9 +41,9 @@
 							{
 								<input hidden name="ProductId" value="@item.ProductId" />
 								<div class="d-flex align-items-center justify-content-center list-unstyled icons">
-									@if (ViewBag.IsProductInCartList.Count != 0)
+									@if (getIteminCatt.Count != 0)
 									{
-										<button class="button-75 icon mx-3" type="submit" disabled="@ViewBag.IsProductInCartList[count++]"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></button>
+										<button class="button-75 icon mx-3" type="submit" disabled="@getIteminCatt[count++]"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></button>
 									}
 									else
 									{

@@ -11,7 +11,7 @@
     ViewData["Title"] = "SPTheoLoai";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var uniqueBrands = Model.Select(b => b.Brand.Name).Distinct().ToList();
-    var getIteminCatt = HttpContextAccessor.HttpContext.Session.GetObject<List<bool>>("isProductInCartList");
+    var getIteminCatt = HttpContextAccessor.HttpContext.Session.GetObject<List<bool>>("isProductInCartCategory");
     var count = 0;
 
 }
@@ -129,7 +129,7 @@
                                                                                 <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
                                                                             }
                                                                         </a>
-                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Filter" asp-action="SPTheoLoai" asp-route-id="@item.Id">
+                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Home">
                                                                             @if (_SignInManaer.IsSignedIn(User))
                                                                             {
                                                                                 <input hidden name="ProductId" value="@item.Id" />
