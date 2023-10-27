@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Bcpg.Sig;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Utility.Services;
 using System.Security.Claims;
 
 namespace MVC_Core.Areas.Customer.ViewComponents
@@ -51,14 +52,11 @@ namespace MVC_Core.Areas.Customer.ViewComponents
 			}
 
             ViewBag.IsProductInCartList = isProductInCartList;
-
+            HttpContext.Session.SetObject("isProductInCartList", isProductInCartList);
 			return View(listCartItem);
         }
         public bool Check (int productId, string userId)
-        {
-            
-		
-
+        {           	
 				var check = _context.CartItems.Where(a => a.UserId == userId && a.ProductId == productId).FirstOrDefault();
                 if (check != null)
                 {
