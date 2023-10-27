@@ -119,6 +119,7 @@ namespace MVC_Core.Areas.Customer.Controllers
                 return View(cartObj);
             }
         }
+
         public bool Check (int productId, string userId)
         {           	
 				var check = _context.CartItems.Where(a => a.UserId == userId && a.ProductId == productId).FirstOrDefault();
@@ -132,6 +133,22 @@ namespace MVC_Core.Areas.Customer.Controllers
 
                 }
 		}
-
+        public IActionResult SPTheoBrand(int loaiSp)
+        {
+            List<Product> lstSp = _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Brand)
+                .Include(x => x.productGallery)
+                .Where(x => x.Brand.Id == loaiSp)
+                .OrderBy(x => x.Name).ToList();
+            if (lstSp == null || lstSp.Count == 0)
+            {
+                ViewBag.Empty = "Không có sản phẩm nào!!!";
+            }
+            var aidi = _context.Brands
+                .Where(x => x.Id == loaiSp).ToList();
+            ViewBag.TenDanhMuc = aidi;
+            return View(lstSp);
+        }
     }
 }
