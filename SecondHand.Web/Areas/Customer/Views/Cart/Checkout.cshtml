@@ -439,8 +439,8 @@
             $('#wardSelect').on('change', function () {
             var selectedWardCode = $(this).val();
             // Lấy giá trị từ phần tử <div> có id="totalValue"
-            
-            var insuranceValue = @Model.Order.Total; // Chuyển đổi sang kiểu số thực
+
+                var insuranceValue = @Convert.ToDouble(Model.Order.Total); // Chuyển đổi sang kiểu số thực // Chuyển đổi sang kiểu số thực
             // Lấy các thông tin khác cần thiết để tính phí cước
             //var serviceId = /* Lấy ID của gói dịch vụ từ API lấy gói dịch vụ */
             //var weight = /* Lấy trọng lượng hàng hóa từ nguồn dữ liệu hoặc người dùng */

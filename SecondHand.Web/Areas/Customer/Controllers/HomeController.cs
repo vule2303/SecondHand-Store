@@ -109,6 +109,7 @@ namespace MVC_Core.Areas.Customer.Controllers
 					.Select(m => m.count)
 					.Count();
 				HttpContext.Session.SetInt32(SD.ssShopingCart, count);
+
 				return RedirectToAction("Index");
 			}
 			else
