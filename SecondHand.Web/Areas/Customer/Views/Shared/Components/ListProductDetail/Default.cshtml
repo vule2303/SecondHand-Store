@@ -17,7 +17,7 @@
             {
                     <div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
                         <div class="product">
-                        <a class="tm-media-box" asp-action="Details" asp-route-id="@item.Id">
+                        <a class="tm-media-box" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
                             
                                @foreach (var a in Model.Take(1))
                                 {

@@ -72,8 +72,8 @@ namespace SecondHand.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage ="Phải {0} ")]
-            [Display(Name = "nhập tên tài khoản hoặc email")]
+            [Required(ErrorMessage ="Phải nhập {0} đăng nhập")]
+            [Display(Name = "email")]
             //[EmailAddress]
             public string UserNameOrEmail { get; set; }
 

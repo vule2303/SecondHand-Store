@@ -26,7 +26,7 @@
 			{
 				<div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
 					<div class="product">
-						<a class="tm-media-box" asp-action="Details" asp-route-id="@item.Product.Id">
+						<a class="tm-media-box" asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id">
 							@if (item.Product.productGallery != null)
 							{
 								<img src="@Url.Content("~/images/products/" + item.Product.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Product.Name" />

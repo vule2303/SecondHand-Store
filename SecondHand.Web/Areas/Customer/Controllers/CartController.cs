@@ -157,6 +157,13 @@ namespace MVC_Core.Areas.Customer.Controllers
         }
         public IActionResult CheckOut()
         {
+            if (CartVM == null)
+            {
+                return View("Error", "Home");
+            }
+            else
+            {
+
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -180,14 +187,14 @@ namespace MVC_Core.Areas.Customer.Controllers
                 CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
             }
             CartVM.Order.Total = CartVM.Order.Subtotal;
-            if (CheckPomotionIsUsed == false)
+            if (CheckPomotionIsUsed == false )
             {
                 var getPromotion = HttpContext.Session.GetString("promotionCode");
 
                 if (!string.IsNullOrEmpty(getPromotion))
                 {
                     var promotion = _context.Promotions.Where(c => c.Code == getPromotion).FirstOrDefault();
-                    if (promotion != null)
+                    if (promotion != null && promotion.EndDate > DateTime.Now)
                     {
                         var countValue = CalculateDiscount(CartVM.Order.Total, promotion);
                         CartVM.Order.Discount = countValue;
@@ -200,12 +207,16 @@ namespace MVC_Core.Areas.Customer.Controllers
             CartVM.Order.PhoneNumber = CartVM.Order.User.PhoneNumber;
 
             return View(CartVM);
+
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Checkout()
         {
+           
+                     
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var getPromotionCode = HttpContext.Session.GetString("promotionCode");
@@ -258,18 +269,14 @@ namespace MVC_Core.Areas.Customer.Controllers
                 SendOrderEmail(claim.Value, CartVM.Order.Id);
                 return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.Order.Id });
             }
-            else if (CartVM.Order.PaymentMethod == SD.PaymentMethodVnPay)
-            {
+            else
+            { 
                 //process the payment
                 var url = _vnPayService.CreatePaymentUrl(CartVM.Order, HttpContext);
 
                 return Redirect(url);
             }
-            else
-            {
-                return RedirectToAction("OrderConfirmation", "Cart", new { id = CartVM.Order.Id });
-            }
-
+            
 
         }
 

@@ -32,7 +32,7 @@
 
 
                 <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
-                    Tất cả sản phẩm
+                    @ViewBag.TenDanhMuc
                 </h1>               
                     <div class="uk-text-meta uk-margin-xsmall-top uk-margin-bottom">
                         Tổng sản phẩm:  @Model.Count()
@@ -118,7 +118,7 @@
                                                             {
                                                                 <div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
                                                                     <div class="product">
-                                                                        <a class="tm-media-box" asp-action="Details" asp-route-id="@item.Id">
+                                                                        <a class="tm-media-box" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
                                                                             @if (item.productGallery != null)
                                                                             {
                                                                                 <img src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
@@ -129,7 +129,7 @@
                                                                                 <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
                                                                             }
                                                                         </a>
-                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Home">
+                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Filter" asp-action="SPTheoLoai">
                                                                             @if (_SignInManaer.IsSignedIn(User))
                                                                             {
                                                                                 <input hidden name="ProductId" value="@item.Id" />

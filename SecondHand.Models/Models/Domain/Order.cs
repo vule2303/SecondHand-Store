@@ -36,13 +36,21 @@ namespace SecondHand.Models.Domain {
         public string? Note { get; set; }
 
         public DateTime? ShippingDate { get; set; }
-
+        [Required(ErrorMessage = "Phải nhập {0} đăng nhập")]
+        [Display(Name = "Tên người nhận")]
         public string? Name { get; set; }
-
+        [Required(ErrorMessage = "Nhập {0}")]
+        [Display(Name = "Số điện thoại")]
         public string? PhoneNumber { get; set; }
+       
+        [Required(ErrorMessage = "Nhập {0}")]
+        [Display(Name = "Địa chỉ giao hàng")]
         public string? Address { get; set; }
+        [Required]
         public string? City { get; set; }
+        [Required]
         public string? State { get;set; }
+        [Required]
         public string? Ward { get; set; }
         
         public DateTime? OrderDate { get; set; }

@@ -86,7 +86,7 @@
                                                         <div class="uk-form-controls">
                                                         <input asp-for="Order.Address" class="uk-input"
                                                                type="text" />
-                                                            <span asp-validation-for="Order.Address" class="text-danger"></span>
+                                                        <span asp-validation-for="Order.Address" class="text-danger"></span>
                                                         </div>
                                                     </label>
                                                 </div>
@@ -101,9 +101,10 @@
                                                             </div>
                                                             <select id="citySelect" class="uk-select">
                                                                 <option value="">Chọn thành phố</option>
+                                                                <span asp-validation-for="Order.City" class="text-danger"></span>
+
                                                             </select>
                                                             <input hidden asp-for="Order.City" value="" id="cityInput" />
-                                                            <span asp-validation-for="Order.City" class="text-danger"></span>
                                                         </label>
                                                     </div>
 
@@ -115,8 +116,9 @@
                                                             <select id="districtSelect" class="uk-select">
                                                                 <option value="">Chọn quận/huyện</option>
                                                             </select>
-                                                            <input hidden asp-for="Order.State" value="" id="districtInput" />
                                                             <span asp-validation-for="Order.State" class="text-danger"></span>
+
+                                                            <input hidden asp-for="Order.State" value="" id="districtInput" />
                                                         </label>
                                                     </div>
 
@@ -127,9 +129,10 @@
                                                             </div>
                                                             <select id="wardSelect" class="uk-select">
                                                                 <option value="">Chọn phường/xã</option>
+                                                                <span asp-validation-for="Order.Ward" class="text-danger"></span>
+
                                                             </select>
                                                             <input hidden asp-for="Order.Ward" value="" id="wardInput" />
-                                                            <span asp-validation-for="Order.Ward" class="text-danger"></span>
                                                         </label>
                                                     </div>
                                                 <div class="uk-form-group uk-margin-top">
@@ -145,15 +148,10 @@
                                                         <span asp-validation-for="Order.Note" class="text-danger"></span>
                                                            
 
-                                                         </div>
-                                                    
-                                               
-                                                    
+                                                         </div>                                                                                                                                                      
                                                         <div>
                                                             <input hidden asp-for="Order.FeeShipping" value="" id="feeShippingInput" />
-                                                        </div>
-
-                                                    
+                                                        </div>                                                  
                                                  </div>
                                            </div>
                                         
@@ -167,7 +165,7 @@
                                 </h2>
                                 <div class="uk-card uk-card-default uk-card-small tm-ignore-container uk-margin-top uk-margin-bottom">
                                         <div class="uk-card-body">
-                                            <div class="uk-grid-small uk-grid-match uk-child-width-1-1 uk-child-width-1-3@s uk-flex-center"
+                                            <div class="uk-grid-small uk-grid-match uk-child-width-1-1 uk-child-width-1-2@s uk-flex-center"
                                                  uk-switcher="toggle: &gt; * &gt; .tm-choose"
                                                  uk-grid>
                                                 <div>
@@ -188,19 +186,7 @@
                                                         </div>
                                                     </a>
                                     
-                                                </div>
-                                                <div>
-                                                    <a class="tm-choose" href="#">
-                                                        <div class="tm-choose-title">
-                                                            Thanh toán điện tử
-                                                        </div>
-                                                        <div class="tm-choose-description">
-                                                            MoMo
-                                                        </div>
-                                                    </a>
-                                                    
-                                                </div>
-                                            </div>
+                                                </div>                                             
                                         </div>
                                         <input hidden id="PaymentMethod" asp-for="Order.PaymentMethod" value="@SD.PaymentMethodCod" />
 
@@ -214,21 +200,7 @@
                                                 thanh toán
                                                 được đảm bảo bởi
                                                 các giao thức bảo mật
-                                            </div>
-                                            <div>
-                                                <img src="images/verified-by-visa.svg"
-                                                     title="Verified by Visa"
-                                                     style="
-                                                                        height: 25px;
-                                                                    " />
-                                            </div>
-                                            <div>
-                                                <img src="images/mastercard-securecode.svg"
-                                                     title="MasterCard SecureCode"
-                                                     style="
-                                                                        height: 25px;
-                                                                    " />
-                                            </div>
+                                            </div>                                           
                                         </div>
                                     </div>
                                 </div>
@@ -256,8 +228,7 @@
                                             <div>@details.Product.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ",")</div>
                                         </div>
                                     </div>
-                                }
-                              
+                                }                            
                             </section>
                             <section class="uk-card-body">
                                 <div class="uk-grid-small"
@@ -327,7 +298,9 @@
         </div>
     </div>
 </section>
-
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
