@@ -1,10 +1,24 @@
-﻿@page
+﻿@page "/admin/s2Handstore/truy-cap-bi-tu-choi"
+
+@using SecondHand.Models.Domain;
 @model AccessDeniedModel
 @{
     ViewData["Title"] = "Access denied";
+    Layout = "_LayoutAuthorize";
 }
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+
+<link href="~/css/error.css" rel="stylesheet" />
+<div class="main-error-page">
+    <img src="~/images/accessdenied.jpg" style="width: 600px;height:600px;"/>
+    <h1 class="error-title">
+        Woops! <br>Quyền truy cập bị từ chối :(
+    </h1>
+    <h2 class="error-subtitle">
+        Hãy thử lại sau
+    </h2>
+
+
+</div>
+
+

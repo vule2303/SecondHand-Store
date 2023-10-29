@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
@@ -16,6 +18,8 @@ namespace MVC_Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/s2Handstore/san-pham/[action]/{id?}")]
+    [Authorize(Roles = "Admin")]
+
     public class ProductsController : Controller
     {
 

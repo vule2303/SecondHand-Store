@@ -1,13 +1,17 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MVC_Core.Areas.Admin.Pages.Role;
 using SecondHand.DataAccess.Data;
+using System.Data;
 
 namespace MVC_Core.Areas.Identity.Pages.Role
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+
     public class IndexModel : RolePageModel
     {
         public IndexModel(RoleManager<IdentityRole> roleManager, S2HandDbContext context) : base(roleManager, context)

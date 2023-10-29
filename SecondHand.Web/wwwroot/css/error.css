@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+.body {
+  background-color: #fff;
+}
 .main-error-page {
-    min-height: 600px;
+    min-height: 1100px;
     margin: 0px auto;
     width: auto;
-    max-width: 560px;
+    max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +23,7 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: #4b4b62;
+    color: #ff0000;
     margin-bottom: 16px;
 }
 

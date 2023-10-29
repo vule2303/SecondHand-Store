@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
@@ -8,6 +9,8 @@ namespace MVC_Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/s2Handstore/ho-tro-khach-hang/[action]/{id?}")]
+    [Authorize(Roles = "Admin")]
+
     public class ContactManageController : Controller
     {
         private readonly S2HandDbContext _context;

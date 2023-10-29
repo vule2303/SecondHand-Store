@@ -190,7 +190,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             foreach (var list in CartVM.ListCart)
             {
                 list.price = list.Product.Price;
-                CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
+                CartVM.Order.Subtotal += Convert.ToDecimal(list.price);
             }
             CartVM.Order.Total = CartVM.Order.Subtotal;
             if (CheckPomotionIsUsed == false )
@@ -259,7 +259,7 @@ namespace MVC_Core.Areas.Customer.Controllers
                     Price = item.Product.Price,
                     Count = item.count,
                 };
-                //item.Product.Status = false;
+                item.Product.Status = false;
                 CartVM.Order.Subtotal += (orderDetail.Count * orderDetail.Price);
                 _context.OrderDetail.Add(orderDetail);
             }

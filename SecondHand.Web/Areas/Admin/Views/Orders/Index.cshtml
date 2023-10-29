@@ -1,6 +1,6 @@
 ﻿@using SecondHand.Models.Domain;
 @using SecondHand.Models.Models.Domain;
-
+@using SecondHand.Utility;
 @model IEnumerable<SecondHand.Models.Domain.Order>
 @{
     ViewData["Title"] = "Index";
@@ -57,14 +57,14 @@
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>OrderCode</th>
+                            <th>Mã Đơn hàng</th>
                             <th>Tình trạng</th>
                             <th>Phương thức</th>
                             <th>Tình trạng đơn hàng</th>
                             <th>Tổng tiền trước giảm giá</th>
                             <th>Giảm giá</th>
                             <th>Tổng tiền</th>
-                            <th>ID Người dùng</th>
+                            <th>Email</th>
                             
                         </tr>
                     </thead>
@@ -73,13 +73,14 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(modelItem => item.OrderCode)</td>
-                                <td>@Html.DisplayFor(modelItem => item.PaymentStatus)</td>
-                                <td>@Html.DisplayFor(modelItem => item.PaymentMethod)</td>
-                                <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Subtotal)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Discount)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                                <td>@item.OrderCode</td>
+                                <td>@item.PaymentStatus</td>
+                                <td>@item.PaymentMethod</td>
+                                <td>@item.OrderStatus</td>
+                                <td>@SD.ConvertToCurrencyFormat(item.Subtotal)</td>
+                                <td>@SD.ConvertToCurrencyFormat(item.Discount)</td>
+                                <td>@SD.ConvertToCurrencyFormat(item.Total)</td>
+                                        
 @*                                <td>
                                     @if (item.Promotion != null)
                                     {

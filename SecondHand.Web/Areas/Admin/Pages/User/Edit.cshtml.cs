@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace MVC_Core.Areas.Admin.Pages.User
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

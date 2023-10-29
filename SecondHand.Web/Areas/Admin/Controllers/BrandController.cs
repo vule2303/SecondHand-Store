@@ -9,11 +9,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.IO;
 using SecondHand.Models.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/s2Handstore/thuong-hieu/[action]/{id?}")]
+    [Authorize(Roles = "Admin")]
+
     public class BrandController : Controller
     {
 

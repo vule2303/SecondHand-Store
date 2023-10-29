@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Migrations;
 using SecondHand.Models.Domain;
 using System.ComponentModel;
+using System.Data;
 
 namespace MVC_Core.Areas.Admin.Pages.User
 {
+    [Authorize(Roles = "Admin")]
     public class AddRoleModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

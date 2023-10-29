@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,8 @@ namespace MVC_Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/s2Handstore/don-dat-hang/[action]/{id?}")]
+    [Authorize(Roles = "Admin")]
+
     public class OrdersController : Controller
     {
         private readonly S2HandDbContext _context;
@@ -28,10 +32,11 @@ namespace MVC_Core.Areas.Admin.Controllers
             var s2HandDbContext = await _context.Orders
             .Include(o => o.Promotion)
             .Include(o => o.User)
-            .Where(o => o.Promotion != null && o.User != null) // Kiểm tra xem các thuộc tính liên quan có giá trị null hay không
+            .Where(o => o.Promotion != null && o.User != null)
+            .OrderByDescending(d => d.OrderDate)// Kiểm tra xem các thuộc tính liên quan có giá trị null hay không
             .ToListAsync();
             //return View(s2HandDbContext);
-
+            
 
             const int pageSize = 7;
             if (pg < 1)
@@ -59,17 +64,18 @@ namespace MVC_Core.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
-            var order = await _context.Orders
-                .Include(o => o.Promotion)
-                .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            var listOdered = _context.Orders
+               .Include(d => d.OrderDetails)
+               .ThenInclude(p => p.Product)
+               .ThenInclude(x => x.productGallery)
+               .Include(u => u.User)
+               .FirstOrDefault(x => x.Id == id);
+            if (listOdered == null)
             {
                 return NotFound();
             }
 
-            return View(order);
+            return View(listOdered);
         }
 
         // GET: Orders/Create

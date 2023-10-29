@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.ObjectModelRemoting;
@@ -6,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
 using SecondHand.Models.Models.Domain;
+using System.Data;
 
 
 namespace MVC_Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("admin/s2Handstore/danh-muc/[action]/{id?}")]
+    [Authorize(Roles = "Admin")]
 
     public class CategoryController : Controller
     {

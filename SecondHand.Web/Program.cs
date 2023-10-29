@@ -109,14 +109,21 @@ namespace SecondHand
                 // Thiết lập đường dẫn Facebook chuyển hướng đến
                 facebookOptions.CallbackPath = "/dang-nhap-tu-facebook";
             });
-
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AllowEdit", policyBuilder =>
                 {
-                    options.LoginPath = "/dangnhap";
-                }
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.RequireRole("Admin");
 
-            );
+                });
+            });
+            builder.Services.ConfigureApplicationCookie(option =>
+            {
+                option.AccessDeniedPath = $"/admin/s2Handstore/truy-cap-bi-tu-choi";
+                option.LoginPath = $"/dangnhap";
+                option.LogoutPath = $"/Identity/Account/Logout";
+            });
             //sign for Interface
 
             //sign samesite

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,10 +7,13 @@ using MVC_Core.Areas.Admin.Pages.Role;
 using SecondHand.DataAccess.Data;
 using SecondHand.DataAccess.Migrations;
 using SecondHand.Models.Domain;
+using System.Data;
 
 namespace MVC_Core.Areas.Admin.Pages.User
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

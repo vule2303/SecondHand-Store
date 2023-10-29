@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SecondHand.DataAccess.Data;
 using SecondHand.DataAccess.Migrations;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace MVC_Core.Areas.Admin.Pages.Role
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : RolePageModel
     {
         public DeleteModel(RoleManager<IdentityRole> roleManager, S2HandDbContext context) : base(roleManager, context)

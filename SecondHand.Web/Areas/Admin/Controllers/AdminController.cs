@@ -7,8 +7,8 @@ using SecondHand.Models.ViewModels;
 namespace MVC_Core.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("admin/s2Handstore/trang-chu")]
-    [Authorize]
+    [Route("admin/s2Handstore/trang-chu/{action}")]
+    [Authorize(Policy = "AllowEdit")]
     public class AdminController : Controller
     {
         private readonly S2HandDbContext _context;
@@ -70,6 +70,10 @@ namespace MVC_Core.Areas.Admin.Controllers
                 TotalSalesPerMonth = salesByMonth
             };
             return View(analystVM);
+        }
+        public IActionResult Error()
+        {
+            return View();
         }
     }
 }
