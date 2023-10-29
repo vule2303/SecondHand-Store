@@ -179,6 +179,7 @@ namespace MVC_Core.Areas.Customer.Controllers
 
                 }
 		}
+
         public IActionResult SPTheoBrand(int loaiSp)
         {
             List<Product> lstSp = _context.Products
@@ -191,10 +192,77 @@ namespace MVC_Core.Areas.Customer.Controllers
             {
                 ViewBag.Empty = "Không có sản phẩm nào!!!";
             }
-            var aidi = _context.Brands
-                .Where(x => x.Id == loaiSp).ToList();
+            var aidi = _context.Brands.Where(x => x.Id == loaiSp).Select(x => x.Name).FirstOrDefault();
             ViewBag.TenDanhMuc = aidi;
+            var listCartItem = new List<CartItem>();
+            var isProductInBrandList = new List<bool>();
+            foreach (var product in lstSp)
+            {
+                CartItem cartObj = new CartItem()
+                {
+                    Product = product,
+                    ProductId = product.Id
+                };
+                if (_signInManager.IsSignedIn(User))
+                {
+                    var claimsIdentity = (ClaimsIdentity)User.Identity;
+                    var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                    var check = Check(product.Id, claim.Value);
+
+                    isProductInBrandList.Add(check);
+
+                }
+                listCartItem.Add(cartObj);
+            }
+            HttpContext.Session.SetObject("isProductInCartBrand", isProductInBrandList);
             return View(lstSp);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SPTheoBrand(CartItem CartObject)
+        {
+            CartObject.Id = 0;
+            if (ModelState.IsValid)
+            {
+                var claimsIdenity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdenity.FindFirst(ClaimTypes.NameIdentifier);
+                CartObject.UserId = claim.Value;
+                CartItem cartFromDb = _context.CartItems.Include(db => db.Product).FirstOrDefault(u => u.UserId == CartObject.UserId && u.ProductId == CartObject.ProductId);
+                if (cartFromDb == null)
+                {
+                    _context.CartItems.Add(CartObject);
+                }
+                else
+                {
+                    cartFromDb.count += CartObject.count;
+                    //_context.CartItems.Update(cartFromDb);
+                }
+                var brandId = _context.Products.Include(ct => ct.Category).FirstOrDefault(d => d.Id == CartObject.ProductId);
+                _context.SaveChanges();
+                var count = _context.CartItems
+                    .Where(c => c.UserId == CartObject.UserId)
+                    .Select(m => m.count)
+                    .Count();
+                HttpContext.Session.SetInt32(SD.ssShopingCart, count);
+                return RedirectToAction("SPTheoBrand", new { loaiSp = brandId.BrandId});
+            }
+            else
+            {
+                var product = await _context.Products
+               .Include(p => p.Brand)
+               .Include(p => p.Category)
+               .Include(p => p.productGallery)
+               .FirstOrDefaultAsync(m => m.Id == CartObject.ProductId);
+                CartItem cartObj = new CartItem()
+                {
+                    Product = product,
+                    ProductId = product.Id
+                };
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                return View(cartObj);
+            }
         }
     }
 }

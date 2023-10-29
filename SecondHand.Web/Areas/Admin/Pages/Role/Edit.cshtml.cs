@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SecondHand.DataAccess.Data;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVC_Core.Areas.Admin.Pages.Role
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : RolePageModel
     {
         public EditModel(RoleManager<IdentityRole> roleManager, S2HandDbContext context) : base(roleManager, context)

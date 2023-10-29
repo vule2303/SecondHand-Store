@@ -148,6 +148,10 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var cart = _context.CartItems.FirstOrDefault(u => u.Id == cartId);
             var cnt = _context.CartItems.Where(u => u.UserId == cart.UserId).Count();
+            if(cnt == null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             _context.CartItems.Remove(cart);
             _context.SaveChanges();
 

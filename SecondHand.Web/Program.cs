@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Builder;
 using SecondHand.Models.Services;
 using MVC_Core.Areas.Customer.Repository;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SecondHand
 {
@@ -108,6 +109,14 @@ namespace SecondHand
                 // Thiết lập đường dẫn Facebook chuyển hướng đến
                 facebookOptions.CallbackPath = "/dang-nhap-tu-facebook";
             });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/dangnhap";
+                }
+
+            );
             //sign for Interface
 
             //sign samesite

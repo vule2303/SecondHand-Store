@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 
 namespace MVC_Core.Areas.Admin.Pages.User
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

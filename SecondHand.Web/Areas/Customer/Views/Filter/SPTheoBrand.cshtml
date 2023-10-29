@@ -1,17 +1,22 @@
-﻿@{
-    ViewData["Title"] = "SPTheoLoai";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
+﻿@using System.Globalization;
 @using SecondHand.Models.Models.Domain;
+@using SecondHand.Utility.Services;
 @using System.Linq;
 @model IEnumerable<SecondHand.Models.Domain.Product>
-@{
+@inject SignInManager<ApplicationUser> _SignInManaer;
+@inject UserManager<ApplicationUser> _UserManager;
+@inject IHttpContextAccessor HttpContextAccessor;
 
+@{
+    ViewData["Title"] = "SPTheoLoai";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var uniqueBrands = Model.Select(b => b.Brand.Name).Distinct().ToList();
+    var getIteminCatt = HttpContextAccessor.HttpContext.Session.GetObject<List<bool>>("isProductInCartBrand");
+    var count = 0;
 
 }
 
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <section class="uk-section uk-section-small">
     <div class="uk-container">
         <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
@@ -19,24 +24,19 @@
             <div class="uk-text-center">
                 <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
 
-                    <li><a asp-controller="Home" asp-action="Index">Trang Chủ</a></li>
-                    <li><a href="catalog.html">Thương Hiệu</a></li>
+
+                    <li><a asp-controller="Home">Trang Chủ</a></li>
+
+
                 </ul>
-                @foreach (var item in ViewBag.TenDanhMuc)
-                {
-                    <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
-                        @item.Name
-                    </h1>
 
-                }
 
-                @foreach (var item in Model.Take(1))
-                {
-                    <div class="uk-text-meta uk-margin-xsmall-top">
-                        Tổng sản phẩm: @Model.Count()
-                    </div>
-                }
-
+                <h1 id="product-title" class="uk-margin-small-top uk-margin-remove-bottom">
+                    @ViewBag.TenDanhMuc
+                </h1>
+                <div class="uk-text-meta uk-margin-xsmall-top uk-margin-bottom">
+                    Tổng sản phẩm:  @Model.Count()
+                </div>
             </div>
 
             <div>
@@ -63,42 +63,13 @@
                                      uk-accordion="multiple: true; targets: &gt; .js-accordion-section"
                                      style="flex-basis: auto">
                                     @await Component.InvokeAsync("DanhMuc")
-                                    <section class="uk-card-body uk-open js-accordion-section">
-                                        <h4 class="uk-accordion-title uk-margin-remove">
-                                            Giá Tiền
-                                        </h4>
-                                        <div class="uk-accordion-content">
-                                            <div class="uk-grid-small uk-child-width-1-2 uk-text-small"
-                                                 uk-grid>
-                                                <div>
-                                                    <div class="uk-inline">
-                                                        <span class="uk-form-icon uk-text-xsmall">Từ</span><input class="uk-input"
-                                                                                                                  type="text"
-                                                                                                                  placeholder="$59" />
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <div class="uk-inline">
-                                                        <span class="uk-form-icon uk-text-xsmall">Đến</span><input class="uk-input"
-                                                                                                                   type="text"
-                                                                                                                   placeholder="$6559" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
                                     <section class="uk-card-body js-accordion-section uk-open">
                                         <h4 class="uk-accordion-title uk-margin-remove">
                                             Nhãn Hiệu
                                         </h4>
                                         @await Component.InvokeAsync("Brandd")
                                     </section>
-                                    <div class="uk-card-body">
-                                        <a asp-controller="Filter" asp-action="Index" class="uk-button uk-button-default uk-width-1-1">
-                                            <span class="uk-margin-xsmall-right"
-                                                  uk-icon="icon: close; ratio: .75;"></span>Đặt lại bộ lọc
-                                        </a>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -115,18 +86,6 @@
                                             <div class="uk-grid-small uk-flex-middle"
                                                  uk-grid>
                                                 <div class="uk-width-1-1 uk-width-expand@s uk-flex uk-flex-center uk-flex-left@s uk-text-small">
-                                                    <span class="uk-margin-small-right uk-text-muted">Tìm kiếm bởi</span>
-                                                    <ul class="uk-subnav uk-margin-remove">
-
-                                                        <li>
-                                                            <a class="uk-text"
-                                                               href="#">Giá</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="uk-text"
-                                                               href="#">Mới Nhất</a>
-                                                        </li>
-                                                    </ul>
                                                 </div>
                                                 <div class="uk-width-1-1 uk-width-auto@s uk-flex uk-flex-center uk-flex-middle">
                                                     <button class="uk-button uk-button-default uk-button-small uk-hidden@m"
@@ -143,11 +102,7 @@
                                                                    uk-icon="grid"
                                                                    uk-tooltip="Grid"></a>
                                                             </li>
-                                                            <li>
-                                                                <a data-view="list"
-                                                                   uk-icon="list"
-                                                                   uk-tooltip="List"></a>
-                                                            </li>
+
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -155,75 +110,60 @@
                                         </div>
                                         <div>
                                             <div class="uk-card uk-card-default tm-ignore-container">
-                                                <div class="uk-grid-collapse uk-child-width-1-4 tm-products-grid js-products-grid"
-                                                     uk-grid>
-                                                    @if (ViewBag.Empty != null)
-                                                    {
-                                                        @foreach (var item in ViewBag.Empty)
-                                                        {
-                                                            @item
-                                                        }
-                                                    }
-                                                    @foreach (var c in Model)
-                                                    {
+                                                <section class="section-products">
+                                                    <div class="container">
 
-                                                        <article id="product-title" class="tm-product-card ">
+                                                        <div class="row">
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                <div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
+                                                                    <div class="product">
+                                                                        <a class="tm-media-box" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                                                                            @if (item.productGallery != null)
+                                                                            {
+                                                                                <img src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
 
-                                                            <div class="tm-product-card-media">
-                                                                <div class="tm-ratio tm-ratio-4-3">
-
-                                                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@c.Id"  class="tm-media-box uk-padding-remove">
-
-                                                                        <figure class="tm-media-box-wrap">
-
-                                                                            <img src="@Url.Content("~/images/products/" + c.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@c.Name" />
-
-                                                                        </figure>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="tm-product-card-body">
-                                                                <div class="tm-product-card-info">
-                                                                    <div class="uk-text-meta uk-margin-xsmall-bottom">
-                                                                        @c.Brand.Name
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
+                                                                            }
+                                                                        </a>
+                                                                        <form method="post" enctype="multipart/form-data" asp-controller="Filter" asp-action="SPTheoBrand">
+                                                                            @if (_SignInManaer.IsSignedIn(User))
+                                                                            {
+                                                                                <input hidden name="ProductId" value="@item.Id" />
+                                                                                <div class="d-flex align-items-center justify-content-center list-unstyled icons">
+                                                                                    @if (getIteminCatt.Count != 0)
+                                                                                    {
+                                                                                        <button class="button-75 icon mx-3" type="submit" disabled="@getIteminCatt[count++]"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></button>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <button class="button-75 icon mx-3" type="submit"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></button>
+                                                                                    }
+                                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div class="d-flex align-items-center justify-content-center list-unstyled icons">
+                                                                                    <a class="button-75 icon mx-3" asp-area="Identity" asp-page="/Account/Login"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></a>
+                                                                                </div>
+                                                                            }
+                                                                        </form>
                                                                     </div>
-                                                                    <h3 class="tm-product-card-title">
-                                                                        <a class="uk-link-heading"
-                                                                           href="product.html">@c.Name</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <div class="tm-product-card-shop product-mg">
-                                                                    <div class="tm-product-card-prices ">
-                                                                        <div class="uk-text-meta">Size M</div>
-                                                                        <div class="tm-product-card-price">
-                                                                            @c.Price
-                                                                        </div>
+                                                                    <div class="tag bg-red">sale</div>
+                                                                    <div class="heart">
+                                                                        <a href="#"><i class="fa fa-heart-o" id="white-heart"></i></a>
                                                                     </div>
-                                                                    <div class="tm-product-card-add">
-                                                                        <div class="uk-text-meta tm-product-card-actions">
-                                                                            <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
-                                                                               title="Yêu thích">
-                                                                                <span uk-icon="icon: heart; ratio: .75;"></span><span class="tm-product-card-action-text">
-                                                                                    Add to
-                                                                                    favorites
-                                                                                </span>
-                                                                            </a>
-                                                                        </div>
-                                                                        <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
-                                                                            <span class="tm-product-card-add-button-icon"
-                                                                                  uk-icon="cart"></span><span class="tm-product-card-add-button-text">add to cart</span>
-                                                                        </button>
-                                                                    </div>
+                                                                    <a class="title pt-4 pb-1" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                                                    <a class="size" asp-action="Details" asp-route-id="@item.Id">Size @item.Size</a>
+                                                                    <a class="price" asp-action="Details" asp-route-id="@item.Id">@(item.Price.ToString("C", CultureInfo.GetCultureInfo("vi-VN")).Replace(" ", "").Replace(".", ","))</a>
                                                                 </div>
-                                                            </div>
-
-                                                        </article>
-
-
-
-                                                    }
-
-                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </section>
                                             </div>
 
                                         </div>
@@ -262,10 +202,11 @@
 
 
 
-
-
-
 </section>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 
 
 
