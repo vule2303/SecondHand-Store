@@ -21,7 +21,7 @@
 			{
 				<div class="col-lg-3 col-sm-6 d-flex flex-column align-items-center justify-content-center product-item my-3">
 					<div class="product">
-						<a class="tm-media-box" asp-action="Details" asp-route-id="@item.Id">
+						<a class="tm-media-box" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
 							@if (item.productGallery != null)
 							{
 								<img src="@Url.Content("~/images/products/" + item.productGallery.Select(p=>p.URL).FirstOrDefault())" alt="@item.Name" />
@@ -32,12 +32,12 @@
 								<img src="~/images/SweaterNike.jpg" alt="Không có hình ảnh" />
 							}
 						</a>
-						<form method="post" enctype="multipart/form-data" asp-action="Details">
+						<form method="post" enctype="multipart/form-data" asp-controller="Search" asp-action="Search">
 							<input hidden asp-for="@item.Id" />
 							<div class="d-flex align-items-center justify-content-center list-unstyled icons">
 								<button class="button-75 icon mx-3" type="submit"><span class="fas fa-shopping-bag"></span><span style="margin-left: 4px;">Thêm vào giỏ</span></button>
 							</div>
-						</form>
+						</form>	
 					</div>
 					<div class="tag bg-red">sale</div>
 					<div class="heart">

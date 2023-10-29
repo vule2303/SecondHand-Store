@@ -81,7 +81,7 @@ else if(ViewBag.PromotionIsUsed == true)
                                                     <div class="uk-width-1-3">
                                                         <div class="tm-ratio tm-ratio-4-3">
                                                             <a class="tm-media-box"
-                                                               asp-controller="Home" asp-action="Details" asp-route-id ="@item.Id">
+                                                               asp-controller="Home" asp-action="Details" asp-route-id ="@item.Product.Id">
                                                                 <figure class="tm-media-box-wrap">
                                                                     <img src="~/images/products/@item.Product.productGallery.Select(m => m.URL).FirstOrDefault()"
                                                                          alt='@item.Product.Name' />
@@ -94,7 +94,7 @@ else if(ViewBag.PromotionIsUsed == true)
                                                             @item.Product.Category.Name
                                                         </div>
                                                         <a class="uk-link-heading"
-                                                   asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">@item.Product.Name</a>
+                                                   asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id">@item.Product.Name</a>
                                                     </div>
                                                 </div>
                                             </div>

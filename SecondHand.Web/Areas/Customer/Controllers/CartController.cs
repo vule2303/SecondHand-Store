@@ -63,7 +63,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             foreach (var list in CartVM.ListCart)
             {
                 list.price = list.Product.Price;
-                CartVM.Order.Subtotal += Convert.ToDecimal(list.price * list.count);
+                CartVM.Order.Subtotal += Convert.ToDecimal(list.price);
             }
 
             var getPromotion = HttpContext.Session.GetString("promotionCode");

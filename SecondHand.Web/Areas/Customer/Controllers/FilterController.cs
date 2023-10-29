@@ -10,6 +10,7 @@ using SecondHand.Models.ViewModels;
 using SecondHand.Utility;
 using SecondHand.Utility.Services;
 using System.Security.Claims;
+
 namespace MVC_Core.Areas.Customer.Controllers
 {
     [Area("Customer")]
@@ -29,9 +30,9 @@ namespace MVC_Core.Areas.Customer.Controllers
         public async Task<IActionResult> Index(int pg = 1)
         {
             var a = _context.Products.Where(p => p.Status == true)
-    .Include(p => p.Brand)
-    .Include(p => p.Category)
-    .Include(p => p.productGallery).ToList();
+            .Include(p => p.Brand)
+            .Include(p => p.Category)
+            .Include(p => p.productGallery).ToList();
 
             const int pageSize = 8;
             if (pg < 1)
