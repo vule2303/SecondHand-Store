@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Bcpg.Sig;
 using SecondHand.DataAccess.Data;
 using SecondHand.Models.Domain;
+using SecondHand.Models.Models.Domain;
 using SecondHand.Models.ViewModels;
 using SecondHand.Utility;
 using SecondHand.Utility.Services;
@@ -25,9 +26,32 @@ namespace MVC_Core.Areas.Customer.Controllers
             _signInManager = signInManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pg = 1)
         {
-            return View();
+            var a = _context.Products.Where(p => p.Status == true)
+    .Include(p => p.Brand)
+    .Include(p => p.Category)
+    .Include(p => p.productGallery).ToList();
+
+            const int pageSize = 8;
+            if (pg < 1)
+                pg = 1;
+
+            int recsCount = a.Count();
+
+            var pager = new Pager(recsCount, pg, pageSize);
+
+            int recSkip = (pg - 1) * pageSize;
+
+            var data = a.Skip(recSkip).Take(pager.PageSize).ToList();
+
+            this.ViewBag.Pager = pager;
+
+            //return View(cateList);
+
+            return View(data);
+
+            //return View(a);
         }
         public IActionResult SPTheoLoai(int loaiSp)
         {
