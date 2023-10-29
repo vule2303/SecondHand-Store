@@ -1,4 +1,8 @@
-﻿@{
+﻿@using SecondHand.Models.Domain;
+@using SecondHand.Models.Models.Domain;
+@using SecondHand.Utility;
+@model SecondHand.Models.ViewModels.AnalystVM
+@{
     Layout = "_AdminLayout";
 }
 <div class="content-header">
@@ -18,66 +22,52 @@
     </div>
 
 
-    <section class="content">
+<section class="content">
         <div class="container-fluid">
 
             <div class="row">
-                <div class="col-lg-3 col-6">
+                <div class="col-lg col-6">
 
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>150</h3>
-                            <p>New Orders</p>
+                        <p>Tổng đơn hàng</p>
+
+                            <h3>@Model.OrderQuantity</h3>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-6">
+                <div class="col-lg col-6">
 
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-                            <p>Bounce Rate</p>
+                        <p>Tổng lợi nhuận</p>
+                            <h3>@SD.ConvertToCurrencyFormat(Model.TotalSales)</h3>
                         </div>
                         <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-6">
+                <div class="col-lg col-6">
 
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
-                            <p>User Registrations</p>
+                        <p>Người dùng mua hàng</p>
+                            <h3>@Model.UserQuantity</h3>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="#" class="small-box-footer">Xem thêm<i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-
-                <div class="col-lg-3 col-6">
-
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-
             </div>
 
 
@@ -113,55 +103,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="~/plugins/chart.js/chart.min.js"></script>
 
-<script>
 
-    //$(document).ready(function () {       
-    //    var stackedBarChartData = {
-    //        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-    //    datasets: [
-    //        {
-    //            label: 'Doanh thu',
-    //            backgroundColor: 'rgba(60,141,188,0.9)',
-    //            borderColor: 'rgba(60,141,188,0.8)',
-    //            pointRadius: false,
-    //            pointColor: '#3b8bba',
-    //            pointStrokeColor: 'rgba(60,141,188,1)',
-    //            pointHighlightFill: '#fff',
-    //            pointHighlightStroke: 'rgba(60,141,188,1)',
-    //            data: [7000000, 4800000, 40000, 1900000, 860000, 2700000, 1000000]
-    //        },
-    //        {
-    //            label: 'Đơn hàng',
-    //            backgroundColor: 'rgba(210, 214, 222, 1)',
-    //            borderColor: 'rgba(210, 214, 222, 1)',
-    //            pointRadius: false,
-    //            pointColor: 'rgba(210, 214, 222, 1)',
-    //            pointStrokeColor: '#c1c7d1',
-    //            pointHighlightFill: '#fff',
-    //            pointHighlightStroke: 'rgba(220,220,220,1)',
-    //            data: [65, 59, 80, 81, 56, 55, 40]
-    //        },
-    //    ]
-    //}  
-    //    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    //    var barChartData = $.extend(true, {}, stackedBarChartData)
-    //    var temp0 = stackedBarChartData.datasets[0]
-    //    var temp1 = stackedBarChartData.datasets[1]
-    //        barChartData.datasets[0] = temp1
-    //        barChartData.datasets[1] = temp0
-
-    //        var barChartOptions = {
-    //            responsive: true,
-    //            maintainAspectRatio: false,
-    //            datasetFill: false,
-    //        }
-
-    //        new Chart(barChartCanvas, {
-    //            type: 'bar',
-    //            data: barChartData,
-    //            options: barChartOptions
-    //        })
-    //});
+    <script>
 
     // Hàm chuyển đổi giá trị thành định dạng VNĐ
     function formatCurrency(value) {
@@ -199,14 +142,14 @@
                     backgroundColor: 'rgba(60,141,188,0.9)',
                     borderColor: 'rgba(60,141,188,0.8)',
                     yAxisID: 'doanhThu', // Sử dụng trục thứ nhất
-                    data: [7000000, 4800000, 40000, 1900000, 860000, 2700000, 1000000]
+                        data: @Html.Raw(Json.Serialize(Model.TotalSalesPerMonth))
                 },
                 {
                     label: 'Đơn hàng',
                     backgroundColor: 'rgba(210, 214, 222, 1)',
                     borderColor: 'rgba(210, 214, 222, 1)',
                     yAxisID: 'donHang', // Sử dụng trục thứ hai
-                    data: [65, 59, 80, 81, 56, 55, 40]
+                    data: @Html.Raw(Json.Serialize(Model.TotalOrderPermonth))
                 },
             ]
         }

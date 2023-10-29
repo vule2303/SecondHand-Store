@@ -157,7 +157,9 @@ namespace MVC_Core.Areas.Customer.Controllers
         }
         public IActionResult CheckOut()
         {
-            if (CartVM == null)
+            var getCart = HttpContext.Session.GetInt32(SD.ssShopingCart);
+
+            if (getCart == 0)
             {
                 return View("Error", "Home");
             }
@@ -233,7 +235,7 @@ namespace MVC_Core.Areas.Customer.Controllers
             CartVM.Order.OrderStatus = SD.OrderStatusPending;
             CartVM.Order.UserId = claim.Value;
             CartVM.Order.OrderDate = DateTime.Now;
-
+            
             if (promotion != null)
             {
                 CartVM.Order.PromotionId = promotion.Id;

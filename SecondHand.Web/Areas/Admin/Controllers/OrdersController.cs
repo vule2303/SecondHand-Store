@@ -25,7 +25,11 @@ namespace MVC_Core.Areas.Admin.Controllers
         // GET: Orders
         public async Task<IActionResult> Index(int pg = 1)
         {
-            var s2HandDbContext = await _context.Orders.Include(o => o.Promotion).Include(o => o.User).ToListAsync();
+            var s2HandDbContext = await _context.Orders
+            .Include(o => o.Promotion)
+            .Include(o => o.User)
+            .Where(o => o.Promotion != null && o.User != null) // Kiểm tra xem các thuộc tính liên quan có giá trị null hay không
+            .ToListAsync();
             //return View(s2HandDbContext);
 
 
@@ -42,10 +46,10 @@ namespace MVC_Core.Areas.Admin.Controllers
             var data = s2HandDbContext.Skip(recSkip).Take(pager.PageSize).ToList();
 
             this.ViewBag.Pager = pager;
-
+             
             //return View(cateList);
 
-            return View(data);
+            return View(s2HandDbContext);
         }
 
         // GET: Orders/Details/5

@@ -29,7 +29,8 @@ namespace MVC_Core.Areas.Customer.Controllers
         {
             var claimsIdenity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdenity.FindFirst(ClaimTypes.NameIdentifier);
-            if(claim != null)
+
+            if (claim != null)
             {
                 var count = _context.CartItems
                    .Where(c => c.UserId == claim.Value)
@@ -37,7 +38,8 @@ namespace MVC_Core.Areas.Customer.Controllers
                    .ToList()
                    .Count();
                 var countOrderUser = _context.Orders.Where(x => x.UserId == claim.Value).Count();
-                if(countOrderUser == null)
+        
+                if (countOrderUser == null)
                 {
                     countOrderUser = 0;
                 }
